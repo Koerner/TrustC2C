@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     interaction.cpp \
-    randomQ.cpp
+    randomQ.cpp \
+    database.cpp
 
 HEADERS += \
         mainwindow.h \
     interaction.h \
-    randomQ.h
+    randomQ.h \
+    database.h
 
 FORMS += \
         mainwindow.ui

@@ -70,12 +70,14 @@ $(document).ready(function(){initNavTree('classinteraction.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8e5f98105474490c268bcb742b5c2cbc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinteraction.html#a8e5f98105474490c268bcb742b5c2cbc">interaction</a> (<a class="el" href="classrandom_q.html">randomQ</a> &amp;truthRandHandover)</td></tr>
-<tr class="separator:a8e5f98105474490c268bcb742b5c2cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a774dc1e9dff613f3033aa8e91f01482a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinteraction.html#a774dc1e9dff613f3033aa8e91f01482a">interaction</a> (QVector&lt; int &gt; &amp;settingsVector, <a class="el" href="classrandom_q.html">randomQ</a> &amp;truthRandHandover, <a class="el" href="classrandom_q.html">randomQ</a> &amp;detectRandXHandover, <a class="el" href="classrandom_q.html">randomQ</a> &amp;honestRandHandover, <a class="el" href="classrandom_q.html">randomQ</a> &amp;honestRandAHandover)</td></tr>
+<tr class="separator:a774dc1e9dff613f3033aa8e91f01482a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc5eba2679706fe5a76510ba1b59ce7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinteraction.html#adc5eba2679706fe5a76510ba1b59ce7b">run</a> ()</td></tr>
+<tr class="separator:adc5eba2679706fe5a76510ba1b59ce7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8e5f98105474490c268bcb742b5c2cbc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e5f98105474490c268bcb742b5c2cbc">&#9670;&nbsp;</a></span>interaction()</h2>
+<a id="a774dc1e9dff613f3033aa8e91f01482a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a774dc1e9dff613f3033aa8e91f01482a">&#9670;&nbsp;</a></span>interaction()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -83,12 +85,60 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">interaction::interaction </td>
           <td>(</td>
+          <td class="paramtype">QVector&lt; int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>settingsVector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype"><a class="el" href="classrandom_q.html">randomQ</a> &amp;&#160;</td>
-          <td class="paramname"><em>truthRandHandover</em></td><td>)</td>
+          <td class="paramname"><em>truthRandHandover</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrandom_q.html">randomQ</a> &amp;&#160;</td>
+          <td class="paramname"><em>detectRandXHandover</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrandom_q.html">randomQ</a> &amp;&#160;</td>
+          <td class="paramname"><em>honestRandHandover</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrandom_q.html">randomQ</a> &amp;&#160;</td>
+          <td class="paramname"><em>honestRandAHandover</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>constructor. copies pointers of randGenerators so we can acces them later </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="adc5eba2679706fe5a76510ba1b59ce7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc5eba2679706fe5a76510ba1b59ce7b">&#9670;&nbsp;</a></span>run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void interaction::run </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>this executes one interaction. Do not Run it twice, rather create a new class for doing so. </p>
 
 </div>
 </div>

@@ -10,25 +10,35 @@
 class interaction
 {
 public:
-    interaction(QVector<int> &settingsVector, randomQ& truthRandHandover, randomQ& detectRandHandover, randomQ& honestRandHandover);
+    interaction(QVector<int> &settingsVector, randomQ& truthRandHandover, randomQ& detectRandXHandover, randomQ& honestRandHandover, randomQ &honestRandAHandover);
 
     void run();
 
 private:
     randomQ *truthRand;
-    randomQ *detectRand;
+    randomQ *detectRandX;
     randomQ *honestRand;
+    randomQ *detectRandA;
 
-    int probCarDetects; //Probability that the car knows what is true
-    int probCarHonest; //Probability that the car tells what it thinks is true
-
-    bool CarKnowsTruth;
+    //Enviroment
     bool truth;
-    bool CarHonest;
-
     void initTruth();
-    void CarDetectionResult();
-    void CarHonestResult();
+
+    //CarX
+    int probCarXDetects; //Probability that the carX knows what is true
+    int probCarXHonest; //Probability that the car tells what it thinks is true
+
+    void CarXDetectionResult();
+    void CarXHonestResult();
+
+    bool CarXKnowsTruth;
+    bool CarXHonest;
+
+    //CarA
+    int probCarADetects; //Probability that the carA knows what is true
+    void CarADetectionResult();
+    bool CarAKnowsTruth;
+    void determineTrustForXFromA();
 };
 
 #endif // INTERACTION_H
