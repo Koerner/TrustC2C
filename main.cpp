@@ -36,20 +36,32 @@ int main(int argc, char *argv[])
     //settings
     settingsGUI instanceSettings;
     instanceSettings.numInteractions = 1000;
-    instanceSettings.numTotalCars = 7; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
+    instanceSettings.numTotalCars = 10; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
     instanceSettings.numCarsRecommending = 5; //has to be -2 total cars
 
     instanceSettings.PropDetectsCarA =90;
-    //instanceSettings.PropDetectsCarB =90;
-    instanceSettings.PropDetectsCarX =90;
 
-    instanceSettings.PropHonestCarB = 100;
+    // Propability distribution
+    QList<QPair<int,int>> PropDetectsCarX;
+    PropDetectsCarX.clear();
+    PropDetectsCarX.append(QPair<unsigned int,int>(0 , 99));
+    PropDetectsCarX.append(QPair<unsigned int,int>(instanceSettings.numTotalCars * 90 /100, 1));
+    instanceSettings.PropDetectsCarX = PropDetectsCarX;
+    qDebug() << PropDetectsCarX;
+
+    // Propability honest  /// not yet implemented
+    QList<QPair<int,int>> PropHonestCarB;
+    PropHonestCarB.clear();
+    PropHonestCarB.append(QPair<unsigned int,int>(100 / 100 * instanceSettings.numTotalCars , 90));
+    PropHonestCarB.append(QPair<unsigned int,int>(instanceSettings.numTotalCars - 0 / 100 * instanceSettings.numTotalCars, 10));
+    instanceSettings.PropHonestCarB = PropHonestCarB;
+
     instanceSettings.PropHonestCarX = 100;
     //end settings
 
 
     //initilaize database with all cars
-    database data(instanceSettings.numTotalCars);
+    database data(instanceSettings.numTotalCars, instanceSettings.PropDetectsCarX, instanceSettings.PropHonestCarB);
 
 
     //TEST

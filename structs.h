@@ -15,11 +15,11 @@ struct settingsGUI {
   unsigned int numCarsRecommending;
 
   unsigned int PropDetectsCarA;
-  unsigned int PropDetectsCarX;
+  QList<QPair<int,int>> PropDetectsCarX;
   //unsigned int PropDetectsCarB;
 
   unsigned int PropHonestCarX;
-  unsigned int PropHonestCarB;
+  QList<QPair<int,int>> PropHonestCarB;
 } ;
 
 

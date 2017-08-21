@@ -93,7 +93,7 @@ void interaction::CarXDetectionResult()
 {
     /// this gives back whether the carX knows the truth.
     /**   */
-    CarXKnowsTruth = randCollection->detectRandX.getResultPercent(instanceSettings.PropDetectsCarX);
+    CarXKnowsTruth = randCollection->detectRandX.getResultPercent(data->getCarPropDetects(carIDs.at(1)));
     qDebug() << "The probability for the carX knowing the truth is: " << instanceSettings.PropDetectsCarX <<" The result of random for knowing the truth is " << CarXKnowsTruth;
 }
 

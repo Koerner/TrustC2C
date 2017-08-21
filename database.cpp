@@ -1,17 +1,37 @@
 #include "database.h"
 
-database::database(unsigned long int size)
+database::database(unsigned long size, QList<QPair<int, int>> PropDetects, QList<QPair<int, int>> PropHonest)
 {
     carVector.clear();
     for(unsigned long int i=0; i<size; i++)
     {
+        int temp1 = calcProp(i, PropDetects);
+        int temp2 = calcProp(i, PropHonest);
+        QMultiMap<unsigned long int, double> temp3;
+        QMultiMap<unsigned long int, double> temp4;
 
-        QMultiMap<unsigned long int, double> temp1;
-        QMultiMap<unsigned long int, double> temp2;
-       // car temp3 = {i, <QMultiMap<int, double>> trust, <QMultiMap<int, double>> reputation};
-        carVector.append({i, temp1, temp2});
+        carVector.append({i, temp1, temp2, temp3, temp4});
+        qDebug() << "car " << i << "detects truth with " << temp1;
     }
     qDebug() << "Number of cars in database: " << carVector.size();
+}
+
+int database::calcProp(int CarID, QList<QPair<int, int>> prop)
+{
+
+    if(prop.size() == 0){qFatal("Something went wrong with the propabilities");}
+
+    int propResult = 0;
+
+    for(int i=0; i < prop.size() ; i++)
+    {
+        if(prop.at(i).first <= CarID)
+        {
+            propResult = prop.at(i).second;
+        }
+    }
+
+    return propResult;
 }
 
 QList<double> database::getCarTrust(unsigned long int CarBID,unsigned long int CarXid) const
@@ -84,5 +104,11 @@ void database::writeInteractionLog(QVector<unsigned long> carIDs, bool truth, bo
     interactionLogList.append(log);
 
     qDebug() << "Interaction Done. Truth:" << log.truth << "Descission: " << log.descissionResult.first;
+}
+
+int database::getCarPropDetects(unsigned long int CarID)
+{
+
+    return carVector.at(CarID).PropDetects;
 }
 
