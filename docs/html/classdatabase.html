@@ -61,6 +61,7 @@ $(document).ready(function(){initNavTree('classdatabase.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classdatabase-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">database Class Reference</div>  </div>
@@ -73,23 +74,34 @@ $(document).ready(function(){initNavTree('classdatabase.html','');});
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdatabase_1_1car.html">car</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdatabase_1_1interaction_log_struct.html">interactionLogStruct</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac9212182669c72d1586ab32dfcc0786d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#ac9212182669c72d1586ab32dfcc0786d">database</a> (int size)</td></tr>
-<tr class="separator:ac9212182669c72d1586ab32dfcc0786d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9659a1940aa09522437df49c87eb3a5c"><td class="memItemLeft" align="right" valign="top">QList&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a9659a1940aa09522437df49c87eb3a5c">getCarTrust</a> (int CarBID, int CarXid) const</td></tr>
-<tr class="separator:a9659a1940aa09522437df49c87eb3a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5104faaf91098b8cf9ded2f96ef55699"><td class="memItemLeft" align="right" valign="top">QList&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a5104faaf91098b8cf9ded2f96ef55699">getCarReputation</a> (int CarAID, int CarBID) const</td></tr>
-<tr class="separator:a5104faaf91098b8cf9ded2f96ef55699"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cf9fbe0fcddb356caebc4a783f368ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a0cf9fbe0fcddb356caebc4a783f368ae">writeTrustX</a> (int CarOwnID, int CarXID, double trust)</td></tr>
-<tr class="separator:a0cf9fbe0fcddb356caebc4a783f368ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ca20b2e18db5bb5826ee870dfc83b5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a6ca20b2e18db5bb5826ee870dfc83b5e">writeReputationB</a> (int CarOwnID, int CarBID, double reputationTrust)</td></tr>
-<tr class="separator:a6ca20b2e18db5bb5826ee870dfc83b5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a636c6f702f3a3fb20f3bf90d50c4f690"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a636c6f702f3a3fb20f3bf90d50c4f690">database</a> (unsigned long size, QList&lt; QPair&lt; int, int &gt;&gt; PropDetects, QList&lt; QPair&lt; int, int &gt;&gt; PropHonest)</td></tr>
+<tr class="separator:a636c6f702f3a3fb20f3bf90d50c4f690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae876c93849458fff10c2b927beca7fab"><td class="memItemLeft" align="right" valign="top">QList&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#ae876c93849458fff10c2b927beca7fab">getCarTrust</a> (unsigned long int CarBID, unsigned long int CarXid) const</td></tr>
+<tr class="separator:ae876c93849458fff10c2b927beca7fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d2d84e7618f38d2e20a75a2279e637b"><td class="memItemLeft" align="right" valign="top">QList&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a8d2d84e7618f38d2e20a75a2279e637b">getCarReputation</a> (unsigned long int CarAID, unsigned long int CarBID) const</td></tr>
+<tr class="separator:a8d2d84e7618f38d2e20a75a2279e637b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50cf8fef01bb28cade7ad3f3dd493c57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a50cf8fef01bb28cade7ad3f3dd493c57">writeTrustX</a> (unsigned long int CarOwnID, unsigned long int CarXID, double trust)</td></tr>
+<tr class="separator:a50cf8fef01bb28cade7ad3f3dd493c57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a871cc6dcb1233ee1dddedfcb9884ca08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a871cc6dcb1233ee1dddedfcb9884ca08">writeReputationB</a> (unsigned long int CarOwnID, unsigned long int CarBID, double reputationTrust)</td></tr>
+<tr class="separator:a871cc6dcb1233ee1dddedfcb9884ca08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91a6d4565dc7bd964510dd406d47edd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a91a6d4565dc7bd964510dd406d47edd9">writeInteractionLog</a> (QVector&lt; unsigned long int &gt; carIDs, bool truth, bool xSays, bool success, QPair&lt; bool, double &gt; descissionResult)</td></tr>
+<tr class="separator:a91a6d4565dc7bd964510dd406d47edd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac974518acabef268e0ff134e6899e3a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#ac974518acabef268e0ff134e6899e3a8">getCarPropDetects</a> (unsigned long CarID)</td></tr>
+<tr class="separator:ac974518acabef268e0ff134e6899e3a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:abefcdeaa177e9ba400d0376c8a4300c8"><td class="memItemLeft" align="right" valign="top">QVector&lt; <a class="el" href="structdatabase_1_1interaction_log_struct.html">interactionLogStruct</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#abefcdeaa177e9ba400d0376c8a4300c8">interactionLogList</a></td></tr>
+<tr class="separator:abefcdeaa177e9ba400d0376c8a4300c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac9212182669c72d1586ab32dfcc0786d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9212182669c72d1586ab32dfcc0786d">&#9670;&nbsp;</a></span>database()</h2>
+<a id="a636c6f702f3a3fb20f3bf90d50c4f690"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a636c6f702f3a3fb20f3bf90d50c4f690">&#9670;&nbsp;</a></span>database()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -97,9 +109,25 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">database::database </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size</em></td><td>)</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">QList&lt; QPair&lt; int, int &gt;&gt;&#160;</td>
+          <td class="paramname"><em>PropDetects</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QList&lt; QPair&lt; int, int &gt;&gt;&#160;</td>
+          <td class="paramname"><em>PropHonest</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -107,8 +135,26 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5104faaf91098b8cf9ded2f96ef55699"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5104faaf91098b8cf9ded2f96ef55699">&#9670;&nbsp;</a></span>getCarReputation()</h2>
+<a id="ac974518acabef268e0ff134e6899e3a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac974518acabef268e0ff134e6899e3a8">&#9670;&nbsp;</a></span>getCarPropDetects()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int database::getCarPropDetects </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>CarID</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8d2d84e7618f38d2e20a75a2279e637b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d2d84e7618f38d2e20a75a2279e637b">&#9670;&nbsp;</a></span>getCarReputation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -116,13 +162,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">QList&lt; double &gt; database::getCarReputation </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarAID</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarBID</em>&#160;</td>
         </tr>
         <tr>
@@ -137,8 +183,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9659a1940aa09522437df49c87eb3a5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9659a1940aa09522437df49c87eb3a5c">&#9670;&nbsp;</a></span>getCarTrust()</h2>
+<a id="ae876c93849458fff10c2b927beca7fab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae876c93849458fff10c2b927beca7fab">&#9670;&nbsp;</a></span>getCarTrust()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,13 +192,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">QList&lt; double &gt; database::getCarTrust </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarBID</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarXid</em>&#160;</td>
         </tr>
         <tr>
@@ -167,8 +213,54 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6ca20b2e18db5bb5826ee870dfc83b5e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ca20b2e18db5bb5826ee870dfc83b5e">&#9670;&nbsp;</a></span>writeReputationB()</h2>
+<a id="a91a6d4565dc7bd964510dd406d47edd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91a6d4565dc7bd964510dd406d47edd9">&#9670;&nbsp;</a></span>writeInteractionLog()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void database::writeInteractionLog </td>
+          <td>(</td>
+          <td class="paramtype">QVector&lt; unsigned long int &gt;&#160;</td>
+          <td class="paramname"><em>carIDs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>truth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>xSays</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>success</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QPair&lt; bool, double &gt;&#160;</td>
+          <td class="paramname"><em>descissionResult</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a871cc6dcb1233ee1dddedfcb9884ca08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a871cc6dcb1233ee1dddedfcb9884ca08">&#9670;&nbsp;</a></span>writeReputationB()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,13 +268,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void database::writeReputationB </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarOwnID</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarBID</em>, </td>
         </tr>
         <tr>
@@ -201,8 +293,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0cf9fbe0fcddb356caebc4a783f368ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cf9fbe0fcddb356caebc4a783f368ae">&#9670;&nbsp;</a></span>writeTrustX()</h2>
+<a id="a50cf8fef01bb28cade7ad3f3dd493c57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50cf8fef01bb28cade7ad3f3dd493c57">&#9670;&nbsp;</a></span>writeTrustX()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,13 +302,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void database::writeTrustX </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarOwnID</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarXID</em>, </td>
         </tr>
         <tr>
@@ -233,6 +325,21 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>inserts new trust pair for specified CarX in the database of CarA (me) </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="abefcdeaa177e9ba400d0376c8a4300c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abefcdeaa177e9ba400d0376c8a4300c8">&#9670;&nbsp;</a></span>interactionLogList</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVector&lt;<a class="el" href="structdatabase_1_1interaction_log_struct.html">interactionLogStruct</a>&gt; database::interactionLogList</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

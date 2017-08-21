@@ -70,18 +70,43 @@ $(document).ready(function(){initNavTree('classrandom_q.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:adcf00bae4dc3acb65be102abbd0d9651"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#adcf00bae4dc3acb65be102abbd0d9651">randomQ</a> ()</td></tr>
+<tr class="separator:adcf00bae4dc3acb65be102abbd0d9651"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07cb989c03a6c435f47a0fb1346bb5f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#a07cb989c03a6c435f47a0fb1346bb5f3">randomQ</a> (int seed)</td></tr>
 <tr class="separator:a07cb989c03a6c435f47a0fb1346bb5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e578c970a107af0c847d2924fdcb7f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#a6e578c970a107af0c847d2924fdcb7f5">seedRandom</a> (int seed)</td></tr>
+<tr class="separator:a6e578c970a107af0c847d2924fdcb7f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a327115a6380e677a5bb6331381f157d3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#a327115a6380e677a5bb6331381f157d3">getBool</a> ()</td></tr>
 <tr class="separator:a327115a6380e677a5bb6331381f157d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f533ae7ccf0a2731b9b64203c3503e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#a3f533ae7ccf0a2731b9b64203c3503e5">getPercent</a> ()</td></tr>
 <tr class="separator:a3f533ae7ccf0a2731b9b64203c3503e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a099b8ef9d55bb4133c40b21e997173aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#a099b8ef9d55bb4133c40b21e997173aa">getResultPercent</a> (int sucessPercent)</td></tr>
 <tr class="separator:a099b8ef9d55bb4133c40b21e997173aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac71a073da550b11cf65c9c610ad4b8ff"><td class="memItemLeft" align="right" valign="top">QVector&lt; unsigned long int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#ac71a073da550b11cf65c9c610ad4b8ff">getCarID</a> (unsigned long int totalCarNumber, int requiredIDs)</td></tr>
+<tr class="separator:ac71a073da550b11cf65c9c610ad4b8ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="adcf00bae4dc3acb65be102abbd0d9651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcf00bae4dc3acb65be102abbd0d9651">&#9670;&nbsp;</a></span>randomQ() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">randomQ::randomQ </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="classrandom_q.html">randomQ</a> constructor, input: seed.</p>
+<p>seeds the std::mt19937 random generator with an &lt;int&gt;. </p>
+
+</div>
+</div>
 <a id="a07cb989c03a6c435f47a0fb1346bb5f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07cb989c03a6c435f47a0fb1346bb5f3">&#9670;&nbsp;</a></span>randomQ()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a07cb989c03a6c435f47a0fb1346bb5f3">&#9670;&nbsp;</a></span>randomQ() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -120,6 +145,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac71a073da550b11cf65c9c610ad4b8ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac71a073da550b11cf65c9c610ad4b8ff">&#9670;&nbsp;</a></span>getCarID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVector&lt; unsigned long int &gt; randomQ::getCarID </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long int&#160;</td>
+          <td class="paramname"><em>totalCarNumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>requiredIDs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>returns random succes for a event with a probability in percent. input: percent for success. </p>
+
+</div>
+</div>
 <a id="a3f533ae7ccf0a2731b9b64203c3503e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3f533ae7ccf0a2731b9b64203c3503e5">&#9670;&nbsp;</a></span>getPercent()</h2>
 
@@ -155,6 +209,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>returns random succes for a event with a probability in percent. input: percent for success. </p>
+
+</div>
+</div>
+<a id="a6e578c970a107af0c847d2924fdcb7f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e578c970a107af0c847d2924fdcb7f5">&#9670;&nbsp;</a></span>seedRandom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void randomQ::seedRandom </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>seed</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
