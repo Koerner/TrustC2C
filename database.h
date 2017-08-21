@@ -11,23 +11,35 @@ public:
 
 
     struct car {
-      int id;
-      QMultiMap<int, double> trustMap; //Car ID, value
-      QMultiMap<int, double> reputationMap; //Car ID, value
+      unsigned long int id;
+      QMultiMap<unsigned long int, double> trustMap; //Car ID, value
+      QMultiMap<unsigned long int, double> reputationMap; //Car ID, value
     } ;
 
-    database(int size);
+    struct interactionLogStruct {
+        QVector<unsigned long int> carIDs;
+        bool truth;
+        bool xSays;
+        bool success;
+        QPair<bool, double> descissionResult;
+    } ;
+
+    QVector<interactionLogStruct> interactionLogList;
+
+    database(unsigned long size);
 
     //get function
-    QList<double> getCarTrust(int CarBID, int CarXid) const;
-    QList<double> getCarReputation(int CarAID, int CarBID) const;
+    QList<double> getCarTrust(unsigned long int CarBID, unsigned long int CarXid) const;
+    QList<double> getCarReputation(unsigned long int CarAID, unsigned long int CarBID) const;
 
     //write function
-    void writeTrustX(int CarOwnID, int CarXID, double trust);
-    void writeReputationB(int CarOwnID, int CarBID, double reputationTrust);
+    void writeTrustX(unsigned long int CarOwnID, unsigned long int CarXID, double trust);
+    void writeReputationB(unsigned long int CarOwnID, unsigned long int CarBID, double reputationTrust);
+    void writeInteractionLog (QVector<unsigned long int> carIDs, bool truth, bool xSays, bool success, QPair<bool, double> descissionResult);
 
 private:
     QVector<car> carVector;
+
 };
 
 #endif // DATABASE_H

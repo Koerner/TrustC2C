@@ -1,0 +1,6 @@
+#include "decision.h"
+
+trustDecision::trustDecision()
+{
+
+}

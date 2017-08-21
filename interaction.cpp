@@ -1,22 +1,17 @@
 #include "interaction.h"
 
 
-interaction::interaction(QVector<int> &settingsVector, randomQ& truthRandHandover, randomQ& detectRandXHandover, randomQ& honestRandHandover, randomQ& detectRandAHandover)
+interaction::interaction(settingsGUI instanceSettingsHandover, randStruct &randCollectionHandover,  database& dataHandover)
 {
     /// constructor. copies pointers of randGenerators so we can acces them later
     /**   */
 
-    truthRand = &truthRandHandover;
-    detectRandX = &detectRandXHandover;
-    honestRand = &honestRandHandover;
-    detectRandA = &detectRandAHandover;
+    instanceSettings = instanceSettingsHandover;
+    randCollection = &randCollectionHandover;
 
-    //copy settings from settingsVector for CarX
-    probCarXDetects = settingsVector.at(1); //Probability that the carX knows what is true
-    probCarXHonest = settingsVector.at(2); //Probability that the car tells what it thinks is true
+    data = &dataHandover;
 
-    //copy settings from settingsVector for CarA
-    probCarADetects = settingsVector.at(3); //Probability that the carA knows what is true
+
 
 
     initTruth();
@@ -30,10 +25,12 @@ void interaction::initTruth()
     /// defines the truth. So if the situation (icy road is true or not)
     /**   */
 
-    truth = truthRand->getBool();
+    truth = randCollection->truthRand.getBool();
     qDebug() << "The reality is" << truth;
 
 }
+
+
 
 
 
@@ -41,6 +38,8 @@ void interaction::run()
 {
     /// this executes one interaction. Do not Run it twice, rather create a new class for doing so.
     /**   */
+    // Determines Cars involved
+    selectInvolvedCars();
 
     // Determine whether the carX identified the truth correctly.
     CarXDetectionResult();
@@ -49,18 +48,53 @@ void interaction::run()
     // Determine whether the carA identified the truth correctly.
     CarADetectionResult();
 
-    determineTrustForXFromA();
+    //get all reputations from all Bs towards X as QList
+    getReputatiosnBs();
+
+    //calculate decission
+    trustDecision tempDec;
+    QList<QList<double>> reputationRecordABs;
+    for(int i=2; i<carIDs.size(); i++)
+    {
+        reputationRecordABs.append(data->getCarReputation(carIDs.at(0), carIDs.at(i)));
+    }
+    descissionResult =  tempDec.calculateDecission(reputations, reputationRecordABs, data->getCarTrust(carIDs.at(0), carIDs.at(1)), getXsends());
+
+    // store new Trust from A towards X
+    storeTrustForXFromA();
+
+    //store Reputation from a towards B
+    storeReputationForBFromA();
+
+    //store interaction to database
+    storeInteractionHandler();
 
 }
 
+void interaction::selectInvolvedCars()
+{
+    /// determines the cars involved in the interaction.
+    /**   */
+    int requiredCarIDs = 1 + 1 + instanceSettings.numCarsRecommending;
 
+    if (requiredCarIDs > instanceSettings.numTotalCars)
+    {
+        qWarning() << "Not enough total cars for the number of reomending cars. Setting the reccomending cars to #totalCars-2.";
+        instanceSettings.numCarsRecommending = instanceSettings.numTotalCars - 2;
+        requiredCarIDs = instanceSettings.numTotalCars;
+    }
+
+    carIDs = randCollection->carSelectRand.getCarID(instanceSettings.numTotalCars, requiredCarIDs);
+    qDebug() << carIDs;
+
+}
 
 void interaction::CarXDetectionResult()
 {
     /// this gives back whether the carX knows the truth.
     /**   */
-    CarXKnowsTruth = detectRandX->getResultPercent(probCarXDetects);
-    qDebug() << "The probability for the carX knowing the truth is: " << probCarXDetects <<" The result of random for knowing the truth is " << CarXKnowsTruth;
+    CarXKnowsTruth = randCollection->detectRandX.getResultPercent(instanceSettings.PropDetectsCarX);
+    qDebug() << "The probability for the carX knowing the truth is: " << instanceSettings.PropDetectsCarX <<" The result of random for knowing the truth is " << CarXKnowsTruth;
 }
 
 
@@ -69,40 +103,96 @@ void interaction::CarXHonestResult()
 {
     /// this gives back whether the carX is honest and tells other cars the truth of it's knowledge.
     /**   */
-    CarXHonest = honestRand->getResultPercent(probCarXHonest);
-    qDebug() << "The probability for the car being honest is: " << probCarXHonest <<" The car is honest " << CarXHonest;
+    CarXHonest = randCollection->honestRand.getResultPercent(instanceSettings.PropHonestCarX);
+    qDebug() << "The probability for the car being honest is: " << instanceSettings.PropHonestCarX <<" The car is honest " << CarXHonest;
 }
 
 void interaction::CarADetectionResult()
 {
     /// this gives back whether the carA knows the truth.
     /**   */
-    CarAKnowsTruth = detectRandA->getResultPercent(probCarADetects);
-    qDebug() << "The probability for the carA knowing the truth is: " << probCarADetects <<" The result of random for knowing the truth is " << CarAKnowsTruth;
+    CarAKnowsTruth = randCollection->detectRandA.getResultPercent(instanceSettings.PropDetectsCarA);
+    qDebug() << "The probability for the carA knowing the truth is: " << instanceSettings.PropDetectsCarA <<" The result of random for knowing the truth is " << CarAKnowsTruth;
 }
 
-void interaction::determineTrustForXFromA()
+bool interaction::getXsends()
 {
-    /// This function determines the trust value for X from A
-    /**   */
-
-    //calculate what X sends
     bool xSend = ! (CarXKnowsTruth ^ CarXHonest);
     xSend = ! (xSend ^ truth);
-    qDebug() << "CarX sends" << xSend;
+    return xSend;
+}
+
+bool interaction::isXMatchA()
+{
+
 
     //calculate car what A thinks is true afterwards
     bool aThinks = ! (truth ^ CarAKnowsTruth);
     qDebug() << "CarA thinks" << aThinks;
 
+    bool match = ! (getXsends() ^ aThinks);
+
+    return match;
+}
+
+void interaction::getReputatiosnBs()
+{
+    /// This function gets all reputations from all Bs towards CarX and saves it in the <QList> reputations
+    /**   */
+    reputations.clear();
+
+    trustKnowledge temp;
+
+    for (int i=2; i < carIDs.size(); i++)
+    {
+        QList<double> reputationBX;
+        reputationBX = data->getCarReputation(carIDs.at(i), carIDs.at(1));
+        reputations.append(temp.average(reputationBX));
+    }
+    qDebug() << "Calculated reputations from B towards X, size: " << reputations.size();
+}
 
 
-    if(xSend == aThinks)
+void interaction::storeTrustForXFromA()
+{
+    /// This function determines the trust value for X from A
+    /**   */
+
+    //calculate the Trust value which should be added
+    trustKnowledge temp;
+    double newTrustvalue = temp.trustFeedback(isXMatchA());
+
+    //add the new trust value to the databse
+    data->writeTrustX(carIDs.at(0), carIDs.at(1), newTrustvalue);
+    qDebug() << "Added in knowlege of A: " << carIDs.at(0) << "a new Trust value for " << carIDs.at(1) << " : " << newTrustvalue;
+
+
+}
+
+void interaction::storeReputationForBFromA()
+{
+    /// This stores the change in reputation for carB from the perspective of carA
+    /**   */
+
+
+    trustKnowledge temp;
+    if (reputations.size() != instanceSettings.numCarsRecommending){qFatal("no reputation specified, can't use it without calculation before");}
+
+    QVector<double> newReputationValues = temp.reputationFeedback(isXMatchA(), reputations);
+
+    for(int i=2; i < carIDs.size(); i++)
     {
-        qDebug() << "Increasing Trust";
+        data->writeReputationB(carIDs.at(0), carIDs.at(i), newReputationValues.at(i-2));
     }
-    else
-    {
-        qDebug() << "Decreasing Trust";
-    }
+    qDebug() << "For cars" << carIDs << "the Reputation Feedback is: x x " << newReputationValues;
+
+    //MATCH reputation with own experience.
+
+
+}
+
+void interaction::storeInteractionHandler()
+{
+    bool success = ! (truth ^ descissionResult.first);
+    data->writeInteractionLog(carIDs, truth, getXsends(), success, descissionResult);
 }

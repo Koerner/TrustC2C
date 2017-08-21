@@ -7,14 +7,20 @@
 class randomQ
 {
 public:
+    randomQ();
     randomQ(int seed);
+
+    void seedRandom(int seed);
 
     bool getBool();
     int getPercent();
     bool getResultPercent(int sucessPercent);
 
+
+    QVector<unsigned long int> getCarID(unsigned long int totalCarNumber, int requiredIDs);
+
 private:
-    std::mt19937 boolMT;
+    std::mt19937 randMT;
 
 };
 

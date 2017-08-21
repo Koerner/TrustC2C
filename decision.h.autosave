@@ -1,0 +1,11 @@
+#ifndef TRUSTDECISION_H
+#define TRUSTDECISION_H
+
+
+class trustDecision
+{
+public:
+    trustDecision();
+};
+
+#endif // TRUSTDECISION_H

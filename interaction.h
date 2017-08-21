@@ -5,12 +5,16 @@
 #include <iostream>
 #include <QtDebug>
 #include "randomQ.h"
+#include "database.h"
+#include "structs.h"
+#include "trustknowledge.h"
+#include "trustDecision.h"
 
 
 class interaction
 {
 public:
-    interaction(QVector<int> &settingsVector, randomQ& truthRandHandover, randomQ& detectRandXHandover, randomQ& honestRandHandover, randomQ &honestRandAHandover);
+    interaction(settingsGUI instanceSettingsHandover, randStruct &randCollectionHandover, database &dataHandover);
 
     void run();
 
@@ -20,25 +24,44 @@ private:
     randomQ *honestRand;
     randomQ *detectRandA;
 
+    database *data;
+    settingsGUI instanceSettings;
+    randStruct *randCollection;
+
+    QVector<unsigned long int> carIDs;
+
     //Enviroment
     bool truth;
     void initTruth();
+    void storeInteractionHandler();
 
     //CarX
-    int probCarXDetects; //Probability that the carX knows what is true
-    int probCarXHonest; //Probability that the car tells what it thinks is true
+
 
     void CarXDetectionResult();
     void CarXHonestResult();
 
     bool CarXKnowsTruth;
     bool CarXHonest;
+    bool getXsends();
 
     //CarA
-    int probCarADetects; //Probability that the carA knows what is true
+
     void CarADetectionResult();
     bool CarAKnowsTruth;
-    void determineTrustForXFromA();
+    void storeTrustForXFromA();
+    void selectInvolvedCars();
+    void storeReputationForBFromA();
+    bool isXMatchA();
+
+    QPair<bool, double> descissionResult;
+
+    //CarB
+    QVector<double> reputations;
+    void getReputatiosnBs();
+
+
+
 };
 
 #endif // INTERACTION_H

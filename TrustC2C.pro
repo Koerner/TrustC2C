@@ -28,13 +28,20 @@ SOURCES += \
         mainwindow.cpp \
     interaction.cpp \
     randomQ.cpp \
-    database.cpp
+    database.cpp \
+    trustknowledge.cpp \
+    trustDecision.cpp \
+    logModel.cpp
 
 HEADERS += \
         mainwindow.h \
     interaction.h \
     randomQ.h \
-    database.h
+    database.h \
+    structs.h \
+    trustknowledge.h \
+    trustDecision.h \
+    logModel.h
 
 FORMS += \
         mainwindow.ui
