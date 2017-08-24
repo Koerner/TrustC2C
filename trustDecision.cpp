@@ -5,7 +5,7 @@ trustDecision::trustDecision()
 
 }
 
-QPair<bool, double> trustDecision::calculateDecission(QVector<double> reputationsBs, QList<QList<double>> reputationRecordABs, QList<double> trustRecordAX, double CarXsays)
+QPair<bool, double> trustDecision::calculateDecission(QList<double> reputationsBs, QList<QList<double>> reputationRecordABs, QList<double> trustRecordAX, double CarXsays)
 {
     //calc over all reputation score from all Bs towards X including A's weight
     double reputationAX = 0.0;
@@ -17,7 +17,7 @@ QPair<bool, double> trustDecision::calculateDecission(QVector<double> reputation
     }
 
     //include A's own trust(!) opinion about X
-    double trustAX = average(trustRecordAX);
+    double trustAX = average::averageMean(trustRecordAX);
     double overallTrustAX = trustWeightCalc(reputationAX, trustAX);
 
     //prepear return variable
@@ -52,24 +52,7 @@ double trustDecision::trustWeightCalc(double reputationBX, double trustAX)
 double trustDecision::reputationAverageCalc(QList<double> elements)
 {
     ///TODO auch primitiv :)
-    return average(elements);
+    return average::averageMean(elements);
 }
 
-double trustDecision::average(QList<double> elements)
-{
-    {
-        if(elements.size() == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            double sum = 0;
-            for(int i=0; i<elements.size(); i++)
-            {
-                sum = elements.at(i);
-            }
-            return sum / elements.size();
-        }
-    }
-}
+

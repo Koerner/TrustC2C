@@ -7,14 +7,15 @@ struct randStruct {
   randomQ honestRand;
   randomQ detectRandA;
   randomQ carSelectRand;
+  randomQ carB2SelectRand;
 } ;
 
 struct settingsGUI {
   unsigned int numInteractions;
   unsigned int numTotalCars;
   unsigned int numCarsRecommending;
+  int numRecomendingDepth;
 
-  unsigned int PropDetectsCarA;
   QList<QPair<int,int>> PropDetectsCarX;
   //unsigned int PropDetectsCarB;
 

@@ -42,14 +42,21 @@ void interaction::run()
     selectInvolvedCars();
 
     // Determine whether the carX identified the truth correctly.
-    CarXDetectionResult();
+    carXKnowsTruth = CarXDetectionResult();
+    carXthinks = carXKnowsTruth == truth;
+    qDebug() << "CarX thinks: " <<carXthinks;
     // Determine whether the car is honest.
-    CarXHonestResult();
+    carXHonest = CarXHonestResult();
+    carXsays = carXHonest == carXthinks;
     // Determine whether the carA identified the truth correctly.
-    CarADetectionResult();
+    carAKnowsTruth = CarADetectionResult();
+    carAthinks = carAKnowsTruth == truth;
+
+    qDebug() << "CarX thinks: " <<carXsays << "CarA thinks: " << carAthinks << "is match: " << isXMatchA();
 
     //get all reputations from all Bs towards X as QList
-    getReputatiosnBs();
+    reputations = getReputatiosnBs();
+    qDebug() << "Calculated reputations from B towards X, size: " << reputations.size();
 
     //calculate decission
     trustDecision tempDec;
@@ -58,7 +65,7 @@ void interaction::run()
     {
         reputationRecordABs.append(data->getCarReputation(carIDs.at(0), carIDs.at(i)));
     }
-    descissionResult =  tempDec.calculateDecission(reputations, reputationRecordABs, data->getCarTrust(carIDs.at(0), carIDs.at(1)), getXsends());
+    descissionResult =  tempDec.calculateDecission(reputations, reputationRecordABs, data->getCarTrust(carIDs.at(0), carIDs.at(1)), carXsays);
 
     // store new Trust from A towards X
     storeTrustForXFromA();
@@ -89,73 +96,103 @@ void interaction::selectInvolvedCars()
 
 }
 
-void interaction::CarXDetectionResult()
+QVector <long unsigned int> interaction::selectInvolvedCarsB2()
+{
+    /// determines the cars which are involved in level 2.
+    /**   */
+
+    return randCollection->carB2SelectRand.getCarID(instanceSettings.numTotalCars, instanceSettings.numCarsRecommending);
+
+}
+
+bool interaction::CarXDetectionResult()
 {
     /// this gives back whether the carX knows the truth.
     /**   */
-    CarXKnowsTruth = randCollection->detectRandX.getResultPercent(data->getCarPropDetects(carIDs.at(1)));
-    qDebug() << "The probability for the carX knowing the truth is: " << instanceSettings.PropDetectsCarX <<" The result of random for knowing the truth is " << CarXKnowsTruth;
+
+    return randCollection->detectRandX.getResultPercent(data->getCarPropDetects(carIDs.at(1)));
 }
 
 
-
-void interaction::CarXHonestResult()
+bool interaction::CarXHonestResult()
 {
     /// this gives back whether the carX is honest and tells other cars the truth of it's knowledge.
     /**   */
-    CarXHonest = randCollection->honestRand.getResultPercent(instanceSettings.PropHonestCarX);
-    qDebug() << "The probability for the car being honest is: " << instanceSettings.PropHonestCarX <<" The car is honest " << CarXHonest;
+
+    return randCollection->honestRand.getResultPercent(instanceSettings.PropHonestCarX);
 }
 
-void interaction::CarADetectionResult()
+bool interaction::CarADetectionResult()
 {
     /// this gives back whether the carA knows the truth.
     /**   */
-    CarAKnowsTruth = randCollection->detectRandA.getResultPercent(instanceSettings.PropDetectsCarA);
-    qDebug() << "The probability for the carA knowing the truth is: " << instanceSettings.PropDetectsCarA <<" The result of random for knowing the truth is " << CarAKnowsTruth;
+    return randCollection->detectRandA.getResultPercent(data->getCarPropDetects(carIDs.at(0)));
+
 }
 
-bool interaction::getXsends()
-{
-    bool xSend = ! (CarXKnowsTruth ^ CarXHonest);
-    xSend = ! (xSend ^ truth);
-    return xSend;
-}
 
 bool interaction::isXMatchA()
 {
-
-
-    //calculate car what A thinks is true afterwards
-    bool aThinks = ! (truth ^ CarAKnowsTruth);
-    qDebug() << "CarA thinks" << aThinks;
-
-    bool match = ! (getXsends() ^ aThinks);
-
-    return match;
+    return carXsays == carAthinks;
 }
 
-void interaction::getReputatiosnBs()
+QList<double> interaction::getReputatiosnBs()
 {
     /// This function gets all reputations from all Bs towards CarX and saves it in the <QList> reputations
     /**   */
-    reputations.clear();
+    QList<double> reputationsReturn;
 
     trustKnowledge temp;
 
     for (int i=2; i < carIDs.size(); i++)
     {
-        QList<double> reputationBX;
-        reputationBX = data->getCarReputation(carIDs.at(i), carIDs.at(1));
-        reputations.append(temp.average(reputationBX));
+        QList<double> temp = data->getCarReputation(carIDs.at(i), carIDs.at(1));
+        if (temp.size() == 0 ) //hier noch tiefe abfrage
+        {
+            temp = generateHigherLevelReputation(1, carIDs.at(i), carIDs.at(1));
+        }
+        reputationsReturn.append(average::averageMean(temp));
     }
-    qDebug() << "Calculated reputations from B towards X, size: " << reputations.size();
+
+    return reputationsReturn;
+}
+
+QList<double> interaction::generateHigherLevelReputation(int depthRecomending, unsigned long int CarB, unsigned long CarX)
+{
+    qWarning() << "Hallo leer" ;
+
+    QList<double> temp;
+
+    int i = 1;
+    while(temp.size()==0 && i < instanceSettings.numRecomendingDepth)
+    {
+
+    //QVector <long unsigned int> temp = interaction::selectInvolvedCarsB2();
+
+    // wähle auto mit höchster id
+
+    // frage ob es X kennen,
+        //wenn jj summieren und speichern
+        //wenn nein nächstes auto
+
+
+     //wenn alle nein
+
+
+    //frage bei diesen autos nach auto X
+
+    //multipliziere reputation mit bekommenen werten
+
+    }
+
+
+    return temp;
 }
 
 
 void interaction::storeTrustForXFromA()
 {
-    /// This function determines the trust value for X from A
+    /// This function handles the calculation of the new added trust value from A for X
     /**   */
 
     //calculate the Trust value which should be added
@@ -178,7 +215,7 @@ void interaction::storeReputationForBFromA()
     trustKnowledge temp;
     if (reputations.size() != instanceSettings.numCarsRecommending){qFatal("no reputation specified, can't use it without calculation before");}
 
-    QVector<double> newReputationValues = temp.reputationFeedback(isXMatchA(), reputations);
+    QList<double> newReputationValues = temp.reputationFeedback(isXMatchA(), reputations);
 
     for(int i=2; i < carIDs.size(); i++)
     {
@@ -193,6 +230,9 @@ void interaction::storeReputationForBFromA()
 
 void interaction::storeInteractionHandler()
 {
-    bool success = ! (truth ^ descissionResult.first);
-    data->writeInteractionLog(carIDs, truth, getXsends(), success, descissionResult);
+    /// This stores the most important values of one event, which can be dispalyed in the gui later
+    /**   */
+
+    bool success = truth && carAthinks;
+    data->writeInteractionLog(carIDs, truth, carXsays, success, descissionResult);
 }

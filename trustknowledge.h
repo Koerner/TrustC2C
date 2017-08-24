@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include <QList>
+#include "average.h"
 
 
 class trustKnowledge
@@ -11,9 +12,8 @@ public:
     trustKnowledge();
     double trustFeedback(bool matching);
     double trustReputation(bool matching);
-    QVector<double> reputationFeedback(bool match, QVector<double> reputations);
+    QList<double> reputationFeedback(bool match, QList<double> &reputations);
     double getReputationFromBforX(QList<double> TrustValueListBX);
-    double average(QList<double> elements);
 };
 
 #endif // TRUSTKNOWLEDGE_H

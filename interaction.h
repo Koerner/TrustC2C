@@ -19,10 +19,6 @@ public:
     void run();
 
 private:
-    randomQ *truthRand;
-    randomQ *detectRandX;
-    randomQ *honestRand;
-    randomQ *detectRandA;
 
     database *data;
     settingsGUI instanceSettings;
@@ -36,29 +32,40 @@ private:
     void storeInteractionHandler();
 
     //CarX
+    bool CarXDetectionResult();
+    bool CarXHonestResult();
+
+    bool carXKnowsTruth;
+    bool carXthinks;
+    bool carXHonest;
+    bool carXsays;
 
 
-    void CarXDetectionResult();
-    void CarXHonestResult();
-
-    bool CarXKnowsTruth;
-    bool CarXHonest;
-    bool getXsends();
 
     //CarA
+    bool carAKnowsTruth;
+    bool carAthinks;
 
-    void CarADetectionResult();
-    bool CarAKnowsTruth;
+    bool CarADetectionResult();
+
+
+    //CarB
+    QList<double> reputations;
+    QList<double> getReputatiosnBs();
+    QVector<unsigned long> selectInvolvedCarsB2();
+    QList<double> generateHigherLevelReputation(int depthRecomending, unsigned long int CarB, unsigned long CarX);
+
+
+    //calculation
+    bool isXMatchA();
     void storeTrustForXFromA();
     void selectInvolvedCars();
     void storeReputationForBFromA();
-    bool isXMatchA();
+
 
     QPair<bool, double> descissionResult;
 
-    //CarB
-    QVector<double> reputations;
-    void getReputatiosnBs();
+
 
 
 

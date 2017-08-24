@@ -3,6 +3,7 @@
 #include <QVector>
 #include <QtDebug>
 #include <QList>
+#include "average.h"
 
 
 class database
@@ -41,6 +42,11 @@ public:
     void writeInteractionLog (QVector<unsigned long int> carIDs, bool truth, bool xSays, bool success, QPair<bool, double> descissionResult);
 
     int getCarPropDetects(unsigned long CarID);
+    double getAverageTrust(unsigned long int CarBID,unsigned long int CarXid);
+
+    void saveToFileTrust();
+    void saveToFileReputation();
+
 private:
     QVector<car> carVector;
 

@@ -15,9 +15,15 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void setProgressBar(int i);
+    void setProgressBarCar1(double i);
+    void setProgressBarCar2(double i);
+
+
 
 private:
     Ui::MainWindow *ui;
+
 };
 
 #endif // MAINWINDOW_H

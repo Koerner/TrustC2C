@@ -14,3 +14,18 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::setProgressBar(int i)
+{
+    this->ui->progressBar->setValue(i);
+}
+
+void MainWindow::setProgressBarCar1(double i)
+{
+    this->ui->progressBar_2->setValue(i*100);
+}
+
+void MainWindow::setProgressBarCar2(double i)
+{
+    this->ui->progressBar_3->setValue(i*100);
+}

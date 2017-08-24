@@ -47,23 +47,19 @@ bool randomQ::getResultPercent(int sucessPercent)
 {
     /// returns random succes for a event with a probability in percent. input: percent for success.
     /**  */
-
-    std::uniform_int_distribution<int> intDist(0, 99);
-    int temp = intDist(randMT);
-
     if(sucessPercent > 100)
     {
         qFatal("percentage can not be higher than 100 or lower than 0: %d", sucessPercent);
     }
 
-    bool result = false;
-
-    if(temp < sucessPercent)
+    if(getPercent() < sucessPercent)
     {
-        result = true;
+        return true;
     }
-
-    return result;
+    else
+    {
+        return false;
+    }
 }
 
 QVector<unsigned long int> randomQ::getCarID(unsigned long int totalCarNumber, int requiredIDs)

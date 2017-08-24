@@ -43,9 +43,7 @@ QList<double> database::getCarTrust(unsigned long int CarBID,unsigned long int C
 
     if(CarBID < 0 || CarBID>=carVector.size() || CarXid < 0 || CarXid >= carVector.size()){qFatal("CarID out of scope!");}
 
-    QList<double> TrustValueList = carVector.at(CarBID).trustMap.values(CarXid); //long but efficent, as nothing is copied
-
-    return TrustValueList; //QList is a list of pointers
+    return carVector.at(CarBID).trustMap.values(CarXid); //long but efficent, as nothing is copied
 
 }
 
@@ -61,9 +59,7 @@ QList<double> database::getCarReputation(unsigned long int CarAID,unsigned long 
 
     if(CarAID < 0 || CarAID>=carVector.size() || CarBID < 0 || CarBID >= carVector.size()){qFatal("CarID out of scope!");}
 
-    QList<double> TrustValueList = carVector.at(CarAID).reputationMap.values(CarBID); //long but efficent, as nothing is copied
-
-    return TrustValueList; //QList is a list of pointers
+    return carVector.at(CarAID).reputationMap.values(CarBID); //long but efficent, as nothing is copied
 
 }
 
@@ -111,4 +107,80 @@ int database::getCarPropDetects(unsigned long int CarID)
 
     return carVector.at(CarID).PropDetects;
 }
+
+
+
+
+double database::getAverageTrust(unsigned long int CarBID, unsigned long int CarXid)
+{
+    QList<double> elements = getCarTrust(CarBID,CarXid);
+    return average::averageMean(elements);
+}
+
+
+
+void database::saveToFileTrust()
+{
+    QString filename="C:\\Users\\Quirin\\Desktop\\DataTrust.txt";
+    QFile file( filename );
+    if ( file.open(QIODevice::WriteOnly) )
+    {
+        QTextStream stream( &file );
+
+        for(int i=0; i < carVector.size(); i++)
+        {
+            stream << "Car" << i << ";" << "\r\n";
+
+            for(int j=0; j < carVector.size(); j++)
+            {
+                stream << "TowardsCar" << j << ";";
+
+                QList<double> tempList = carVector.at(i).trustMap.values(j);
+                double trustValue = 0;
+                for(int k=0; k < tempList.size(); k++)
+                {
+                    trustValue += tempList.at(k) / tempList.size();
+                    stream << tempList.at(k) << ";";
+                }
+                stream << trustValue << ";"<< tempList.size() << ";";
+                stream << "\r\n";
+            }
+            stream << "\r\n";
+        }
+        stream << "Ende" << endl;
+    }
+}
+
+void database::saveToFileReputation()
+{
+    QString filename="C:\\Users\\Quirin\\Desktop\\DataReputation.txt";
+    QFile file( filename );
+    if ( file.open(QIODevice::WriteOnly) )
+    {
+        QTextStream stream( &file );
+
+        for(int i=0; i < carVector.size(); i++)
+        {
+            stream << "Car" << i << ";" << "\r\n";
+
+            for(int j=0; j < carVector.size(); j++)
+            {
+                stream << "TowardsCar" << j << ";";
+
+                QList<double> tempList = carVector.at(i).reputationMap.values(j);
+                double reputationValue = 0;
+                for(int k=0; k < tempList.size(); k++)
+                {
+                    reputationValue += tempList.at(k) / tempList.size();
+                    stream << tempList.at(k) << ";";
+                }
+                stream << reputationValue << ";"<< tempList.size() << ";";
+                stream << "\r\n";
+            }
+            stream << "\r\n";
+        }
+        stream << "Ende" << endl;
+    }
+}
+
 
