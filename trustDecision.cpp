@@ -5,54 +5,114 @@ trustDecision::trustDecision()
 
 }
 
-QPair<bool, double> trustDecision::calculateDecission(QList<double> reputationsBs, QList<QList<double>> reputationRecordABs, QList<double> trustRecordAX, double CarXsays)
+QPair<bool, double> trustDecision::calculateDecission(QList<QPair<double, int> > &reputationsBs, QPair<double, int> &trustAX, QPair<bool, double> &CarXsays, QPair<bool, double> &CarAthinks)
 {
-    //calc over all reputation score from all Bs towards X including A's weight
-    double reputationAX = 0.0;
-    for(int i=0; i<reputationsBs.size(); i++)
+    /// This function returns a QPair, where the first is the descission about the reality and the secound the certainty this decsission is made.
+    /**   */
+
+    QPair<double, int> AXreputation = reputationWeightAverage(reputationsBs, trustAX); //3
+
+    QPair<double, int> AXresult;
+    QPair<bool, double> DecissionResult;
+
+    AXresult.second = AXreputation.second;
+    AXresult.first = AXreputation.first * CarXsays.second;
+
+    if(CarAthinks.first == CarXsays.first)
     {
-
-            reputationAX += reputationWeightCalc(reputationsBs.at(i), reputationAverageCalc(reputationRecordABs.at(i)));
-
+        DecissionResult.first = CarAthinks.first;
+        DecissionResult.second = CarAthinks.second + AXresult.first;
+        qDebug() << "A and X say the same";
+    }
+    else
+    {
+        if(CarAthinks.second > AXresult.first)
+        {
+            qDebug() << "Relied on my own value";
+            DecissionResult.first = CarAthinks.first;
+            DecissionResult.second = CarAthinks.second - AXresult.first;
+        }
+        else
+        {
+           qDebug() << "Relied on my own value";
+           DecissionResult.first = CarXsays.first;
+           DecissionResult.second = AXresult.first - CarAthinks.second;
+        }
     }
 
-    //include A's own trust(!) opinion about X
-    double trustAX = average::averageMean(trustRecordAX);
-    double overallTrustAX = trustWeightCalc(reputationAX, trustAX);
-
-    //prepear return variable
-    QPair<bool, double> tempReturn;
-    tempReturn.first =  CarXsays;
-    tempReturn.second =  overallTrustAX;
-
-    return tempReturn;
-
-
+    return DecissionResult;
 
 }
 
-double trustDecision::reputationWeightCalc(double reputationBX, double reputationAB)
+QPair<double, int> trustDecision::reputationWeightAverage(QList<QPair<double, int>> reputationsBs, QPair<double, int> trustAX) //3
 {
-    double overallReputationABX;
+    QList<QPair<double, int>> allValues;
+    allValues.append(trustAX);
+    allValues.append(reputationsBs);
+    QPair<double, int> returnPair;
 
-    ///TODO etwas primitive hier :)
+    if(allValues.isEmpty())
+    {
+        returnPair.first = 0;
+        returnPair.second = 0;
+    }
+    else
+    {
+        double weightedAverage = 0.0;
+        int counter = 0;
 
-    overallReputationABX = reputationBX * reputationAB;
+        for(int i=0; i<allValues.size(); i++)
+        {
+            weightedAverage += allValues.at(i).first * allValues.at(i).second;
+            counter += allValues.at(i).second;
+        }
 
-    return overallReputationABX;
+        QPair<double, int> returnPair;
+        returnPair.first = weightedAverage / counter;
+        returnPair.second = counter;
+    }
+
+    return returnPair;
+
 }
 
-double trustDecision::trustWeightCalc(double reputationBX, double trustAX)
+
+
+int trustDecision::lastCheating(QList<double> elements)
 {
-    double overallTrustAX = 0;
-    overallTrustAX = (reputationBX + trustAX * 3) / 4;
-    return overallTrustAX;
+    /// Returns the number until the last significant (>0,5) cheating attempt.
+    /**   */
+
+    int counter = 0;
+    for(int i=0; i<elements.size(); i++)
+    {
+        if(elements.at(i) > -0.5)
+        {
+            counter++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return counter;
 }
 
-double trustDecision::reputationAverageCalc(QList<double> elements)
+int trustDecision::numberWrongRecomendations(QList<double> elements)
 {
-    ///TODO auch primitiv :)
-    return average::averageMean(elements);
+    /// Returns the number of wrong recomondations (<0).
+    /**   */
+
+    int counter = 0;
+    for(int i=0; i<elements.size(); i++)
+    {
+        if(elements.at(i) < 0)
+        {
+            counter++;
+        }
+    }
+    return counter;
 }
 
 

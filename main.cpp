@@ -5,9 +5,6 @@
 #include "database.h"
 #include "structs.h"
 
-#include <QTableView>
-#include "logModel.h"
-
 
 int main(int argc, char *argv[])
 {
@@ -36,11 +33,9 @@ int main(int argc, char *argv[])
 
     //settings
     settingsGUI instanceSettings;
-    instanceSettings.numInteractions = 100000;
-    instanceSettings.numTotalCars = 20; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
+    instanceSettings.numInteractions = 5;
+    instanceSettings.numTotalCars = 7; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
     instanceSettings.numCarsRecommending = 5; //has to be -2 total cars
-    instanceSettings.numRecomendingDepth = 1;
-
 
     // Propability distribution
     QList<QPair<int,int>> PropDetectsCarX;
@@ -58,22 +53,30 @@ int main(int argc, char *argv[])
     instanceSettings.PropHonestCarB = PropHonestCarB;
 
     instanceSettings.PropHonestCarX = 100;
+
+    //trust chain specification
+    /// be careful needs of lot of computing time
+    instanceSettings.minRecomendingWidthDirect = 1; //minimal 1
+    instanceSettings.minRecomendingWidth = 5; //minimal 1
+    instanceSettings.maxRecomendingDepth = 5;  //Minimal 1
+
     //end settings
 
 
     //initilaize database with all cars
     database data(instanceSettings.numTotalCars, instanceSettings.PropDetectsCarX, instanceSettings.PropHonestCarB);
+    logDatabase logdata;
 
 
     //generate interactions
     qDebug() << "number of interactions" << instanceSettings.numInteractions;
-    qWarning() << "Start with interactions";
+    qWarning() << "!!!!!!!!!!!!!! Start with interactions !!!!!!!!!!!!!!!!!!!!!";
 
-    for (unsigned long int i=0; i < instanceSettings.numInteractions/100; i++)
+    for (unsigned long int i=0; i < ceil((double)instanceSettings.numInteractions/100); i++)
     {
         for (unsigned long int j=0; j< 100; j++)
         {
-        interaction event(instanceSettings, randCollection, data);
+        interaction event(instanceSettings, randCollection, data, logdata);
         event.run();
         }
         if(i%10 == 0)
@@ -84,18 +87,11 @@ int main(int argc, char *argv[])
         qApp->processEvents();
         }
     }
-    qWarning() << "Done with interactions";
+    qWarning() << "!!!!!!!!!!!!!!!!!!!! Done with interactions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
 
     data.saveToFileTrust();
     data.saveToFileReputation();
 
-
-    //Display results
-
-    QTableView tableView;
-    LogModel myModel(0, data, instanceSettings.numInteractions);
-    tableView.setModel( &myModel );
-    tableView.show();
 
 
     return a.exec();

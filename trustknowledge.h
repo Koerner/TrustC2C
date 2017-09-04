@@ -10,9 +10,9 @@ class trustKnowledge
 {
 public:
     trustKnowledge();
-    double trustFeedback(bool matching);
+    static QPair<bool, double> trustFeedback(bool matching, double sentCertainty);
     double trustReputation(bool matching);
-    QList<double> reputationFeedback(bool match, QList<double> &reputations);
+    QList<QPair<bool, double>> reputationFeedback(bool match, QList<QPair<double, int> > &reputations);
     double getReputationFromBforX(QList<double> TrustValueListBX);
 };
 

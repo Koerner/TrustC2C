@@ -5,13 +5,16 @@ database::database(unsigned long size, QList<QPair<int, int>> PropDetects, QList
     carVector.clear();
     for(unsigned long int i=0; i<size; i++)
     {
-        int temp1 = calcProp(i, PropDetects);
-        int temp2 = calcProp(i, PropHonest);
-        QMultiMap<unsigned long int, double> temp3;
-        QMultiMap<unsigned long int, double> temp4;
+        car temp;
+        temp.PropDetects = calcProp(i, PropDetects);
+        temp.PropHonest = calcProp(i, PropHonest);
+        //temp.reputationMap;
+        //temp.trustMap;
+        //temp.reputationSumMap;
+        //temp.trustSumMap;
+        temp.id = i;
 
-        carVector.append({i, temp1, temp2, temp3, temp4});
-        qDebug() << "car " << i << "detects truth with " << temp1;
+        carVector.append(temp);
     }
     qDebug() << "Number of cars in database: " << carVector.size();
 }
@@ -34,7 +37,7 @@ int database::calcProp(int CarID, QList<QPair<int, int>> prop)
     return propResult;
 }
 
-QList<double> database::getCarTrust(unsigned long int CarBID,unsigned long int CarXid) const
+QList<QPair<bool, double>> database::getCarTrust(unsigned long int CarBID,unsigned long int CarXid) const
 {
     /// returns all trust values stored by B for the car X
     /** This function searches for all trust values stored by B towards Car X.
@@ -43,7 +46,7 @@ QList<double> database::getCarTrust(unsigned long int CarBID,unsigned long int C
 
     if(CarBID < 0 || CarBID>=carVector.size() || CarXid < 0 || CarXid >= carVector.size()){qFatal("CarID out of scope!");}
 
-    return carVector.at(CarBID).trustMap.values(CarXid); //long but efficent, as nothing is copied
+    return carVector.at(CarBID).trustMap.values(CarXid);
 
 }
 
@@ -51,7 +54,7 @@ QList<double> database::getCarTrust(unsigned long int CarBID,unsigned long int C
 
 
 
-QList<double> database::getCarReputation(unsigned long int CarAID,unsigned long int CarBID) const
+QList<QPair<bool, double> > database::getCarReputation(unsigned long int CarAID,unsigned long int CarBID) const
 {
     /// returns all reputation values stored by A for the car B
     /** This function searches for all reputation values stored by A (receiving trust recomondation) towards Car B (sending trust about X).
@@ -59,29 +62,36 @@ QList<double> database::getCarReputation(unsigned long int CarAID,unsigned long 
 
     if(CarAID < 0 || CarAID>=carVector.size() || CarBID < 0 || CarBID >= carVector.size()){qFatal("CarID out of scope!");}
 
-    return carVector.at(CarAID).reputationMap.values(CarBID); //long but efficent, as nothing is copied
+    return carVector.at(CarAID).reputationMap.values(CarBID);
+
+
 
 }
 
-void database::writeTrustX(unsigned long int CarOwnID,unsigned long int CarXID, double trust)
+void database::writeTrustX(unsigned long int CarOwnID,unsigned long int CarXID, QPair<bool, double> trust)
 {
     /// inserts new trust pair for specified CarX in the database of CarA (me)
     /**   */
 
     if(CarOwnID < 0 || CarOwnID>=carVector.size() || CarXID < 0 || CarXID >= carVector.size()){qFatal("CarID out of scope!");}
 
+    carVector[CarOwnID].trustMap.insert(CarXID, trust); //as it is a multi map it adds the value even, if the key already exists
 
-    carVector[CarOwnID].trustMap.insert(CarXID, trust);
+    QList<QPair<bool,double>> tempList = carVector.at(CarOwnID).trustMap.values(CarXID); //getting list
+    carVector[CarOwnID].trustSumMap.insert(CarXID, trustReputational::mergeTrustD(tempList)); //replaces existing values
 
     return;
 }
 
-void database::writeReputationB(unsigned long int CarOwnID,unsigned long int CarBID, double reputationTrust)
+void database::writeReputationB(unsigned long int CarOwnID, unsigned long int CarBID, QPair<bool, double> reputationTrust)
 {
 
     if(CarOwnID < 0 || CarOwnID>=carVector.size() || CarBID < 0 || CarBID >= carVector.size()){qFatal("CarID out of scope!");}
 
     carVector[CarOwnID].reputationMap.insert(CarBID, reputationTrust);
+
+    QList<QPair<bool,double>> tempList = carVector.at(CarOwnID).reputationMap.values(CarBID); //getting list
+    carVector[CarOwnID].reputationSumMap.insert(CarBID, trustReputational::mergeReputationD(tempList)); //replaces existing values
 
     return;
 }
@@ -99,7 +109,7 @@ void database::writeInteractionLog(QVector<unsigned long> carIDs, bool truth, bo
     //write
     interactionLogList.append(log);
 
-    qDebug() << "Interaction Done. Truth:" << log.truth << "Descission: " << log.descissionResult.first;
+    qDebug() << "Logged interaction";
 }
 
 int database::getCarPropDetects(unsigned long int CarID)
@@ -109,12 +119,24 @@ int database::getCarPropDetects(unsigned long int CarID)
 }
 
 
-
-
 double database::getAverageTrust(unsigned long int CarBID, unsigned long int CarXid)
 {
-    QList<double> elements = getCarTrust(CarBID,CarXid);
-    return average::averageMean(elements);
+    return carVector[CarBID].trustSumMap.value(CarXid);
+}
+
+
+QList<unsigned long> database::getCarIDsAscendingReputation(unsigned long CarB)
+{
+    QMultiMap<double, long unsigned> newMap;
+
+    QMapIterator<long unsigned, double> it(carVector[CarB].reputationSumMap);
+    while (it.hasNext())
+    {
+        it.next();
+        newMap.insert(it.value(), it.key()); //swap value and key
+    }
+    return newMap.values();
+
 }
 
 
@@ -127,22 +149,22 @@ void database::saveToFileTrust()
     {
         QTextStream stream( &file );
 
-        for(int i=0; i < carVector.size(); i++)
+        for(int i=0; i < carVector.size(); i++) // i = carID (own)
         {
             stream << "Car" << i << ";" << "\r\n";
 
-            for(int j=0; j < carVector.size(); j++)
+            for(int j=0; j < carVector.size(); j++)  //j = carID (towards car)
             {
                 stream << "TowardsCar" << j << ";";
 
-                QList<double> tempList = carVector.at(i).trustMap.values(j);
-                double trustValue = 0;
-                for(int k=0; k < tempList.size(); k++)
+                QList<QPair<bool, double>> tempList = carVector.at(i).trustMap.values(j);
+
+                for(int k=0; k < tempList.size(); k++) // K = entries of i->j
                 {
-                    trustValue += tempList.at(k) / tempList.size();
-                    stream << tempList.at(k) << ";";
+                    stream << tempList.at(k).second << ";";
                 }
-                stream << trustValue << ";"<< tempList.size() << ";";
+                double sum= carVector.at(i).trustSumMap.value(j);
+                stream << sum << ";"<< tempList.size() << ";";
                 stream << "\r\n";
             }
             stream << "\r\n";
@@ -159,22 +181,22 @@ void database::saveToFileReputation()
     {
         QTextStream stream( &file );
 
-        for(int i=0; i < carVector.size(); i++)
+        for(int i=0; i < carVector.size(); i++) // i = carID (own)
         {
             stream << "Car" << i << ";" << "\r\n";
 
-            for(int j=0; j < carVector.size(); j++)
+            for(int j=0; j < carVector.size(); j++)  //j = carID (towards car)
             {
                 stream << "TowardsCar" << j << ";";
 
-                QList<double> tempList = carVector.at(i).reputationMap.values(j);
-                double reputationValue = 0;
-                for(int k=0; k < tempList.size(); k++)
+                QList<QPair<bool, double>> tempList = carVector.at(i).reputationMap.values(j);
+
+                for(int k=0; k < tempList.size(); k++) // K = entries of i->j
                 {
-                    reputationValue += tempList.at(k) / tempList.size();
-                    stream << tempList.at(k) << ";";
+
+                    stream << tempList.at(k).second << ";";
                 }
-                stream << reputationValue << ";"<< tempList.size() << ";";
+                stream << carVector.at(i).reputationSumMap.value(j) << ";"<< tempList.size() << ";";
                 stream << "\r\n";
             }
             stream << "\r\n";
@@ -182,5 +204,7 @@ void database::saveToFileReputation()
         stream << "Ende" << endl;
     }
 }
+
+
 
 

@@ -4,6 +4,7 @@
 #include<QPair>
 #include<QVector>
 #include "average.h"
+#include <QDebug>
 
 
 class trustDecision
@@ -11,12 +12,15 @@ class trustDecision
 public:
     trustDecision();
 
-    QPair<bool, double> calculateDecission(QList<double> reputationsBs, QList<QList<double>> reputationRecordABs, QList<double> trustRecordAX, double CarXsays);
+    QPair<bool, double> calculateDecission(QList<QPair<double, int> > &reputationsBs, QPair<double, int> &trustAX, QPair<bool, double> &CarXsays, QPair<bool, double> &CarAthinks);
 
 private:
-    double reputationWeightCalc(double reputationBX, double reputationAB);
+
+    QPair<double, int> reputationWeightAverage(QList<QPair<double, int>> reputationsBs, QPair<double, int> trustAX); //3
     double trustWeightCalc(double reputationBX, double trustAX);
-    double reputationAverageCalc(QList<double> elements);
+
+    int lastCheating(QList<double> elements);
+    int numberWrongRecomendations(QList<double> elements);
 };
 
 #endif // TRUSTDECISION_H

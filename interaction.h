@@ -9,65 +9,69 @@
 #include "structs.h"
 #include "trustknowledge.h"
 #include "trustDecision.h"
+#include "logdatabase.h"
+#include "trustreputational.h"
 
 
 class interaction
 {
 public:
-    interaction(settingsGUI instanceSettingsHandover, randStruct &randCollectionHandover, database &dataHandover);
+    interaction(settingsGUI instanceSettingsHandover, randStruct &randCollectionHandover, database &dataHandover, logDatabase &logdataHandover);
 
     void run();
 
 private:
 
     database *data;
+    logDatabase *logdata;
     settingsGUI instanceSettings;
     randStruct *randCollection;
 
-    QVector<unsigned long int> carIDs;
-
     //Enviroment
     bool truth;
-    void initTruth();
-    void storeInteractionHandler();
+    QVector<unsigned long int> carIDs;
+    QVector<unsigned long> selectInvolvedCars();
 
     //CarX
-    bool CarXDetectionResult();
-    bool CarXHonestResult();
+    bool getCarXKnowsTruth();
+    bool isCarXHonest();
+    QPair<bool,double> getCarXsays();
 
     bool carXKnowsTruth;
     bool carXthinks;
     bool carXHonest;
-    bool carXsays;
-
+    QPair<bool,double> carXsays;
 
 
     //CarA
     bool carAKnowsTruth;
-    bool carAthinks;
+    QPair<bool,double> carAthinks;
+    QPair<bool,double> getCarAthinks();
 
-    bool CarADetectionResult();
+    bool getCarAKnowsTruth();
 
 
     //CarB
-    QList<double> reputations;
-    QList<double> getReputatiosnBs();
-    QVector<unsigned long> selectInvolvedCarsB2();
-    QList<double> generateHigherLevelReputation(int depthRecomending, unsigned long int CarB, unsigned long CarX);
+    QList<QPair<double,int>> reputations;
+    QList<QPair<double,int>> getReputatiosnBs();
+    QPair<double, int> getHigherLevelReputation(int depthRecomending, int neededRecomendingWidth, unsigned long carB, QVector<unsigned long> blockedCarIDs);
+
 
 
     //calculation
     bool isXMatchA();
+
+    //TrustRecord
     void storeTrustForXFromA();
-    void selectInvolvedCars();
     void storeReputationForBFromA();
 
-
+    //Decission
     QPair<bool, double> descissionResult;
+    QPair<bool, double> getDecissionA();
+    bool correctDecission;
 
-
-
-
+    //Logging
+    void logInteraction();
 
 };
 

@@ -5,44 +5,32 @@ trustKnowledge::trustKnowledge()
 
 }
 
-double trustKnowledge::trustFeedback(bool matching)
+QPair<bool, double> trustKnowledge::trustFeedback(bool matching, double sentCertainty)
 {
     /// Calculates a <double> for the event of a matching <bool> between carA and carX
     /**   */
+    QPair<bool, double> returnPair;
+    returnPair.first = matching;
+    returnPair.second = sentCertainty;
 
-    if(matching)
-    {
-        return(1.0);
-    }
-    else
-    {
-        return(-1.0);
-    }
+    return returnPair;
 }
 
-QList<double> trustKnowledge::reputationFeedback(bool match, QList<double> &reputations)
+QList<QPair<bool, double>> trustKnowledge::reputationFeedback(bool match, QList<QPair<double,int>> &reputations)
 {
     /// Calculates a <double> for the reputation of each recomending carB
     /**   */
 
-    QList<double> reputationsFeedbackValues;
+    QList<QPair<bool, double>> reputationsFeedbackValues;
 
     for(int i = 0; i<reputations.size(); i++)
     {
-        if((reputations.at(i)>0 && match) || (reputations.at(i)<0 && !match) )
-        {
-            reputationsFeedbackValues.append(reputations.at(i) * 1);
-        }
-        else if((reputations.at(i)<0 && match) || (reputations.at(i)>0 && !match) )
-        {
-            reputationsFeedbackValues.append(-1 * reputations.at(i));
-        }
-        else
-        {
-            reputationsFeedbackValues.append(0);
-        }
+        QPair<bool, double> temp;
+        temp.first = match;
+        temp.second = reputations.at(i).first;
+        reputationsFeedbackValues.append(temp);
     }
-    if(reputations.size() != reputationsFeedbackValues.size()){qFatal("reputation required and reputations in Feedback vector do not match");}
+
 
     return reputationsFeedbackValues;
 

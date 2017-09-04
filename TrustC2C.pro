@@ -42,7 +42,9 @@ SOURCES += \
     trustknowledge.cpp \
     trustDecision.cpp \
     logModel.cpp \
-    average.cpp
+    average.cpp \
+    logdatabase.cpp \
+    trustreputational.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -53,7 +55,9 @@ HEADERS += \
     trustknowledge.h \
     trustDecision.h \
     logModel.h \
-    average.h
+    average.h \
+    logdatabase.h \
+    trustreputational.h
 
 FORMS += \
         mainwindow.ui

@@ -75,13 +75,13 @@ QVector<unsigned long int> randomQ::getCarID(unsigned long int totalCarNumber, i
     for(int i=0; i<requiredIDs; i++)
     {
         int temp = longDist(randMT);
-        qDebug() << temp;
+        //qDebug() << "Car ID: " << temp;
 
         if(carIDs.contains(temp))
         {
             //we never want to have the same carIDs in one batch!
             i--;
-            qDebug() << "Detected same CarID in one batch, generating a new one";
+            //qDebug() << "Detected same CarID in one batch, generating a new one";
         }
         else
         {
