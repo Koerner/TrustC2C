@@ -16,7 +16,7 @@ QPair<bool, double> trustKnowledge::trustFeedback(bool matching, double sentCert
     return returnPair;
 }
 
-QList<QPair<bool, double>> trustKnowledge::reputationFeedback(bool match, QList<QPair<double,int>> &reputations)
+QList<QPair<bool, double>> trustKnowledge::reputationFeedback(bool match, double certaintyAobservation, QList<QPair<double,int>> &reputations)
 {
     /// Calculates a <double> for the reputation of each recomending carB
     /**   */
@@ -27,11 +27,14 @@ QList<QPair<bool, double>> trustKnowledge::reputationFeedback(bool match, QList<
     {
         QPair<bool, double> temp;
         temp.first = match;
-        temp.second = reputations.at(i).first;
+
+        temp.second = reputations.at(i).first * certaintyAobservation;
+
         reputationsFeedbackValues.append(temp);
+
     }
 
-
+    qDebug() << "Calculated reputation return: " << reputationsFeedbackValues;
     return reputationsFeedbackValues;
 
 }

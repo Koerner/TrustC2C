@@ -60,6 +60,7 @@ $(document).ready(function(){initNavTree('classtrust_knowledge.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classtrust_knowledge-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">trustKnowledge Class Reference</div>  </div>
@@ -72,16 +73,17 @@ $(document).ready(function(){initNavTree('classtrust_knowledge.html','');});
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab7839883fb965bc9c3fe0d4d6e6aef68"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_knowledge.html#ab7839883fb965bc9c3fe0d4d6e6aef68">trustKnowledge</a> ()</td></tr>
 <tr class="separator:ab7839883fb965bc9c3fe0d4d6e6aef68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bf5231759870acf63c7892a1e31735c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_knowledge.html#a8bf5231759870acf63c7892a1e31735c">trustFeedback</a> (bool matching)</td></tr>
-<tr class="separator:a8bf5231759870acf63c7892a1e31735c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60d14cf0aa72b43413e43cd4caff2dc5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_knowledge.html#a60d14cf0aa72b43413e43cd4caff2dc5">trustReputation</a> (bool matching)</td></tr>
 <tr class="separator:a60d14cf0aa72b43413e43cd4caff2dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abad645308f7ef97d6516a87f1f4cf142"><td class="memItemLeft" align="right" valign="top">QVector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_knowledge.html#abad645308f7ef97d6516a87f1f4cf142">reputationFeedback</a> (bool match, QVector&lt; double &gt; reputations)</td></tr>
-<tr class="separator:abad645308f7ef97d6516a87f1f4cf142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a619781bcf997822629f6fa9a00207eea"><td class="memItemLeft" align="right" valign="top">QList&lt; QPair&lt; bool, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_knowledge.html#a619781bcf997822629f6fa9a00207eea">reputationFeedback</a> (bool match, double certaintyAobservation, QList&lt; QPair&lt; double, int &gt; &gt; &amp;reputations)</td></tr>
+<tr class="separator:a619781bcf997822629f6fa9a00207eea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90419728383637a1d1864e4a5262fc28"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_knowledge.html#a90419728383637a1d1864e4a5262fc28">getReputationFromBforX</a> (QList&lt; double &gt; TrustValueListBX)</td></tr>
 <tr class="separator:a90419728383637a1d1864e4a5262fc28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade816ecb4b4bb8a8f2cb6e92e902a990"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_knowledge.html#ade816ecb4b4bb8a8f2cb6e92e902a990">average</a> (QList&lt; double &gt; elements)</td></tr>
-<tr class="separator:ade816ecb4b4bb8a8f2cb6e92e902a990"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a5dbb4b38a5cce22d5076a9cc08f64077"><td class="memItemLeft" align="right" valign="top">static QPair&lt; bool, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_knowledge.html#a5dbb4b38a5cce22d5076a9cc08f64077">trustFeedback</a> (bool matching, double sentCertainty)</td></tr>
+<tr class="separator:a5dbb4b38a5cce22d5076a9cc08f64077"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab7839883fb965bc9c3fe0d4d6e6aef68"></a>
@@ -102,24 +104,6 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ade816ecb4b4bb8a8f2cb6e92e902a990"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade816ecb4b4bb8a8f2cb6e92e902a990">&#9670;&nbsp;</a></span>average()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double trustKnowledge::average </td>
-          <td>(</td>
-          <td class="paramtype">QList&lt; double &gt;&#160;</td>
-          <td class="paramname"><em>elements</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a90419728383637a1d1864e4a5262fc28"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a90419728383637a1d1864e4a5262fc28">&#9670;&nbsp;</a></span>getReputationFromBforX()</h2>
 
@@ -135,18 +119,17 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>obsolete right at the moment </p>
 
 </div>
 </div>
-<a id="abad645308f7ef97d6516a87f1f4cf142"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abad645308f7ef97d6516a87f1f4cf142">&#9670;&nbsp;</a></span>reputationFeedback()</h2>
+<a id="a619781bcf997822629f6fa9a00207eea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a619781bcf997822629f6fa9a00207eea">&#9670;&nbsp;</a></span>reputationFeedback()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QVector&lt; double &gt; trustKnowledge::reputationFeedback </td>
+          <td class="memname">QList&lt; QPair&lt; bool, double &gt; &gt; trustKnowledge::reputationFeedback </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>match</em>, </td>
@@ -154,7 +137,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QVector&lt; double &gt;&#160;</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>certaintyAobservation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QList&lt; QPair&lt; double, int &gt; &gt; &amp;&#160;</td>
           <td class="paramname"><em>reputations</em>&#160;</td>
         </tr>
         <tr>
@@ -164,25 +153,42 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calculates a &lt;double&gt; for the reputation of each recomending carB</p>
-<p>TODO sehr rudimentaer unten </p>
+<p>Calculates a &lt;double&gt; for the reputation of each recomending carB </p>
 
 </div>
 </div>
-<a id="a8bf5231759870acf63c7892a1e31735c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bf5231759870acf63c7892a1e31735c">&#9670;&nbsp;</a></span>trustFeedback()</h2>
+<a id="a5dbb4b38a5cce22d5076a9cc08f64077"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dbb4b38a5cce22d5076a9cc08f64077">&#9670;&nbsp;</a></span>trustFeedback()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double trustKnowledge::trustFeedback </td>
+          <td class="memname">QPair&lt; bool, double &gt; trustKnowledge::trustFeedback </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>matching</em></td><td>)</td>
+          <td class="paramname"><em>matching</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>sentCertainty</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Calculates a &lt;double&gt; for the event of a matching &lt;bool&gt; between carA and carX </p>
 

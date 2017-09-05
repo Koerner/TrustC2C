@@ -1,5 +1,9 @@
 var files =
 [
+    [ "average.cpp", "average_8cpp.html", null ],
+    [ "average.h", "average_8h.html", [
+      [ "average", "classaverage.html", "classaverage" ]
+    ] ],
     [ "database.cpp", "database_8cpp.html", null ],
     [ "database.h", "database_8h.html", [
       [ "database", "classdatabase.html", "classdatabase" ],
@@ -9,6 +13,10 @@ var files =
     [ "interaction.cpp", "interaction_8cpp.html", null ],
     [ "interaction.h", "interaction_8h.html", [
       [ "interaction", "classinteraction.html", "classinteraction" ]
+    ] ],
+    [ "logdatabase.cpp", "logdatabase_8cpp.html", null ],
+    [ "logdatabase.h", "logdatabase_8h.html", [
+      [ "logDatabase", "classlog_database.html", "classlog_database" ]
     ] ],
     [ "logmodel.cpp", "logmodel_8cpp.html", null ],
     [ "logmodel.h", "logmodel_8h.html", [
@@ -27,10 +35,7 @@ var files =
     [ "randomQ.h", "random_q_8h.html", [
       [ "randomQ", "classrandom_q.html", "classrandom_q" ]
     ] ],
-    [ "structs.h", "structs_8h.html", [
-      [ "randStruct", "structrand_struct.html", "structrand_struct" ],
-      [ "settingsGUI", "structsettings_g_u_i.html", "structsettings_g_u_i" ]
-    ] ],
+    [ "structs.h", "structs_8h.html", "structs_8h" ],
     [ "trustDecision.cpp", "trust_decision_8cpp.html", null ],
     [ "trustDecision.h", "trust_decision_8h.html", [
       [ "trustDecision", "classtrust_decision.html", "classtrust_decision" ]
@@ -38,5 +43,9 @@ var files =
     [ "trustknowledge.cpp", "trustknowledge_8cpp.html", null ],
     [ "trustknowledge.h", "trustknowledge_8h.html", [
       [ "trustKnowledge", "classtrust_knowledge.html", "classtrust_knowledge" ]
+    ] ],
+    [ "trustreputational.cpp", "trustreputational_8cpp.html", null ],
+    [ "trustreputational.h", "trustreputational_8h.html", [
+      [ "trustReputational", "classtrust_reputational.html", "classtrust_reputational" ]
     ] ]
 ];

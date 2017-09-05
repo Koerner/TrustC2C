@@ -1,8 +1,9 @@
 #ifndef TRUSTREPUTATIONAL_H
 #define TRUSTREPUTATIONAL_H
 
-#include <qpair.h>
-#include <qlist.h>
+#include <QPair>
+#include <QList>
+#include <QDebug>
 
 class trustReputational
 {

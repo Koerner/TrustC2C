@@ -35,14 +35,18 @@ void interaction::run()
     carXHonest = isCarXHonest();
     carXsays = getCarXsays() ;
     // Determine whether the carA identified the truth correctly.
-    carAKnowsTruth = getCarAKnowsTruth();
-    carAthinks = getCarAthinks();carAKnowsTruth == truth;
 
-    qDebug() << "CarX thinks: " <<carXsays << "| CarA thinks: " << carAthinks << "| is match: " << isXMatchA();
+    carAobservation = getCarAobservation();
+    carAprediction = getCarAprediction();
+
+    qDebug() << "CarX thinks: " <<carXsays << "| CarA prediction is " << carAprediction << "observation is:" << carAobservation <<"| is match: " << isXMatchAobservation();
 
     //get all reputations from all Bs towards X as QList
     reputations = getReputatiosnBs();
     qDebug() << "Calculated reputations from B towards X: " << reputations << ", size: " << reputations.size();
+
+    //megre foreign reputation values with own reputatuin towards B
+    reputationABXs =  getMergedReputatiosnABXs(reputations);
 
     //calculate decission
     descissionResult = getDecissionA();
@@ -83,7 +87,7 @@ bool interaction::getCarXKnowsTruth()
     /// this gives back whether the carX knows the truth.
     /**   */
 
-    return randCollection->detectRandX.getResultPercent(data->getCarPropDetects(carIDs.at(1)));
+    return randCollection->detectRandX.getResultPercent(data->getCarPropDetectsObservation(carIDs.at(1)));
 }
 
 
@@ -100,32 +104,48 @@ QPair<bool, double> interaction::getCarXsays()
     QPair<bool, double> returnPair;
 
     returnPair.first = carXHonest == carXthinks;
-    returnPair.second = 1; ///TODO if we want to add certainty
+    if(instanceSettings.certaintyXon)
+    {
+        returnPair.second = data->getCarPropDetectsObservation(carIDs.at(1)); //if certainty is on
+    }
+    else
+    {
+        returnPair.second = 1; //no certainty added, tus 100%
+    }
 
     return returnPair;
 }
 
-QPair<bool, double> interaction::getCarAthinks()
+QPair<bool, double> interaction::getCarAobservation()
 {
     QPair<bool, double> returnPair;
+
+    bool carAKnowsTruth = randCollection->detectRandA.getResultPercent(data->getCarPropDetectsObservation(carIDs.at(0)));
+
     returnPair.first = carAKnowsTruth == truth;
-    returnPair.second = data->getCarPropDetects(carIDs.at(0));
+    returnPair.second = data->getCarPropDetectsObservation(carIDs.at(0));
 
     return returnPair;
 }
 
-bool interaction::getCarAKnowsTruth()
+QPair<bool, double> interaction::getCarAprediction()
 {
-    /// this gives back whether the carA knows the truth.
-    /**   */
-    return randCollection->detectRandA.getResultPercent(data->getCarPropDetects(carIDs.at(0)));
+    QPair<bool, double> returnPair;
 
+    bool carAKnowsTruth = randCollection->detectRandA.getResultPercent(data->getCarPropDetectsObservation(carIDs.at(0)));
+
+    returnPair.first = carAKnowsTruth == truth;
+    returnPair.second = data->getCarPropDetectsObservation(carIDs.at(0));
+
+    return returnPair;
 }
 
 
-bool interaction::isXMatchA()
+
+
+bool interaction::isXMatchAobservation()
 {
-    return carXsays.first == carAthinks.first;
+    return carXsays.first == carAobservation.first;
 }
 
 QList<QPair<double, int>> interaction::getReputatiosnBs()
@@ -134,6 +154,7 @@ QList<QPair<double, int>> interaction::getReputatiosnBs()
     /// for each B get all trust values from B towards X, compute average and save to QList
     /**   */
     QList<QPair<double, int>> reputationsReturn;
+    trustReputational tempTR;
 
     for (int i=2; i < carIDs.size(); i++)
     {
@@ -145,24 +166,41 @@ QList<QPair<double, int>> interaction::getReputatiosnBs()
         if(wholeTrustRecordBX.isEmpty()  && instanceSettings.maxRecomendingDepth > 1)
         {
             // BB Level
+            if(REP_DEBUG){qDebug() << "Car " << carIDs.at(i) << " needs new level";};
             mergedTrustBX = getHigherLevelReputation((instanceSettings.maxRecomendingDepth - 1), instanceSettings.minRecomendingWidth, carIDs.at(i), carIDs);
         }
         else
         {
             // B Level
-            mergedTrustBX = trustReputational::mergeTrust(wholeTrustRecordBX);
+
+            mergedTrustBX = tempTR.mergeTrust(wholeTrustRecordBX);
+            if(REP_DEBUG){qDebug() << "Car " << carIDs.at(i) << " has at least one trust value abot CarX. Result: "<< mergedTrustBX;};
         }
 
+        reputationsReturn.append(mergedTrustBX);
 
-        QPair<double, int> mergedreputationsAB;
-        mergedreputationsAB = trustReputational::mergeReputation(data->getCarReputation(carIDs.at(0), carIDs.at(i)));
-
-        reputationsReturn.append(trustReputational::combine(mergedreputationsAB, mergedTrustBX));
-
-        if(REP_DEBUG){qDebug() << "--- End for Car " << carIDs.at(i) << " ---";};
+        if(REP_DEBUG){qDebug() << "--- End for Car " << carIDs.at(i) << "Reputation towards CarX:" << reputationsReturn.last() <<" ---";};
     }
 
     return reputationsReturn;
+}
+
+QList<QPair<double, int>> interaction::getMergedReputatiosnABXs(QList<QPair<double, int>> reputationBs)
+{
+    QList<QPair<double, int>> returnMergedReputatiosnABX;
+
+    for (int i=2; i < reputationBs.size()+2; i++)
+    {
+        QPair<double, int> mergedreputationsAB;
+
+        mergedreputationsAB = trustReputational::mergeReputation(data->getCarReputation(carIDs.at(0), carIDs.at(i)));
+
+        if(REP_DEBUG){qDebug() << "Reputation A towards B :"<< data->getCarReputation(carIDs.at(0), carIDs.at(i)) <<"=>" << mergedreputationsAB <<" ---";};
+
+        returnMergedReputatiosnABX.append(trustReputational::combine(mergedreputationsAB, reputationBs.at(i-2)));
+    }
+
+    return returnMergedReputatiosnABX;
 }
 
 QPair<double, int> interaction::getHigherLevelReputation(int depthRecomending, int neededRecomendingWidth, unsigned long carB, QVector<unsigned long>blockedCarIDs)
@@ -170,11 +208,12 @@ QPair<double, int> interaction::getHigherLevelReputation(int depthRecomending, i
     if(REP_DEBUG){qDebug() << "+++ Start level " << instanceSettings.maxRecomendingDepth - depthRecomending << " to add " << neededRecomendingWidth <<"to car" << carB << "'s recomendations.";};
 
     QPair<int, double> recomendationReturn;
+    trustReputational tempTR;
 
     QList<unsigned long> tempCarsAscending = data->getCarIDsAscendingReputation(carB);
     int i = tempCarsAscending.size() -1;
 
-    for (i; i>0; i--) //going down the ascending list
+    for (i=i; i>0; i--) //going down the ascending list
     {
         if(REP_DEBUG){qDebug() << "~~~ Start for Car " << carB << "<-" <<tempCarsAscending.at(i)<<"~~~";};
         QVector<unsigned long> newBlockedCarIDs = blockedCarIDs;
@@ -194,17 +233,20 @@ QPair<double, int> interaction::getHigherLevelReputation(int depthRecomending, i
             }
             else
             {
-                mergedreputationsBX = trustReputational::mergeTrust(wholeTrustRecordBX);
+                mergedreputationsBX = tempTR.mergeTrust(wholeTrustRecordBX);
             }
-                QPair<double, int> mergedreputationsAB;
-                mergedreputationsAB = trustReputational::mergeReputation(data->getCarReputation(carB, tempCarsAscending.at(i)));
 
-                recomendationReturn = (trustReputational::combine(mergedreputationsAB, mergedreputationsBX));
+            QPair<double, int> mergedreputationsAB;
+            mergedreputationsAB = tempTR.mergeReputation(data->getCarReputation(carB, tempCarsAscending.at(i)));
+
+            recomendationReturn = (tempTR.combine(mergedreputationsAB, mergedreputationsBX));
+
             if(recomendationReturn.second != 0)
             {
                 i=0;
             }
         }
+        if(REP_DEBUG){qDebug() << "~~~ Car " << carB << "<-" <<tempCarsAscending.at(i)<<"<--" << recomendationReturn.first;};
         if(REP_DEBUG){qDebug() << "~~~ End for Car " << carB << "<-" <<tempCarsAscending.at(i)<<"~~~";};
     }
 
@@ -332,7 +374,7 @@ void interaction::storeTrustForXFromA()
 
     //calculate the Trust value which should be added
     trustKnowledge temp;
-    QPair<bool, double> newTrustvalue = trustKnowledge::trustFeedback(isXMatchA(), carXsays.second);
+    QPair<bool, double> newTrustvalue = trustKnowledge::trustFeedback(isXMatchAobservation(), carXsays.second);
 
     //add the new trust value to the databse
     data->writeTrustX(carIDs.at(0), carIDs.at(1), newTrustvalue);
@@ -350,7 +392,7 @@ void interaction::storeReputationForBFromA()
     trustKnowledge temp;
     if (reputations.size() != instanceSettings.numCarsRecommending){qFatal("no reputation specified, can't use it without calculation before");}
 
-    QList<QPair<bool,double>> newReputationValues = temp.reputationFeedback(isXMatchA(), reputations);
+    QList<QPair<bool,double>> newReputationValues = temp.reputationFeedback(isXMatchAobservation(), carAobservation.second, reputations);
 
     for(int i=2; i < carIDs.size(); i++)
     {
@@ -377,7 +419,7 @@ QPair<bool, double> interaction::getDecissionA()
     trustAX = trustReputational::mergeTrust(data->getCarTrust(carIDs.at(0), carIDs.at(1)));
 
     trustDecision temp;
-    returnPair = temp.calculateDecission(reputations, trustAX, carXsays, carAthinks);
+    returnPair = temp.calculateDecission(reputationABXs, trustAX, carXsays, carAprediction);
 
 
     return returnPair;
@@ -389,7 +431,8 @@ void interaction::logInteraction()
     /**   */
     interactionLog log;
     log.carAKnowsTruth =carAKnowsTruth;
-    log.carAthinks = carAthinks;
+    log.carAprediction = carAprediction;
+    log.carAobservation = carAobservation;
     log.carIDs = carIDs;
     log.carXHonest = carXHonest;
     log.carXKnowsTruth = carXKnowsTruth;

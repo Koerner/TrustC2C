@@ -1,12 +1,13 @@
 #include "database.h"
 
-database::database(unsigned long size, QList<QPair<int, int>> PropDetects, QList<QPair<int, int>> PropHonest)
+database::database(unsigned long size, QList<QPair<int, double>> PropDetectsPrediction, QList<QPair<int, double> > PropDetectsObservation, QList<QPair<int, double>> PropHonest)
 {
     carVector.clear();
     for(unsigned long int i=0; i<size; i++)
     {
         car temp;
-        temp.PropDetects = calcProp(i, PropDetects);
+        temp.PropDetectsPrediction = calcProp(i, PropDetectsPrediction);
+        temp.PropDetectsObservation = calcProp(i, PropDetectsObservation);
         temp.PropHonest = calcProp(i, PropHonest);
         //temp.reputationMap;
         //temp.trustMap;
@@ -19,12 +20,12 @@ database::database(unsigned long size, QList<QPair<int, int>> PropDetects, QList
     qDebug() << "Number of cars in database: " << carVector.size();
 }
 
-int database::calcProp(int CarID, QList<QPair<int, int>> prop)
+double database::calcProp(int CarID, QList<QPair<int, double>> prop)
 {
 
     if(prop.size() == 0){qFatal("Something went wrong with the propabilities");}
 
-    int propResult = 0;
+    double propResult = 0.0;
 
     for(int i=0; i < prop.size() ; i++)
     {
@@ -46,7 +47,14 @@ QList<QPair<bool, double>> database::getCarTrust(unsigned long int CarBID,unsign
 
     if(CarBID < 0 || CarBID>=carVector.size() || CarXid < 0 || CarXid >= carVector.size()){qFatal("CarID out of scope!");}
 
-    return carVector.at(CarBID).trustMap.values(CarXid);
+    QList<QPair<bool, double>> returnList  = carVector.at(CarBID).trustMap.values(CarXid);
+    /*if(returnList.isEmpty())
+    {
+        qDebug() << "No trust values found";
+        returnList.append(qMakePair(false, 0.0));
+    }*/
+    //qDebug() << "Following Trust values returned: " << returnList;
+    return returnList;
 
 }
 
@@ -62,7 +70,16 @@ QList<QPair<bool, double> > database::getCarReputation(unsigned long int CarAID,
 
     if(CarAID < 0 || CarAID>=carVector.size() || CarBID < 0 || CarBID >= carVector.size()){qFatal("CarID out of scope!");}
 
-    return carVector.at(CarAID).reputationMap.values(CarBID);
+    QList<QPair<bool, double>> returnList  = carVector.at(CarAID).reputationMap.values(CarBID);
+    /*if(returnList.isEmpty())
+    {
+        qDebug() << "No reputation values found";
+        returnList.append(qMakePair(false, 0.0));
+    }
+    */
+    //qDebug() << "Following Reputation values returned: " << returnList;
+    return returnList;
+
 
 
 
@@ -112,10 +129,16 @@ void database::writeInteractionLog(QVector<unsigned long> carIDs, bool truth, bo
     qDebug() << "Logged interaction";
 }
 
-int database::getCarPropDetects(unsigned long int CarID)
+double database::getCarPropDetectsObservation(unsigned long int CarID)
 {
 
-    return carVector.at(CarID).PropDetects;
+    return carVector.at(CarID).PropDetectsObservation;
+}
+
+double database::getCarPropDetectsPrediction(unsigned long int CarID)
+{
+
+    return carVector.at(CarID).PropDetectsPrediction;
 }
 
 
@@ -161,10 +184,12 @@ void database::saveToFileTrust()
 
                 for(int k=0; k < tempList.size(); k++) // K = entries of i->j
                 {
-                    stream << tempList.at(k).second << ";";
+
+                    stream << "(" << tempList.at(k).first <<","<< tempList.at(k).second << ");";
                 }
-                double sum= carVector.at(i).trustSumMap.value(j);
-                stream << sum << ";"<< tempList.size() << ";";
+
+                stream << "SUM(" << carVector.at(i).trustSumMap.value(j) << ","<< tempList.size() << ");";
+
                 stream << "\r\n";
             }
             stream << "\r\n";
@@ -194,9 +219,9 @@ void database::saveToFileReputation()
                 for(int k=0; k < tempList.size(); k++) // K = entries of i->j
                 {
 
-                    stream << tempList.at(k).second << ";";
+                    stream << "(" << tempList.at(k).first <<","<< tempList.at(k).second << ");";
                 }
-                stream << carVector.at(i).reputationSumMap.value(j) << ";"<< tempList.size() << ";";
+                stream << "SUM(" << carVector.at(i).reputationSumMap.value(j) << ","<< tempList.size() << ");";
                 stream << "\r\n";
             }
             stream << "\r\n";

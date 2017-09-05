@@ -23,11 +23,13 @@ struct settingsGUI {
   int minRecomendingWidthDirect;
   int minRecomendingWidth;
 
-  QList<QPair<int,int>> PropDetectsCarX;
-  //unsigned int PropDetectsCarB;
+  bool certaintyXon;
+
+  QList<QPair<int,double>> PropDetectsPrediction;
+  QList<QPair<int,double>> PropDetectsObservation;
 
   unsigned int PropHonestCarX;
-  QList<QPair<int,int>> PropHonestCarB;
+  QList<QPair<int,double>> PropHonestCarB;
 } ;
 
 struct interactionLog {
@@ -37,7 +39,8 @@ struct interactionLog {
     bool carXHonest;
     QPair<bool,double> carXsays;
     bool carAKnowsTruth;
-    QPair<bool,double> carAthinks;
+    QPair<bool,double> carAprediction;
+    QPair<bool,double> carAobservation;
     QVector<unsigned long int> carIDs;
     QList<QPair<double,int>> reputations;
     QPair<bool, double> descissionResult;

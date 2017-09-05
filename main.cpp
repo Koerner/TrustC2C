@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     w.show();
 
 
-
+ #define CERTAINTY_X_ON true
 
 
     // Setup Randoms
@@ -33,23 +33,37 @@ int main(int argc, char *argv[])
 
     //settings
     settingsGUI instanceSettings;
-    instanceSettings.numInteractions = 5;
-    instanceSettings.numTotalCars = 7; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
+    instanceSettings.numInteractions = 300;
+    instanceSettings.numTotalCars = 10; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
     instanceSettings.numCarsRecommending = 5; //has to be -2 total cars
+    instanceSettings.certaintyXon = true;
 
-    // Propability distribution
-    QList<QPair<int,int>> PropDetectsCarX;
-    PropDetectsCarX.clear();
-    PropDetectsCarX.append(QPair<unsigned int,int>(0 , 95));
-    PropDetectsCarX.append(QPair<unsigned int,int>(instanceSettings.numTotalCars * 90 /100, 5));
-    instanceSettings.PropDetectsCarX = PropDetectsCarX;
-    qDebug() << PropDetectsCarX;
+    // Propability for cars to detect the truth before arriving
+    QList<QPair<int,double>> PropDetectsPrediction;
+    PropDetectsPrediction.clear();
+    PropDetectsPrediction.append(QPair<unsigned int,double>(0 , 0.95));
+    PropDetectsPrediction.append(QPair<unsigned int,double>(instanceSettings.numTotalCars * 90 /100, 0.05));
+    instanceSettings.PropDetectsPrediction = PropDetectsPrediction;
+    qDebug() << PropDetectsPrediction;
+
+    // Propability for cars to detect the truth after situation (observation)
+    QList<QPair<int,double>> PropDetectsObservation;
+    PropDetectsObservation.clear();
+    PropDetectsObservation.append(QPair<unsigned int,double>(0 , 0.95));
+    PropDetectsObservation.append(QPair<unsigned int,double>(instanceSettings.numTotalCars * 90 /100, 0.05));
+    instanceSettings.PropDetectsObservation = PropDetectsObservation;
+    qDebug() << PropDetectsObservation;
+
+
+
+
+
 
     // Propability honest  /// not yet implemented
-    QList<QPair<int,int>> PropHonestCarB;
+    QList<QPair<int,double>> PropHonestCarB;
     PropHonestCarB.clear();
-    PropHonestCarB.append(QPair<unsigned int,int>(100 / 100 * instanceSettings.numTotalCars , 90));
-    PropHonestCarB.append(QPair<unsigned int,int>(instanceSettings.numTotalCars - 0 / 100 * instanceSettings.numTotalCars, 10));
+    PropHonestCarB.append(QPair<unsigned int,double>(100 / 100 * instanceSettings.numTotalCars , 90));
+    PropHonestCarB.append(QPair<unsigned int,double>(instanceSettings.numTotalCars - 0 / 100 * instanceSettings.numTotalCars, 10));
     instanceSettings.PropHonestCarB = PropHonestCarB;
 
     instanceSettings.PropHonestCarX = 100;
@@ -64,7 +78,7 @@ int main(int argc, char *argv[])
 
 
     //initilaize database with all cars
-    database data(instanceSettings.numTotalCars, instanceSettings.PropDetectsCarX, instanceSettings.PropHonestCarB);
+    database data(instanceSettings.numTotalCars, instanceSettings.PropDetectsPrediction, instanceSettings.PropDetectsObservation, instanceSettings.PropHonestCarB);
     logDatabase logdata;
 
 

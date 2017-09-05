@@ -5,7 +5,7 @@ logDatabase::logDatabase()
 
 }
 
-logDatabase::writeInteractionLog(interactionLog log)
+void logDatabase::writeInteractionLog(interactionLog log)
 {
     interactionLogDatabase.append(log);
 }

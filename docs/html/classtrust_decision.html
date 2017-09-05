@@ -72,8 +72,8 @@ $(document).ready(function(){initNavTree('classtrust_decision.html','');});
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad7a909809ae5ba83a3361770e03d0cb6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_decision.html#ad7a909809ae5ba83a3361770e03d0cb6">trustDecision</a> ()</td></tr>
 <tr class="separator:ad7a909809ae5ba83a3361770e03d0cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53a162623de08735b4d7b844f8700252"><td class="memItemLeft" align="right" valign="top">QPair&lt; bool, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_decision.html#a53a162623de08735b4d7b844f8700252">calculateDecission</a> (QVector&lt; double &gt; reputationsBs, QList&lt; QList&lt; double &gt;&gt; reputationRecordABs, QList&lt; double &gt; trustRecordAX, double CarXsays)</td></tr>
-<tr class="separator:a53a162623de08735b4d7b844f8700252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10fab59520dc0a37b4cbb6710730cc66"><td class="memItemLeft" align="right" valign="top">QPair&lt; bool, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtrust_decision.html#a10fab59520dc0a37b4cbb6710730cc66">calculateDecission</a> (QList&lt; QPair&lt; double, int &gt; &gt; &amp;reputationsBs, QPair&lt; double, int &gt; &amp;trustAX, QPair&lt; bool, double &gt; &amp;CarXsays, QPair&lt; bool, double &gt; &amp;CarAthinks)</td></tr>
+<tr class="separator:a10fab59520dc0a37b4cbb6710730cc66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad7a909809ae5ba83a3361770e03d0cb6"></a>
@@ -94,8 +94,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a53a162623de08735b4d7b844f8700252"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53a162623de08735b4d7b844f8700252">&#9670;&nbsp;</a></span>calculateDecission()</h2>
+<a id="a10fab59520dc0a37b4cbb6710730cc66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10fab59520dc0a37b4cbb6710730cc66">&#9670;&nbsp;</a></span>calculateDecission()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -103,26 +103,26 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">QPair&lt; bool, double &gt; trustDecision::calculateDecission </td>
           <td>(</td>
-          <td class="paramtype">QVector&lt; double &gt;&#160;</td>
+          <td class="paramtype">QList&lt; QPair&lt; double, int &gt; &gt; &amp;&#160;</td>
           <td class="paramname"><em>reputationsBs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QList&lt; QList&lt; double &gt;&gt;&#160;</td>
-          <td class="paramname"><em>reputationRecordABs</em>, </td>
+          <td class="paramtype">QPair&lt; double, int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>trustAX</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QList&lt; double &gt;&#160;</td>
-          <td class="paramname"><em>trustRecordAX</em>, </td>
+          <td class="paramtype">QPair&lt; bool, double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>CarXsays</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>CarXsays</em>&#160;</td>
+          <td class="paramtype">QPair&lt; bool, double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>CarAthinks</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -131,6 +131,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function returns a QPair, where the first is the descission about the reality and the secound the certainty this decsission is made. </p>
 
 </div>
 </div>

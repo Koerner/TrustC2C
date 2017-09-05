@@ -8,7 +8,7 @@ class logDatabase
 {
 public:
     logDatabase();
-    writeInteractionLog(interactionLog log);
+    void writeInteractionLog(interactionLog log);
     interactionLog getInteractionLog(int position);
     int sizeInteractionLogDatabase();
 

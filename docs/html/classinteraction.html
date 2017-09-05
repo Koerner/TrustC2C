@@ -70,14 +70,14 @@ $(document).ready(function(){initNavTree('classinteraction.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a466c8f360cfd582c4dc1be8f00ddd3b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinteraction.html#a466c8f360cfd582c4dc1be8f00ddd3b4">interaction</a> (<a class="el" href="structsettings_g_u_i.html">settingsGUI</a> instanceSettingsHandover, <a class="el" href="structrand_struct.html">randStruct</a> &amp;randCollectionHandover, <a class="el" href="classdatabase.html">database</a> &amp;dataHandover)</td></tr>
-<tr class="separator:a466c8f360cfd582c4dc1be8f00ddd3b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07bbce5d9526c086ffc25bf73925c715"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinteraction.html#a07bbce5d9526c086ffc25bf73925c715">interaction</a> (<a class="el" href="structsettings_g_u_i.html">settingsGUI</a> instanceSettingsHandover, <a class="el" href="structrand_struct.html">randStruct</a> &amp;randCollectionHandover, <a class="el" href="classdatabase.html">database</a> &amp;dataHandover, <a class="el" href="classlog_database.html">logDatabase</a> &amp;logdataHandover)</td></tr>
+<tr class="separator:a07bbce5d9526c086ffc25bf73925c715"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc5eba2679706fe5a76510ba1b59ce7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinteraction.html#adc5eba2679706fe5a76510ba1b59ce7b">run</a> ()</td></tr>
 <tr class="separator:adc5eba2679706fe5a76510ba1b59ce7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a466c8f360cfd582c4dc1be8f00ddd3b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a466c8f360cfd582c4dc1be8f00ddd3b4">&#9670;&nbsp;</a></span>interaction()</h2>
+<a id="a07bbce5d9526c086ffc25bf73925c715"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07bbce5d9526c086ffc25bf73925c715">&#9670;&nbsp;</a></span>interaction()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -98,7 +98,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classdatabase.html">database</a> &amp;&#160;</td>
-          <td class="paramname"><em>dataHandover</em>&#160;</td>
+          <td class="paramname"><em>dataHandover</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classlog_database.html">logDatabase</a> &amp;&#160;</td>
+          <td class="paramname"><em>logdataHandover</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -107,7 +113,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>constructor. copies pointers of randGenerators so we can acces them later </p>
+<p>constructor. copies necessary stuff.</p>
+<p>Copies pointers of randGenerators, pointer to the database and the Settings from the GUI </p>
 
 </div>
 </div>
@@ -126,7 +133,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>this executes one interaction. Do not Run it twice, rather create a new class for doing so. </p>
+<p>this function executes one interaction. Do not run it twice, rather create a new class for doing so. </p>
 
 </div>
 </div>

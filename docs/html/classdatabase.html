@@ -79,20 +79,30 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a636c6f702f3a3fb20f3bf90d50c4f690"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a636c6f702f3a3fb20f3bf90d50c4f690">database</a> (unsigned long size, QList&lt; QPair&lt; int, int &gt;&gt; PropDetects, QList&lt; QPair&lt; int, int &gt;&gt; PropHonest)</td></tr>
-<tr class="separator:a636c6f702f3a3fb20f3bf90d50c4f690"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae876c93849458fff10c2b927beca7fab"><td class="memItemLeft" align="right" valign="top">QList&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#ae876c93849458fff10c2b927beca7fab">getCarTrust</a> (unsigned long int CarBID, unsigned long int CarXid) const</td></tr>
-<tr class="separator:ae876c93849458fff10c2b927beca7fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d2d84e7618f38d2e20a75a2279e637b"><td class="memItemLeft" align="right" valign="top">QList&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a8d2d84e7618f38d2e20a75a2279e637b">getCarReputation</a> (unsigned long int CarAID, unsigned long int CarBID) const</td></tr>
-<tr class="separator:a8d2d84e7618f38d2e20a75a2279e637b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50cf8fef01bb28cade7ad3f3dd493c57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a50cf8fef01bb28cade7ad3f3dd493c57">writeTrustX</a> (unsigned long int CarOwnID, unsigned long int CarXID, double trust)</td></tr>
-<tr class="separator:a50cf8fef01bb28cade7ad3f3dd493c57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a871cc6dcb1233ee1dddedfcb9884ca08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a871cc6dcb1233ee1dddedfcb9884ca08">writeReputationB</a> (unsigned long int CarOwnID, unsigned long int CarBID, double reputationTrust)</td></tr>
-<tr class="separator:a871cc6dcb1233ee1dddedfcb9884ca08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b50dc11162e1b4b0be306885565c12f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a7b50dc11162e1b4b0be306885565c12f">database</a> (unsigned long size, QList&lt; QPair&lt; int, double &gt; &gt; PropDetectsPrediction, QList&lt; QPair&lt; int, double &gt; &gt; PropDetectsObservation, QList&lt; QPair&lt; int, double &gt; &gt; PropHonest)</td></tr>
+<tr class="separator:a7b50dc11162e1b4b0be306885565c12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87d146d6814b01ed2fa94c57cd846ac5"><td class="memItemLeft" align="right" valign="top">QList&lt; QPair&lt; bool, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a87d146d6814b01ed2fa94c57cd846ac5">getCarTrust</a> (unsigned long int CarBID, unsigned long int CarXid) const</td></tr>
+<tr class="separator:a87d146d6814b01ed2fa94c57cd846ac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3df1f24b3dc47d2014ec8f191f3da9de"><td class="memItemLeft" align="right" valign="top">QList&lt; QPair&lt; bool, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a3df1f24b3dc47d2014ec8f191f3da9de">getCarReputation</a> (unsigned long int CarAID, unsigned long int CarBID) const</td></tr>
+<tr class="separator:a3df1f24b3dc47d2014ec8f191f3da9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13289f03be005c7f0392c5590c810a04"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a13289f03be005c7f0392c5590c810a04">getCarPropDetectsObservation</a> (unsigned long int CarID)</td></tr>
+<tr class="separator:a13289f03be005c7f0392c5590c810a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a893393796c17889fc27a135910f4cb55"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a893393796c17889fc27a135910f4cb55">getCarPropDetectsPrediction</a> (unsigned long int CarID)</td></tr>
+<tr class="separator:a893393796c17889fc27a135910f4cb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6074fb7579db6540eb76fa573fd9e7c1"><td class="memItemLeft" align="right" valign="top">QList&lt; unsigned long &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a6074fb7579db6540eb76fa573fd9e7c1">getCarIDsAscendingReputation</a> (unsigned long CarB)</td></tr>
+<tr class="separator:a6074fb7579db6540eb76fa573fd9e7c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add53632f09ae5dd927b62bb6a75afedc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#add53632f09ae5dd927b62bb6a75afedc">writeTrustX</a> (unsigned long int CarOwnID, unsigned long int CarXID, QPair&lt; bool, double &gt; trust)</td></tr>
+<tr class="separator:add53632f09ae5dd927b62bb6a75afedc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8810eb5c2a7773361079596b6c162271"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a8810eb5c2a7773361079596b6c162271">writeReputationB</a> (unsigned long int CarOwnID, unsigned long int CarBID, QPair&lt; bool, double &gt; reputationTrust)</td></tr>
+<tr class="separator:a8810eb5c2a7773361079596b6c162271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcaf13002fa8284f60db20537b503c12"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#afcaf13002fa8284f60db20537b503c12">getAverageTrust</a> (unsigned long int CarBID, unsigned long int CarXid)</td></tr>
+<tr class="separator:afcaf13002fa8284f60db20537b503c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91a6d4565dc7bd964510dd406d47edd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a91a6d4565dc7bd964510dd406d47edd9">writeInteractionLog</a> (QVector&lt; unsigned long int &gt; carIDs, bool truth, bool xSays, bool success, QPair&lt; bool, double &gt; descissionResult)</td></tr>
 <tr class="separator:a91a6d4565dc7bd964510dd406d47edd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac974518acabef268e0ff134e6899e3a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#ac974518acabef268e0ff134e6899e3a8">getCarPropDetects</a> (unsigned long CarID)</td></tr>
-<tr class="separator:ac974518acabef268e0ff134e6899e3a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b79051a88358ae6fb88eda2971e48fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a9b79051a88358ae6fb88eda2971e48fe">saveToFileTrust</a> ()</td></tr>
+<tr class="separator:a9b79051a88358ae6fb88eda2971e48fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d5471f515bb9e4a111a0c1bb6b4bf6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdatabase.html#a3d5471f515bb9e4a111a0c1bb6b4bf6f">saveToFileReputation</a> ()</td></tr>
+<tr class="separator:a3d5471f515bb9e4a111a0c1bb6b4bf6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -100,8 +110,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:abefcdeaa177e9ba400d0376c8a4300c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a636c6f702f3a3fb20f3bf90d50c4f690"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a636c6f702f3a3fb20f3bf90d50c4f690">&#9670;&nbsp;</a></span>database()</h2>
+<a id="a7b50dc11162e1b4b0be306885565c12f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b50dc11162e1b4b0be306885565c12f">&#9670;&nbsp;</a></span>database()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -115,13 +125,19 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QList&lt; QPair&lt; int, int &gt;&gt;&#160;</td>
-          <td class="paramname"><em>PropDetects</em>, </td>
+          <td class="paramtype">QList&lt; QPair&lt; int, double &gt; &gt;&#160;</td>
+          <td class="paramname"><em>PropDetectsPrediction</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QList&lt; QPair&lt; int, int &gt;&gt;&#160;</td>
+          <td class="paramtype">QList&lt; QPair&lt; int, double &gt; &gt;&#160;</td>
+          <td class="paramname"><em>PropDetectsObservation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QList&lt; QPair&lt; int, double &gt; &gt;&#160;</td>
           <td class="paramname"><em>PropHonest</em>&#160;</td>
         </tr>
         <tr>
@@ -135,16 +151,62 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac974518acabef268e0ff134e6899e3a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac974518acabef268e0ff134e6899e3a8">&#9670;&nbsp;</a></span>getCarPropDetects()</h2>
+<a id="afcaf13002fa8284f60db20537b503c12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcaf13002fa8284f60db20537b503c12">&#9670;&nbsp;</a></span>getAverageTrust()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int database::getCarPropDetects </td>
+          <td class="memname">double database::getAverageTrust </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long int&#160;</td>
+          <td class="paramname"><em>CarBID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long int&#160;</td>
+          <td class="paramname"><em>CarXid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6074fb7579db6540eb76fa573fd9e7c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6074fb7579db6540eb76fa573fd9e7c1">&#9670;&nbsp;</a></span>getCarIDsAscendingReputation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; unsigned long &gt; database::getCarIDsAscendingReputation </td>
           <td>(</td>
           <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>CarB</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a13289f03be005c7f0392c5590c810a04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13289f03be005c7f0392c5590c810a04">&#9670;&nbsp;</a></span>getCarPropDetectsObservation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double database::getCarPropDetectsObservation </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarID</em></td><td>)</td>
           <td></td>
         </tr>
@@ -153,14 +215,32 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8d2d84e7618f38d2e20a75a2279e637b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d2d84e7618f38d2e20a75a2279e637b">&#9670;&nbsp;</a></span>getCarReputation()</h2>
+<a id="a893393796c17889fc27a135910f4cb55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a893393796c17889fc27a135910f4cb55">&#9670;&nbsp;</a></span>getCarPropDetectsPrediction()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QList&lt; double &gt; database::getCarReputation </td>
+          <td class="memname">double database::getCarPropDetectsPrediction </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long int&#160;</td>
+          <td class="paramname"><em>CarID</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3df1f24b3dc47d2014ec8f191f3da9de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3df1f24b3dc47d2014ec8f191f3da9de">&#9670;&nbsp;</a></span>getCarReputation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; QPair&lt; bool, double &gt; &gt; database::getCarReputation </td>
           <td>(</td>
           <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarAID</em>, </td>
@@ -183,14 +263,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ae876c93849458fff10c2b927beca7fab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae876c93849458fff10c2b927beca7fab">&#9670;&nbsp;</a></span>getCarTrust()</h2>
+<a id="a87d146d6814b01ed2fa94c57cd846ac5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87d146d6814b01ed2fa94c57cd846ac5">&#9670;&nbsp;</a></span>getCarTrust()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QList&lt; double &gt; database::getCarTrust </td>
+          <td class="memname">QList&lt; QPair&lt; bool, double &gt; &gt; database::getCarTrust </td>
           <td>(</td>
           <td class="paramtype">unsigned long int&#160;</td>
           <td class="paramname"><em>CarBID</em>, </td>
@@ -210,6 +290,40 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>returns all trust values stored by B for the car X</p>
 <p>This function searches for all trust values stored by B towards Car X. It returns a list which is sorted by the time with double values containing the trust score at that point </p>
+
+</div>
+</div>
+<a id="a3d5471f515bb9e4a111a0c1bb6b4bf6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d5471f515bb9e4a111a0c1bb6b4bf6f">&#9670;&nbsp;</a></span>saveToFileReputation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void database::saveToFileReputation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9b79051a88358ae6fb88eda2971e48fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b79051a88358ae6fb88eda2971e48fe">&#9670;&nbsp;</a></span>saveToFileTrust()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void database::saveToFileTrust </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -259,8 +373,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a871cc6dcb1233ee1dddedfcb9884ca08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a871cc6dcb1233ee1dddedfcb9884ca08">&#9670;&nbsp;</a></span>writeReputationB()</h2>
+<a id="a8810eb5c2a7773361079596b6c162271"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8810eb5c2a7773361079596b6c162271">&#9670;&nbsp;</a></span>writeReputationB()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -280,7 +394,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">QPair&lt; bool, double &gt;&#160;</td>
           <td class="paramname"><em>reputationTrust</em>&#160;</td>
         </tr>
         <tr>
@@ -293,8 +407,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a50cf8fef01bb28cade7ad3f3dd493c57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50cf8fef01bb28cade7ad3f3dd493c57">&#9670;&nbsp;</a></span>writeTrustX()</h2>
+<a id="add53632f09ae5dd927b62bb6a75afedc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add53632f09ae5dd927b62bb6a75afedc">&#9670;&nbsp;</a></span>writeTrustX()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -314,7 +428,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype">QPair&lt; bool, double &gt;&#160;</td>
           <td class="paramname"><em>trust</em>&#160;</td>
         </tr>
         <tr>

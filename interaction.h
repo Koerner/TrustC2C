@@ -45,21 +45,23 @@ private:
 
     //CarA
     bool carAKnowsTruth;
-    QPair<bool,double> carAthinks;
-    QPair<bool,double> getCarAthinks();
-
-    bool getCarAKnowsTruth();
+    QPair<bool,double> carAprediction;
+    QPair<bool,double> carAobservation;
+    QPair<bool,double> getCarAprediction();
+    QPair<bool,double> getCarAobservation();
 
 
     //CarB
     QList<QPair<double,int>> reputations;
+    QList<QPair<double,int>> reputationABXs;
     QList<QPair<double,int>> getReputatiosnBs();
     QPair<double, int> getHigherLevelReputation(int depthRecomending, int neededRecomendingWidth, unsigned long carB, QVector<unsigned long> blockedCarIDs);
+    QList<QPair<double, int> > getMergedReputatiosnABXs(QList<QPair<double, int> > reputationBs);
 
 
 
     //calculation
-    bool isXMatchA();
+    bool isXMatchAobservation();
 
     //TrustRecord
     void storeTrustForXFromA();
@@ -72,6 +74,7 @@ private:
 
     //Logging
     void logInteraction();
+
 
 };
 
