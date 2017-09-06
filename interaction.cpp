@@ -47,6 +47,8 @@ void interaction::run()
 
     //megre foreign reputation values with own reputatuin towards B
     reputationABXs =  getMergedReputatiosnABXs(reputations);
+    qDebug() << "Calculated reputations from ABX combined: " << reputationABXs << ", size: " << reputationABXs.size();
+
 
     //calculate decission
     descissionResult = getDecissionA();
@@ -196,6 +198,7 @@ QList<QPair<double, int>> interaction::getMergedReputatiosnABXs(QList<QPair<doub
         mergedreputationsAB = trustReputational::mergeReputation(data->getCarReputation(carIDs.at(0), carIDs.at(i)));
 
         if(REP_DEBUG){qDebug() << "Reputation A towards B :"<< data->getCarReputation(carIDs.at(0), carIDs.at(i)) <<"=>" << mergedreputationsAB <<" ---";};
+        if(REP_DEBUG){qDebug() << "Merged A->B :" << mergedreputationsAB;};
 
         returnMergedReputatiosnABX.append(trustReputational::combine(mergedreputationsAB, reputationBs.at(i-2)));
     }
@@ -256,115 +259,6 @@ QPair<double, int> interaction::getHigherLevelReputation(int depthRecomending, i
 
 }
 
-//QList<QPair<double,int>> interaction::generateHigherLevelReputation(int depthRecomending, int neededRecomendingWidth, unsigned long carB)
-//{
-//    qDebug() << "Started level " << instanceSettings.maxRecomendingDepth - depthRecomending << "to get the number of  "<< neededRecomendingWidth << "required values.";
-
-//    QList<QPair<double,int>> tempReturn;
-
-
-//    QList<unsigned long> tempCarsAscending = data->getCarIDsAscendingReputation(carB);
-//    int j = tempCarsAscending.size() -1;
-
-//    while(tempReturn.size() < neededRecomendingWidth && j >= 0)
-//    {
-//        qDebug() << "+++ Car: " << tempCarsAscending.at(j);
-//        QList<double> tempList = data->getCarTrust(carIDs.at(tempCarsAscending.at(j)),carIDs.at(1));
-//        if(!tempList.isEmpty())
-//        {
-//            QList<double> factorList = data->getCarReputation(carB, tempCarsAscending.at(j));
-//            double factor = average::averageMean(factorList).first;
-//            <QPair <double, int> temp = verage::averageMean(tempList);
-//            temp.second = temp.second * factor;
-//            tempReturn.append(temp);
-//        }
-//        j--;
-//    }
-
-//     qDebug() << "Got "<< tempReturn.size() << "recomendations";
-
-
-//    if((tempReturn.size() < neededRecomendingWidth) && (depthRecomending > 1))
-//    {
-//        qDebug() << "At this level there are still not enough recommendations. " << neededRecomendingWidth - tempReturn.size() << " more needed";
-
-//        int k = tempCarsAscending.size() - 1;
-//        qDebug() << "Will start the next level with the following cars: " << tempCarsAscending << " Total number of cars: " << k+1;
-
-//        while((neededRecomendingWidth - tempReturn.size() > 0) && (k >= 0))
-//        {
-//            QList<double> temp2 = generateHigherLevelReputation((depthRecomending-1), (instanceSettings.minRecomendingWidth - tempReturn.size()), tempCarsAscending.at(k));
-//            if(!temp2.isEmpty())
-//            {
-//                //QList<double> factorList = data->getCarReputation(carB, tempCarsAscending.at(k));
-//                //double factor = average::averageMean(factorList);
-//                tempReturn.append(average::averageMean(temp2));
-//            }
-//            k--;
-//        }
-
-//    }
-//    return tempReturn;
-//}
-
-//QList<double> interaction::OLDgenerateHigherLevelReputation(int depthRecomending, int neededRecomendingWidth, QList<unsigned long> cars)
-//{
-//    qWarning() << "Started level " << instanceSettings.maxRecomendingDepth - depthRecomending << "to get the number of  "<< neededRecomendingWidth << "required values.";
-
-//    QList<double> tempReturn;
-
-//    //return highest remonding car of B
-//    int i=0;
-//    while( (tempReturn.size() < neededRecomendingWidth) && (i < cars.size()))
-//    {
-
-
-//        QList<unsigned long> tempAscending = data->getCarIDsAscendingReputation(cars.at(i));
-
-//        int j = tempAscending.size() -1;
-//        QList<double> tempReturn2;
-//        while(tempReturn2.size() < neededRecomendingWidth && j >= 0)
-//        {
-//            QList<double> temp = data->getCarTrust(cars.at(tempAscending.at(j)),cars.at(1));
-//            if(!temp.isEmpty())
-//            {
-//                tempReturn2.append(average::averageMean(temp));
-//            }
-//            j--;
-//        }
-//        if(!tempReturn2.isEmpty())
-//        {
-//            tempReturn.append(average::averageMean(tempReturn2));
-//        }
-//        i++;
-//    }
-
-
-//    if((tempReturn.size() < neededRecomendingWidth) && (depthRecomending > 1))
-//    {
-//        qDebug() << "At this level there are still not enough recommendations. " << neededRecomendingWidth - tempReturn.size() << " more needed";
-
-//        QList<unsigned long>carsNew;
-
-//        for (int k=0; k < cars.size(); k++)
-//        {
-//        carsNew.append(data->getCarIDsAscendingReputation(cars.at(k)));
-//        }
-
-//        qDebug() << "Will start the next level with the following cars: " << carsNew << " Total number of cars: " << carsNew.size();
-
-//        if(!carsNew.isEmpty())
-//        {
-//            QList<double> temp2 = generateHigherLevelReputation((depthRecomending-1), (instanceSettings.minRecomendingWidth - tempReturn.size()), carsNew);
-//            if(temp2.size() != 0)
-//            {
-//                tempReturn.append(average::averageMean(temp2));
-//            }
-//        }
-
-//    }
-//    return tempReturn;
-//}
 
 
 void interaction::storeTrustForXFromA()

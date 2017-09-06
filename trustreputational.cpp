@@ -17,7 +17,7 @@ QPair<double, int> trustReputational::combine(QPair<double, int> own, QPair<doub
     returnPair.first = own.first * foreign.first; //multiply the percentages of trust
     returnPair.second = std::min(own.second,foreign.second); //return the smaller of the two list sizes.
 
-    qDebug() <<"Result combine function: " << returnPair;
+    //qDebug() <<"Result combine function: " << returnPair;
     return returnPair;
 }
 

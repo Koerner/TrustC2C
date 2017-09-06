@@ -10,33 +10,45 @@ QPair<bool, double> trustDecision::calculateDecission(QList<QPair<double, int> >
     /// This function returns a QPair, where the first is the descission about the reality and the secound the certainty this decsission is made.
     /**   */
 
-    QPair<double, int> AXreputation = reputationWeightAverage(reputationsBs, trustAX); //3
+    qDebug() << "A's own trust values towards X" << trustAX;
+
+    //
+    // D3
+    QPair<double, int> AXreputation = reputationWeightAverage(reputationsBs, trustAX);
+
+    //
+    //D2
 
     QPair<double, int> AXresult;
     QPair<bool, double> DecissionResult;
 
-    AXresult.second = AXreputation.second;
-    AXresult.first = AXreputation.first * CarXsays.second;
+    AXresult.second = AXreputation.second; //bool state
+    AXresult.first = AXreputation.first * CarXsays.second; //certainty combined %
+
+    //
+    //D1
 
     if(CarAthinks.first == CarXsays.first)
     {
         DecissionResult.first = CarAthinks.first;
-        DecissionResult.second = CarAthinks.second + AXresult.first;
-        qDebug() << "A and X say the same";
+        DecissionResult.second = std::max(CarAthinks.second, AXresult.first);
+        qDebug() << "##### State of A and X are the same:" << DecissionResult;
     }
     else
     {
         if(CarAthinks.second > AXresult.first)
         {
-            qDebug() << "Relied on my own value";
+
             DecissionResult.first = CarAthinks.first;
-            DecissionResult.second = CarAthinks.second - AXresult.first;
+            DecissionResult.second = CarAthinks.second;
+            qDebug() << "##### Relied on A's state: "  << DecissionResult;
         }
         else
         {
-           qDebug() << "Relied on my own value";
+
            DecissionResult.first = CarXsays.first;
-           DecissionResult.second = AXresult.first - CarAthinks.second;
+           DecissionResult.second = AXresult.first;
+           qDebug() << "##### Relied on X's state:" << DecissionResult;
         }
     }
 
@@ -48,6 +60,12 @@ QPair<double, int> trustDecision::reputationWeightAverage(QList<QPair<double, in
 {
     QList<QPair<double, int>> allValues;
     allValues.append(trustAX);
+
+    for(int i=0; i<reputationsBs.size(); i++)
+    {
+        reputationsBs[i].second = 1;
+    }
+
     allValues.append(reputationsBs);
     QPair<double, int> returnPair;
 
@@ -67,11 +85,11 @@ QPair<double, int> trustDecision::reputationWeightAverage(QList<QPair<double, in
             counter += allValues.at(i).second;
         }
 
-        QPair<double, int> returnPair;
+
         returnPair.first = weightedAverage / counter;
         returnPair.second = counter;
     }
-
+    qDebug() << "Overall reputation X: " << returnPair;
     return returnPair;
 
 }

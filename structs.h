@@ -47,7 +47,7 @@ struct interactionLog {
     bool correctDecission;
 };
 
-#define REP_DEBUG true
+#define REP_DEBUG false
 
 
 

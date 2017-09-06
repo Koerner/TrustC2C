@@ -34,7 +34,7 @@ QList<QPair<bool, double>> trustKnowledge::reputationFeedback(bool match, double
 
     }
 
-    qDebug() << "Calculated reputation return: " << reputationsFeedbackValues;
+    //qDebug() << "Calculated reputation return: " << reputationsFeedbackValues;
     return reputationsFeedbackValues;
 
 }
