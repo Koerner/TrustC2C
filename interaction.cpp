@@ -30,7 +30,7 @@ void interaction::run()
 
     // Determine whether the carX identified the truth correctly.
     carXKnowsTruth = getCarXKnowsTruth();
-    carXthinks = carXKnowsTruth == truth;
+    carXthinks = carXKnowsTruth.first == truth;
     // Determine whether the car is honest.
     carXHonest = isCarXHonest();
     carXsays = getCarXsays() ;
@@ -84,12 +84,21 @@ QVector<unsigned long int> interaction::selectInvolvedCars()
 
 
 
-bool interaction::getCarXKnowsTruth()
+QPair<bool, double> interaction::getCarXKnowsTruth()
 {
     /// this gives back whether the carX knows the truth.
     /**   */
 
-    return randCollection->detectRandX.getResultPercent(data->getCarPropDetectsObservation(carIDs.at(1)));
+    //qDebug() << "CarX %:" << data->getCarPropDetectsPrediction(carIDs.at(0));
+    double percent = data->getCarPropDetectsObservation(carIDs.at(1));
+    percent = randCollection->Poison.getPoisonPercent(percent);
+    qDebug() << "%:" << percent;
+
+    QPair<bool, double> returnPair;
+    returnPair.first = randCollection->detectRandX.getResultPercent(percent);
+    returnPair.second = percent;
+
+    return returnPair;
 }
 
 
@@ -108,7 +117,7 @@ QPair<bool, double> interaction::getCarXsays()
     returnPair.first = carXHonest == carXthinks;
     if(instanceSettings.certaintyXon)
     {
-        returnPair.second = data->getCarPropDetectsObservation(carIDs.at(1)); //if certainty is on
+        returnPair.second = carXKnowsTruth.second; //if certainty is on
     }
     else
     {
@@ -121,11 +130,13 @@ QPair<bool, double> interaction::getCarXsays()
 QPair<bool, double> interaction::getCarAobservation()
 {
     QPair<bool, double> returnPair;
+    double percent = data->getCarPropDetectsObservation(carIDs.at(0));
+    percent = randCollection->Poison.getPoisonPercent(percent);
 
-    bool carAKnowsTruth = randCollection->detectRandA.getResultPercent(data->getCarPropDetectsObservation(carIDs.at(0)));
+    bool carAKnowsTruth = randCollection->detectRandA.getResultPercent(percent);
 
     returnPair.first = carAKnowsTruth == truth;
-    returnPair.second = data->getCarPropDetectsObservation(carIDs.at(0));
+    returnPair.second = percent;
 
     return returnPair;
 }
@@ -133,11 +144,13 @@ QPair<bool, double> interaction::getCarAobservation()
 QPair<bool, double> interaction::getCarAprediction()
 {
     QPair<bool, double> returnPair;
+    double percent = data->getCarPropDetectsPrediction(carIDs.at(0));
+    percent = randCollection->Poison.getPoisonPercent(percent);
 
-    bool carAKnowsTruth = randCollection->detectRandA.getResultPercent(data->getCarPropDetectsObservation(carIDs.at(0)));
+    bool carAKnowsTruth = randCollection->detectRandA.getResultPercent(percent);
 
     returnPair.first = carAKnowsTruth == truth;
-    returnPair.second = data->getCarPropDetectsObservation(carIDs.at(0));
+    returnPair.second = percent;
 
     return returnPair;
 }
@@ -324,7 +337,7 @@ void interaction::logInteraction()
     /// This stores the most important values of one event, which can be dispalyed in the gui later
     /**   */
     interactionLog log;
-    log.carAKnowsTruth =carAKnowsTruth;
+    log.carAKnowsTruth = carAKnowsTruth;
     log.carAprediction = carAprediction;
     log.carAobservation = carAobservation;
     log.carIDs = carIDs;
@@ -335,6 +348,7 @@ void interaction::logInteraction()
     log.correctDecission = correctDecission;
     log.descissionResult = descissionResult;
     log.reputations = reputations;
+    log.reputationABXs = reputationABXs;
     log.truth = truth;
 
     logdata->writeInteractionLog(log);

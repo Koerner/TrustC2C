@@ -13,6 +13,7 @@ struct randStruct {
   randomQ detectRandA;
   randomQ carSelectRand;
   randomQ carB2SelectRand;
+  randomQ Poison;
 } ;
 
 struct settingsGUI {
@@ -34,7 +35,7 @@ struct settingsGUI {
 
 struct interactionLog {
     bool truth;
-    bool carXKnowsTruth;
+    QPair<bool,double> carXKnowsTruth;
     bool carXthinks;
     bool carXHonest;
     QPair<bool,double> carXsays;
@@ -43,6 +44,7 @@ struct interactionLog {
     QPair<bool,double> carAobservation;
     QVector<unsigned long int> carIDs;
     QList<QPair<double,int>> reputations;
+    QList<QPair<double,int>> reputationABXs;
     QPair<bool, double> descissionResult;
     bool correctDecission;
 };

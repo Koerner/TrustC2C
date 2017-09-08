@@ -14,11 +14,13 @@ public:
 
     bool getBool();
     int getPercent();
-    bool getResultPercent(int sucessPercent);
+    bool getResultPercent(double sucessPercent);
 
 
     QVector<unsigned long int> getCarID(unsigned long int totalCarNumber, int requiredIDs);
 
+    double getPoison(double mean);
+    double getPoisonPercent(double mean);
 private:
     std::mt19937 randMT;
 

@@ -34,6 +34,27 @@ bool randomQ::getBool()
     return boolDist(randMT);
 }
 
+double randomQ::getPoisonPercent(double mean)
+{
+    /// returns random bool.
+    /** Returns one random bool from an uniform distribution based on std::mt19937. */
+
+    std::poisson_distribution<int> poisonDist(mean * 100);
+    int percent = poisonDist(randMT);
+
+    if(percent>100)
+    {
+        percent = 100;
+    }
+    if(percent<0)
+    {
+        percent = 0;
+    }
+    double returnValue = percent/100.0;
+
+    return returnValue;
+}
+
 int randomQ::getPercent()
 {
     /// returns random <int> between 0 and 99.
@@ -43,16 +64,18 @@ int randomQ::getPercent()
     return intDist(randMT);
 }
 
-bool randomQ::getResultPercent(int sucessPercent)
+bool randomQ::getResultPercent(double sucessPercent)
 {
     /// returns random succes for a event with a probability in percent. input: percent for success.
     /**  */
-    if(sucessPercent > 100)
+    //qDebug() << "Car %:" << sucessPercent;
+
+    if(sucessPercent > 1.000)
     {
-        qFatal("percentage can not be higher than 100 or lower than 0: %d", sucessPercent);
+        qFatal("percentage can not be higher than 100 or lower than 0: %f", sucessPercent);
     }
 
-    if(getPercent() < sucessPercent)
+    if(getPercent() < sucessPercent * 100)
     {
         return true;
     }

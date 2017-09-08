@@ -13,10 +13,10 @@ public:
     trustDecision();
 
     QPair<bool, double> calculateDecission(QList<QPair<double, int> > &reputationsBs, QPair<double, int> &trustAX, QPair<bool, double> &CarXsays, QPair<bool, double> &CarAthinks);
+    QPair<double, int> reputationWeightAverage(QList<QPair<double, int>> reputationsBs, QPair<double, int> trustAX); //3
 
 private:
 
-    QPair<double, int> reputationWeightAverage(QList<QPair<double, int>> reputationsBs, QPair<double, int> trustAX); //3
     double trustWeightCalc(double reputationBX, double trustAX);
 
     int lastCheating(QList<double> elements);

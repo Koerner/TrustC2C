@@ -4,14 +4,13 @@
 #include "randomQ.cpp"
 #include "database.h"
 #include "structs.h"
+#include <QtWidgets/QApplication>
+#include "guiChart.h"
 
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
 
-    w.show();
 
 
  #define CERTAINTY_X_ON true
@@ -22,10 +21,11 @@ int main(int argc, char *argv[])
     randStruct randCollection;
     randCollection.truthRand.seedRandom(21035219);
     randCollection.detectRandA.seedRandom(73263905);
-    randCollection.detectRandX.seedRandom(60485875);
+    randCollection.detectRandX.seedRandom(604858754);
     randCollection.honestRand.seedRandom(52006881);
     randCollection.carSelectRand.seedRandom(84934424);
     randCollection.carB2SelectRand.seedRandom(84934424);
+    randCollection.Poison.seedRandom(67934424);
 
 
     //Get GUI input
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 
     //settings
     settingsGUI instanceSettings;
-    instanceSettings.numInteractions = 300;
+    instanceSettings.numInteractions = 3000;
     instanceSettings.numTotalCars = 10; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
     instanceSettings.numCarsRecommending = 5; //has to be -2 total cars
     instanceSettings.certaintyXon = true;
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     QList<QPair<int,double>> PropDetectsPrediction;
     PropDetectsPrediction.clear();
     PropDetectsPrediction.append(QPair<unsigned int,double>(0 , 0.95));
-    PropDetectsPrediction.append(QPair<unsigned int,double>(instanceSettings.numTotalCars * 90 /100, 0.05));
+    PropDetectsPrediction.append(QPair<unsigned int,double>(instanceSettings.numTotalCars * 90 /100, 0.50));
     instanceSettings.PropDetectsPrediction = PropDetectsPrediction;
     qDebug() << PropDetectsPrediction;
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     QList<QPair<int,double>> PropDetectsObservation;
     PropDetectsObservation.clear();
     PropDetectsObservation.append(QPair<unsigned int,double>(0 , 0.95));
-    PropDetectsObservation.append(QPair<unsigned int,double>(instanceSettings.numTotalCars * 90 /100, 0.05));
+    PropDetectsObservation.append(QPair<unsigned int,double>(instanceSettings.numTotalCars * 90 /100, 0.95));
     instanceSettings.PropDetectsObservation = PropDetectsObservation;
     qDebug() << PropDetectsObservation;
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     PropHonestCarB.append(QPair<unsigned int,double>(instanceSettings.numTotalCars - 0 / 100 * instanceSettings.numTotalCars, 10));
     instanceSettings.PropHonestCarB = PropHonestCarB;
 
-    instanceSettings.PropHonestCarX = 100;
+    instanceSettings.PropHonestCarX = 1;
 
     //trust chain specification
     /// be careful needs of lot of computing time
@@ -81,7 +81,6 @@ int main(int argc, char *argv[])
     database data(instanceSettings.numTotalCars, instanceSettings.PropDetectsPrediction, instanceSettings.PropDetectsObservation, instanceSettings.PropHonestCarB);
     logDatabase logdata;
 
-
     //generate interactions
     qDebug() << "number of interactions" << instanceSettings.numInteractions;
     qWarning() << "!!!!!!!!!!!!!! Start with interactions !!!!!!!!!!!!!!!!!!!!!";
@@ -95,16 +94,25 @@ int main(int argc, char *argv[])
         }
         if(i%10 == 0)
         {
-        w.setProgressBar(i * 100 * 100 / instanceSettings.numInteractions);
-        w.setProgressBarCar1(data.getAverageTrust(0,1));
-        w.setProgressBarCar2(data.getAverageTrust(0,instanceSettings.numTotalCars - 1));
+        //w.setProgressBar(i * 100 * 100 / instanceSettings.numInteractions);
+        //w.setProgressBarCar1(data.getAverageTrust(0,1));
+        //w.setProgressBarCar2(data.getAverageTrust(0,instanceSettings.numTotalCars - 1));
         qApp->processEvents();
         }
     }
     qWarning() << "!!!!!!!!!!!!!!!!!!!! Done with interactions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
 
-    data.saveToFileTrust();
-    data.saveToFileReputation();
+    //data.saveToFileTrust();
+    //data.saveToFileReputation();
+
+
+    QApplication a(argc, argv);
+    //MainWindow w;
+
+    //w.show();
+    //QApplication b(argc, argv);
+    guiChart w(logdata, data);
+    w.show();
 
 
 

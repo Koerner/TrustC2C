@@ -33,11 +33,11 @@ private:
     QVector<unsigned long> selectInvolvedCars();
 
     //CarX
-    bool getCarXKnowsTruth();
+    QPair<bool, double> getCarXKnowsTruth();
     bool isCarXHonest();
     QPair<bool,double> getCarXsays();
 
-    bool carXKnowsTruth;
+    QPair<bool, double> carXKnowsTruth;
     bool carXthinks;
     bool carXHonest;
     QPair<bool,double> carXsays;

@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
+QT += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -44,7 +45,9 @@ SOURCES += \
     logModel.cpp \
     average.cpp \
     logdatabase.cpp \
-    trustreputational.cpp
+    trustreputational.cpp \
+    guitableforchart.cpp \
+    guiChart.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -57,7 +60,9 @@ HEADERS += \
     logModel.h \
     average.h \
     logdatabase.h \
-    trustreputational.h
+    trustreputational.h \
+    guitableforchart.h \
+    guiChart.h
 
 FORMS += \
         mainwindow.ui
