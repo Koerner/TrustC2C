@@ -80,10 +80,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a327115a6380e677a5bb6331381f157d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f533ae7ccf0a2731b9b64203c3503e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#a3f533ae7ccf0a2731b9b64203c3503e5">getPercent</a> ()</td></tr>
 <tr class="separator:a3f533ae7ccf0a2731b9b64203c3503e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a099b8ef9d55bb4133c40b21e997173aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#a099b8ef9d55bb4133c40b21e997173aa">getResultPercent</a> (int sucessPercent)</td></tr>
-<tr class="separator:a099b8ef9d55bb4133c40b21e997173aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed10ee9b35f9bf43f80951b79a2986ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#aed10ee9b35f9bf43f80951b79a2986ff">getResultPercent</a> (double sucessPercent)</td></tr>
+<tr class="separator:aed10ee9b35f9bf43f80951b79a2986ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac71a073da550b11cf65c9c610ad4b8ff"><td class="memItemLeft" align="right" valign="top">QVector&lt; unsigned long int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#ac71a073da550b11cf65c9c610ad4b8ff">getCarID</a> (unsigned long int totalCarNumber, int requiredIDs)</td></tr>
 <tr class="separator:ac71a073da550b11cf65c9c610ad4b8ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa527382fa9ef7c650d9877059b5676d9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#aa527382fa9ef7c650d9877059b5676d9">getPoison</a> (double mean)</td></tr>
+<tr class="separator:aa527382fa9ef7c650d9877059b5676d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b8dd5119f221de479b5b0517746f036"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#a2b8dd5119f221de479b5b0517746f036">getPoisonPercent</a> (double mean)</td></tr>
+<tr class="separator:a2b8dd5119f221de479b5b0517746f036"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adcf00bae4dc3acb65be102abbd0d9651"></a>
@@ -193,8 +197,46 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a099b8ef9d55bb4133c40b21e997173aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a099b8ef9d55bb4133c40b21e997173aa">&#9670;&nbsp;</a></span>getResultPercent()</h2>
+<a id="aa527382fa9ef7c650d9877059b5676d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa527382fa9ef7c650d9877059b5676d9">&#9670;&nbsp;</a></span>getPoison()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double randomQ::getPoison </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mean</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2b8dd5119f221de479b5b0517746f036"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b8dd5119f221de479b5b0517746f036">&#9670;&nbsp;</a></span>getPoisonPercent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double randomQ::getPoisonPercent </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mean</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>returns random bool.</p>
+<p>Returns one random bool from an uniform distribution based on std::mt19937. </p>
+
+</div>
+</div>
+<a id="aed10ee9b35f9bf43f80951b79a2986ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed10ee9b35f9bf43f80951b79a2986ff">&#9670;&nbsp;</a></span>getResultPercent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,7 +244,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool randomQ::getResultPercent </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>sucessPercent</em></td><td>)</td>
           <td></td>
         </tr>

@@ -10,6 +10,14 @@ var files =
       [ "car", "structdatabase_1_1car.html", "structdatabase_1_1car" ],
       [ "interactionLogStruct", "structdatabase_1_1interaction_log_struct.html", "structdatabase_1_1interaction_log_struct" ]
     ] ],
+    [ "guiChart.cpp", "gui_chart_8cpp.html", null ],
+    [ "guiChart.h", "gui_chart_8h.html", [
+      [ "guiChart", "classgui_chart.html", "classgui_chart" ]
+    ] ],
+    [ "guitableforchart.cpp", "guitableforchart_8cpp.html", null ],
+    [ "guitableforchart.h", "guitableforchart_8h.html", [
+      [ "guiTableForChart", "classgui_table_for_chart.html", "classgui_table_for_chart" ]
+    ] ],
     [ "interaction.cpp", "interaction_8cpp.html", null ],
     [ "interaction.h", "interaction_8h.html", [
       [ "interaction", "classinteraction.html", "classinteraction" ]

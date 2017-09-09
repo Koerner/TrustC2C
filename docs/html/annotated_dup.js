@@ -2,6 +2,8 @@ var annotated_dup =
 [
     [ "average", "classaverage.html", "classaverage" ],
     [ "database", "classdatabase.html", "classdatabase" ],
+    [ "guiChart", "classgui_chart.html", "classgui_chart" ],
+    [ "guiTableForChart", "classgui_table_for_chart.html", "classgui_table_for_chart" ],
     [ "interaction", "classinteraction.html", "classinteraction" ],
     [ "interactionLog", "structinteraction_log.html", "structinteraction_log" ],
     [ "logDatabase", "classlog_database.html", "classlog_database" ],

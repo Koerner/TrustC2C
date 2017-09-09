@@ -5,6 +5,8 @@ var classrandom_q =
     [ "getBool", "classrandom_q.html#a327115a6380e677a5bb6331381f157d3", null ],
     [ "getCarID", "classrandom_q.html#ac71a073da550b11cf65c9c610ad4b8ff", null ],
     [ "getPercent", "classrandom_q.html#a3f533ae7ccf0a2731b9b64203c3503e5", null ],
-    [ "getResultPercent", "classrandom_q.html#a099b8ef9d55bb4133c40b21e997173aa", null ],
+    [ "getPoison", "classrandom_q.html#aa527382fa9ef7c650d9877059b5676d9", null ],
+    [ "getPoisonPercent", "classrandom_q.html#a2b8dd5119f221de479b5b0517746f036", null ],
+    [ "getResultPercent", "classrandom_q.html#aed10ee9b35f9bf43f80951b79a2986ff", null ],
     [ "seedRandom", "classrandom_q.html#a6e578c970a107af0c847d2924fdcb7f5", null ]
 ];

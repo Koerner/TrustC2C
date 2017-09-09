@@ -34,14 +34,14 @@ guiTableForChart::guiTableForChart(logDatabase &logDatabaseHandover, database &d
                     dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).descissionResult.second);
                     break;
                 case 4: //y-Axes IV //own prediction
-                    dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).carAprediction.first);
+                    dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).carAprediction.first==logDatabaseHandover.getInteractionLog(i).truth);
                     break;
                 case 5: //y-Axes V //own prediction certainty
                     dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).carAprediction.second);
 
                     break;
                 case 6: //y-Axes VI //CarX says state
-                    dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).carXsays.first);
+                    dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).carXsays.first==logDatabaseHandover.getInteractionLog(i).truth);
                     break;
                 case 7: //y-Axes VII //CarX certainty
                     dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).carXsays.second);
