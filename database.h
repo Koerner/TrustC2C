@@ -42,6 +42,7 @@ public:
 
     double getCarPropDetectsObservation(unsigned long int CarID);
     double getCarPropDetectsPrediction(unsigned long int CarID);
+    double getCarPropHonest(unsigned long int CarID);
 
     QList<unsigned long> getCarIDsAscendingReputation(unsigned long CarB);
 
@@ -59,6 +60,8 @@ public:
 
 
 
+    void addCar(double PropDetectsPrediction, double PropDetectsObservation, double PropHonest);
+    int sizeCarsVector();
 private:
     QVector<car> carVector;
 

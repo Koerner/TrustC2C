@@ -20,6 +20,26 @@ database::database(unsigned long size, QList<QPair<int, double>> PropDetectsPred
     qDebug() << "Number of cars in database: " << carVector.size();
 }
 
+int database::sizeCarsVector()
+{
+    return carVector.size();
+
+}
+
+
+void database::addCar(double PropDetectsPrediction, double PropDetectsObservation, double PropHonest)
+{
+    car temp;
+    temp.id = carVector.size();
+    temp.PropDetectsObservation = PropDetectsObservation;
+    temp.PropDetectsPrediction = PropDetectsPrediction;
+    temp.PropHonest = PropHonest;
+
+    carVector.append(temp);
+    qDebug() <<"last id" << temp.id <<"size database" << carVector.size();
+
+}
+
 double database::calcProp(int CarID, QList<QPair<int, double>> prop)
 {
 
@@ -139,6 +159,11 @@ double database::getCarPropDetectsPrediction(unsigned long int CarID)
 {
 
     return carVector.at(CarID).PropDetectsPrediction;
+}
+
+double database::getCarPropHonest(unsigned long CarID)
+{
+    return carVector.at(CarID).PropHonest;
 }
 
 

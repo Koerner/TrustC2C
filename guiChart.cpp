@@ -13,13 +13,13 @@
 
 QT_CHARTS_USE_NAMESPACE
 
-guiChart::guiChart(logDatabase &logDatabaseHandover, database &databaseHandover, QWidget *parent)
+guiChart::guiChart(logDatabase &logDatabaseHandover, database &databaseHandover, int CarID, int first, int last, QWidget *parent)
     : QWidget(parent)
 {
     // create simple model for storing data
     // user's table data model
     //! [1]
-    guiTableForChart *model = new guiTableForChart(logDatabaseHandover,databaseHandover);
+    guiTableForChart *model = new guiTableForChart(logDatabaseHandover,databaseHandover, CarID, first, last);
     //! [1]
 
     //! [2]
@@ -145,26 +145,26 @@ guiChart::guiChart(logDatabase &logDatabaseHandover, database &databaseHandover,
     chart->axisY()->setMin(-0.01);
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setMinimumSize(1200, 300);
+    chartView->setMinimumSize(500, 200);
 
     chart2->createDefaultAxes();
     chart2->axisY()->setMax(1.01);
     chart2->axisY()->setMin(-0.01);
     QChartView *chartView2 = new QChartView(chart2);
     chartView2->setRenderHint(QPainter::Antialiasing);
-    chartView2->setMinimumSize(1200, 300);
+    chartView2->setMinimumSize(500, 200);
     //! [8]
 
     //! [9]
     // create main layout
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->addWidget(tableView, 1, 0, 2, 1);
-    mainLayout->setColumnStretch(0, 2);
+    mainLayout->setColumnStretch(0, 7);
 
     QGridLayout *chartLayout = new QGridLayout;
     mainLayout->addWidget(chartView, 1, 1);
     mainLayout->addWidget(chartView2, 2, 1);
-    mainLayout->setColumnStretch(1, 3);
+    mainLayout->setColumnStretch(1, 9);
 
     setLayout(mainLayout);
     //! [9]

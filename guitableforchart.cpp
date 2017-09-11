@@ -5,16 +5,18 @@
 #include <QtGui/QColor>
 #include "trustDecision.h"
 
-guiTableForChart::guiTableForChart(logDatabase &logDatabaseHandover, database &databaseHandover, QObject *parent) :
+guiTableForChart::guiTableForChart(logDatabase &logDatabaseHandover, database &databaseHandover, int CarID, int first, int last, QObject *parent) :
     QAbstractTableModel(parent)
 
 {
-    m_columnCount = 9;
+
+    m_columnCount = 10;
     m_rowCount = logDatabaseHandover.sizeInteractionLogDatabase();
 
+
     // m_data
-    for (int i = 0; i < m_rowCount; i++) {
-        if(logDatabaseHandover.getInteractionLog(i).carIDs.at(0)==9)
+    for (int i = first; i < last; i++) {
+        if((logDatabaseHandover.getInteractionLog(i).carIDs.at(0)==CarID))
         {
             QVector<qreal>* dataVec = new QVector<qreal>(m_columnCount);
             for (int k = 0; k < dataVec->size(); k++)
@@ -38,7 +40,6 @@ guiTableForChart::guiTableForChart(logDatabase &logDatabaseHandover, database &d
                     break;
                 case 5: //y-Axes V //own prediction certainty
                     dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).carAprediction.second);
-
                     break;
                 case 6: //y-Axes VI //CarX says state
                     dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).carXsays.first==logDatabaseHandover.getInteractionLog(i).truth);
@@ -47,9 +48,14 @@ guiTableForChart::guiTableForChart(logDatabase &logDatabaseHandover, database &d
                     dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).carXsays.second);
                     break;
                 case 8: //y-Axes VIII //CarX reputation
+                {
                     trustDecision trusttemp;
                     QPair<double, int> temp = trusttemp.reputationWeightAverage(logDatabaseHandover.getInteractionLog(i).reputations, qMakePair(0,0)); //3
                     dataVec->replace(k, temp.first);
+                    break;
+                }
+                case 9: //y-Axes VIII //Trust and reputation A->X
+                    dataVec->replace(k, (logDatabaseHandover.getInteractionLog(i).descissionResult.second / logDatabaseHandover.getInteractionLog(i).carXsays.second));
                     break;
                 }
             }
@@ -105,6 +111,9 @@ QVariant guiTableForChart::headerData(int section, Qt::Orientation orientation, 
             break;
         case 8:
             return "Rep(B->X)";
+            break;
+        case 9:
+            return "Trust(A->X)";
             break;
         }
 

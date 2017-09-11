@@ -6,6 +6,7 @@
 #include "structs.h"
 #include <QtWidgets/QApplication>
 #include "guiChart.h"
+#include <QDesktopWidget>
 
 
 int main(int argc, char *argv[])
@@ -15,34 +16,21 @@ int main(int argc, char *argv[])
 
  #define CERTAINTY_X_ON true
 
-
-    // Setup Randoms
-
-    randStruct randCollection;
-    randCollection.truthRand.seedRandom(21035219);
-    randCollection.detectRandA.seedRandom(73263905);
-    randCollection.detectRandX.seedRandom(604858754);
-    randCollection.honestRand.seedRandom(52006881);
-    randCollection.carSelectRand.seedRandom(84934424);
-    randCollection.carB2SelectRand.seedRandom(84934424);
-    randCollection.Poison.seedRandom(67934424);
-
-
-    //Get GUI input
-
+    //Get GUI Settings
 
     //settings
     settingsGUI instanceSettings;
-    instanceSettings.numInteractions = 3000;
-    instanceSettings.numTotalCars = 10; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
+    instanceSettings.numInteractionsFirst = 3000;
+    instanceSettings.numTotalCarsFirst = 10; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
+     //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
     instanceSettings.numCarsRecommending = 5; //has to be -2 total cars
     instanceSettings.certaintyXon = true;
 
     // Propability for cars to detect the truth before arriving
     QList<QPair<int,double>> PropDetectsPrediction;
     PropDetectsPrediction.clear();
-    PropDetectsPrediction.append(QPair<unsigned int,double>(0 , 0.95));
-    PropDetectsPrediction.append(QPair<unsigned int,double>(instanceSettings.numTotalCars * 90 /100, 0.50));
+    PropDetectsPrediction.append(QPair<unsigned int,double>(0 , 0.3));
+    PropDetectsPrediction.append(QPair<unsigned int,double>(instanceSettings.numTotalCarsFirst * 90 /100, 0.2));
     instanceSettings.PropDetectsPrediction = PropDetectsPrediction;
     qDebug() << PropDetectsPrediction;
 
@@ -50,70 +38,133 @@ int main(int argc, char *argv[])
     QList<QPair<int,double>> PropDetectsObservation;
     PropDetectsObservation.clear();
     PropDetectsObservation.append(QPair<unsigned int,double>(0 , 0.95));
-    PropDetectsObservation.append(QPair<unsigned int,double>(instanceSettings.numTotalCars * 90 /100, 0.95));
+    PropDetectsObservation.append(QPair<unsigned int,double>(instanceSettings.numTotalCarsFirst * 90 /100, 0.85));
     instanceSettings.PropDetectsObservation = PropDetectsObservation;
     qDebug() << PropDetectsObservation;
 
-
-
-
-
-
     // Propability honest  /// not yet implemented
-    QList<QPair<int,double>> PropHonestCarB;
-    PropHonestCarB.clear();
-    PropHonestCarB.append(QPair<unsigned int,double>(100 / 100 * instanceSettings.numTotalCars , 90));
-    PropHonestCarB.append(QPair<unsigned int,double>(instanceSettings.numTotalCars - 0 / 100 * instanceSettings.numTotalCars, 10));
-    instanceSettings.PropHonestCarB = PropHonestCarB;
+    QList<QPair<int,double>> PropHonestCarX;
+    PropHonestCarX.clear();
+    PropHonestCarX.append(QPair<unsigned int,double>(0 , 1.0));
+    PropHonestCarX.append(QPair<unsigned int,double>(instanceSettings.numTotalCarsFirst * 90 /100, 0.1));
+    instanceSettings.PropHonestCarX = PropHonestCarX;
 
-    instanceSettings.PropHonestCarX = 1;
+    //instanceSettings.PropHonestCarX = 1;
 
     //trust chain specification
-    /// be careful needs of lot of computing time
     instanceSettings.minRecomendingWidthDirect = 1; //minimal 1
     instanceSettings.minRecomendingWidth = 5; //minimal 1
     instanceSettings.maxRecomendingDepth = 5;  //Minimal 1
 
+    //Batch II
+    double PropDetectsPredictionNew = 0.30;
+    double PropDetectsObservationNew = 0.95;
+    double PropHonestNew = 1;
+    instanceSettings.numInteractionsSecond = 200;
+    instanceSettings.numTotalCarsSecond = instanceSettings.numTotalCarsFirst + 1; //do not change
+
     //end settings
 
+    // Setup Randoms
 
-    //initilaize database with all cars
-    database data(instanceSettings.numTotalCars, instanceSettings.PropDetectsPrediction, instanceSettings.PropDetectsObservation, instanceSettings.PropHonestCarB);
-    logDatabase logdata;
 
-    //generate interactions
-    qDebug() << "number of interactions" << instanceSettings.numInteractions;
-    qWarning() << "!!!!!!!!!!!!!! Start with interactions !!!!!!!!!!!!!!!!!!!!!";
 
-    for (unsigned long int i=0; i < ceil((double)instanceSettings.numInteractions/100); i++)
+    QList<logDatabase> logdataList;
+    QList<randStruct> randList;
+    QList<database> databaseList;
+
+    for(int k=0; k<4; k++)
     {
-        for (unsigned long int j=0; j< 100; j++)
-        {
-        interaction event(instanceSettings, randCollection, data, logdata);
-        event.run();
-        }
-        if(i%10 == 0)
-        {
-        //w.setProgressBar(i * 100 * 100 / instanceSettings.numInteractions);
-        //w.setProgressBarCar1(data.getAverageTrust(0,1));
-        //w.setProgressBarCar2(data.getAverageTrust(0,instanceSettings.numTotalCars - 1));
-        qApp->processEvents();
-        }
-    }
-    qWarning() << "!!!!!!!!!!!!!!!!!!!! Done with interactions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+        qWarning() << "Start run" << k+1;
 
-    //data.saveToFileTrust();
-    //data.saveToFileReputation();
+        //rand Init
+        randStruct randCollection;
+        randCollection.truthRand.seedRandom(21035219+k);
+        randCollection.detectRandA.seedRandom(73263905+k);
+        randCollection.detectRandX.seedRandom(604858754+k);
+        randCollection.honestRand.seedRandom(52006881+k);
+        randCollection.carSelectRandAX.seedRandom(84934424+k);
+        randCollection.carSelectRandB.seedRandom(84934424+k);
+        randCollection.carB2SelectRand.seedRandom(84934424+k);
+        randCollection.Poison.seedRandom(67934424+k);
+
+        randList.append(randCollection);
+
+        //database init
+        database data(instanceSettings.numTotalCarsFirst, instanceSettings.PropDetectsPrediction, instanceSettings.PropDetectsObservation, instanceSettings.PropHonestCarX);
+        databaseList.append(data);
+        logDatabase logdata;
+        logdataList.append(logdata);
+
+        //interaction batch I
+
+        for (unsigned long int i=0; i < ceil((double)instanceSettings.numInteractionsFirst/100); i++)
+        {
+            for (unsigned long int j=0; j< 100; j++)
+            {
+            interaction event(instanceSettings, randList[k], databaseList[k], logdataList[k]);
+            event.run();
+            }
+            if(i%10 == 0)
+            {
+            qApp->processEvents();
+            }
+        }
+
+        //interaction batch II
+        databaseList[k].addCar(PropDetectsPredictionNew, PropDetectsObservationNew, PropHonestNew);
+
+        for (unsigned long int i=0; i < ceil((double)instanceSettings.numInteractionsSecond/100); i++)
+        {
+            for (unsigned long int j=0; j< 100; j++)
+            {
+            interaction event(instanceSettings, randList[k], databaseList[k], logdataList[k]);
+            event.run();
+            }
+            if(i%10 == 0)
+            {
+            qApp->processEvents();
+            }
+        }
+
+        qWarning() << "End run" << k+1;
+
+
+    }
+
 
 
     QApplication a(argc, argv);
+    QDesktopWidget dwO;
+    QRect dw = dwO.screenGeometry(0);
     //MainWindow w;
 
     //w.show();
     //QApplication b(argc, argv);
-    guiChart w(logdata, data);
-    w.show();
 
+    guiChart window1(logdataList[0], databaseList[0], instanceSettings.numTotalCarsSecond -1, instanceSettings.numInteractionsFirst, instanceSettings.numInteractionsFirst + instanceSettings.numInteractionsSecond);
+    window1.setWindowTitle("Run I");
+    window1.move(QPoint(dw.width()*0,dw.height()*0));
+    window1.resize(QSize(dw.width()*0.49, dw.height()*0.45));
+    window1.show();
+
+    guiChart window2(logdataList[1], databaseList[1], instanceSettings.numTotalCarsSecond -1, instanceSettings.numInteractionsFirst, instanceSettings.numInteractionsFirst + instanceSettings.numInteractionsSecond);
+    window2.setWindowTitle("Run II");
+    window2.move(QPoint(dw.width()*0.5,dw.height()*0));
+    window2.resize(QSize(dw.width()*0.49, dw.height()*0.45));
+    window2.show();
+
+    guiChart window3(logdataList[2], databaseList[2], instanceSettings.numTotalCarsSecond -1, instanceSettings.numInteractionsFirst, instanceSettings.numInteractionsFirst + instanceSettings.numInteractionsSecond);
+    window3.setWindowTitle("Run III");
+    window3.move(QPoint(dw.width()*0,dw.height()*0.47));
+    window3.resize(QSize(dw.width()*0.49, dw.height()*0.45));
+    window3.show();
+
+    guiChart window4(logdataList[3], databaseList[3], instanceSettings.numTotalCarsSecond -1, instanceSettings.numInteractionsFirst, instanceSettings.numInteractionsFirst + instanceSettings.numInteractionsSecond);
+    window4.setWindowTitle("Run IV");
+    window4.move(QPoint(dw.width()*0.5,dw.height()*0.47));
+    window4.resize(QSize(dw.width()*0.49, dw.height()*0.45));
+    window4.show();
 
 
     return a.exec();

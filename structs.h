@@ -11,14 +11,17 @@ struct randStruct {
   randomQ detectRandX;
   randomQ honestRand;
   randomQ detectRandA;
-  randomQ carSelectRand;
+  randomQ carSelectRandAX;
+  randomQ carSelectRandB;
   randomQ carB2SelectRand;
   randomQ Poison;
 } ;
 
 struct settingsGUI {
-  unsigned int numInteractions;
-  unsigned int numTotalCars;
+  unsigned int numInteractionsFirst;
+  unsigned int numInteractionsSecond;
+  unsigned int numTotalCarsFirst;
+  unsigned int numTotalCarsSecond;
   unsigned int numCarsRecommending;
   int maxRecomendingDepth;
   int minRecomendingWidthDirect;
@@ -28,9 +31,7 @@ struct settingsGUI {
 
   QList<QPair<int,double>> PropDetectsPrediction;
   QList<QPair<int,double>> PropDetectsObservation;
-
-  unsigned int PropHonestCarX;
-  QList<QPair<int,double>> PropHonestCarB;
+  QList<QPair<int,double>> PropHonestCarX;
 } ;
 
 struct interactionLog {

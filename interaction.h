@@ -34,7 +34,7 @@ private:
 
     //CarX
     QPair<bool, double> getCarXKnowsTruth();
-    bool isCarXHonest();
+    bool isCarXHonest(unsigned long carID);
     QPair<bool,double> getCarXsays();
 
     QPair<bool, double> carXKnowsTruth;

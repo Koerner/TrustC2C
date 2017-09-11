@@ -85,7 +85,7 @@ bool randomQ::getResultPercent(double sucessPercent)
     }
 }
 
-QVector<unsigned long int> randomQ::getCarID(unsigned long int totalCarNumber, int requiredIDs)
+QVector<unsigned long int> randomQ::getCarID(unsigned long int totalCarNumber, int requiredIDs, QVector<unsigned long> blockedCars)
 {
     /// returns random succes for a event with a probability in percent. input: percent for success.
     /**  */
@@ -100,7 +100,7 @@ QVector<unsigned long int> randomQ::getCarID(unsigned long int totalCarNumber, i
         int temp = longDist(randMT);
         //qDebug() << "Car ID: " << temp;
 
-        if(carIDs.contains(temp))
+        if(carIDs.contains(temp) || blockedCars.contains(temp))
         {
             //we never want to have the same carIDs in one batch!
             i--;
@@ -123,6 +123,8 @@ QVector<unsigned long int> randomQ::getCarID(unsigned long int totalCarNumber, i
     }
 
 }
+
+
 
 
 

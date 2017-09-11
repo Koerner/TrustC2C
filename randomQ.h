@@ -17,7 +17,7 @@ public:
     bool getResultPercent(double sucessPercent);
 
 
-    QVector<unsigned long int> getCarID(unsigned long int totalCarNumber, int requiredIDs);
+    QVector<unsigned long int> getCarID(unsigned long int totalCarNumber, int requiredIDs, QVector<unsigned long int> blockedCars);
 
     double getPoison(double mean);
     double getPoisonPercent(double mean);

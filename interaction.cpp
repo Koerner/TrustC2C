@@ -32,7 +32,7 @@ void interaction::run()
     carXKnowsTruth = getCarXKnowsTruth();
     carXthinks = carXKnowsTruth.first == truth;
     // Determine whether the car is honest.
-    carXHonest = isCarXHonest();
+    carXHonest = isCarXHonest(carIDs.at(1));
     carXsays = getCarXsays() ;
     // Determine whether the carA identified the truth correctly.
 
@@ -71,14 +71,18 @@ QVector<unsigned long int> interaction::selectInvolvedCars()
     /**   */
     int requiredCarIDs = 1 + 1 + instanceSettings.numCarsRecommending;
 
-    if (requiredCarIDs > instanceSettings.numTotalCars)
+    if (requiredCarIDs > data->sizeCarsVector())
     {
         qWarning() << "Not enough total cars for the number of reomending cars. Setting the reccomending cars to #totalCars-2.";
-        instanceSettings.numCarsRecommending = instanceSettings.numTotalCars - 2;
-        requiredCarIDs = instanceSettings.numTotalCars;
+        instanceSettings.numCarsRecommending = data->sizeCarsVector() - 2;
+        requiredCarIDs = data->sizeCarsVector();
     }
 
-    return randCollection->carSelectRand.getCarID(instanceSettings.numTotalCars, requiredCarIDs);
+    QVector<unsigned long int> cars;
+    cars.clear();
+    cars.append(randCollection->carSelectRandAX.getCarID(data->sizeCarsVector(), 2, cars));
+    cars.append(randCollection->carSelectRandB.getCarID(data->sizeCarsVector(), instanceSettings.numCarsRecommending, cars));
+    return cars;
 
 }
 
@@ -102,12 +106,12 @@ QPair<bool, double> interaction::getCarXKnowsTruth()
 }
 
 
-bool interaction::isCarXHonest()
+bool interaction::isCarXHonest(unsigned long int carID)
 {
     /// this gives back whether the carX is honest and tells other cars the truth of it's knowledge.
     /**   */
 
-    return randCollection->honestRand.getResultPercent(instanceSettings.PropHonestCarX);
+    return randCollection->honestRand.getResultPercent(data->getCarPropHonest(carID));
 }
 
 QPair<bool, double> interaction::getCarXsays()
@@ -207,10 +211,20 @@ QList<QPair<double, int>> interaction::getMergedReputatiosnABXs(QList<QPair<doub
     for (int i=2; i < reputationBs.size()+2; i++)
     {
         QPair<double, int> mergedreputationsAB;
+        QList<QPair<bool, double>> reputationList = data->getCarReputation(carIDs.at(0), carIDs.at(i));
 
-        mergedreputationsAB = trustReputational::mergeReputation(data->getCarReputation(carIDs.at(0), carIDs.at(i)));
+        if (reputationList.isEmpty()) //if no reputation is available set it 50%
+        {
+            QPair<bool, double> temp = qMakePair(true, 0.1);
+            reputationList.append(temp);
+            temp = qMakePair(false, 0.1);
+            reputationList.append(temp);
+        }
 
-        if(REP_DEBUG){qDebug() << "Reputation A towards B :"<< data->getCarReputation(carIDs.at(0), carIDs.at(i)) <<"=>" << mergedreputationsAB <<" ---";};
+
+        mergedreputationsAB = trustReputational::mergeReputation(reputationList);
+
+        if(REP_DEBUG){qDebug() << "Reputation A towards B :"<< reputationList <<"=>" << mergedreputationsAB <<" ---";};
         if(REP_DEBUG){qDebug() << "Merged A->B :" << mergedreputationsAB;};
 
         returnMergedReputatiosnABX.append(trustReputational::combine(mergedreputationsAB, reputationBs.at(i-2)));
@@ -315,13 +329,6 @@ void interaction::storeReputationForBFromA()
 QPair<bool, double> interaction::getDecissionA()
 {
     QPair<bool, double> returnPair;
-    QList<QList<QPair<bool,double>>> reputationRecordABs;
-
-    for(int i=2; i<carIDs.size(); i++)
-    {
-        // gets all reputations (!) from A to one B
-        reputationRecordABs.append(data->getCarReputation(carIDs.at(0), carIDs.at(i)));
-    }
     QPair<double, int> trustAX;
     trustAX = trustReputational::mergeTrust(data->getCarTrust(carIDs.at(0), carIDs.at(1)));
 

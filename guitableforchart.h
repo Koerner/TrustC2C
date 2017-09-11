@@ -14,7 +14,7 @@ class guiTableForChart : public QAbstractTableModel
     Q_OBJECT
 public:
 
-    explicit guiTableForChart(logDatabase &logDatabaseHandover, database &databaseHandover, QObject *parent = 0);
+    explicit guiTableForChart(logDatabase &logDatabaseHandover, database &databaseHandover, int CarID, int first, int last, QObject *parent = 0);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;

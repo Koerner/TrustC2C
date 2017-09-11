@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1125</width>
-    <height>800</height>
+    <width>1400</width>
+    <height>1000</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,115 +20,17 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>5</y>
-      <width>1111</width>
-      <height>731</height>
+      <x>10</x>
+      <y>10</y>
+      <width>1371</width>
+      <height>911</height>
      </rect>
     </property>
-    <property name="currentIndex">
-     <number>1</number>
-    </property>
-    <widget class="QWidget" name="logSettings">
-     <attribute name="title">
-      <string>Tab 1</string>
-     </attribute>
-     <widget class="QWidget" name="verticalLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>9</x>
-        <y>9</y>
-        <width>1101</width>
-        <height>691</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QProgressBar" name="progressBar">
-         <property name="maximum">
-          <number>99</number>
-         </property>
-         <property name="value">
-          <number>0</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="logTab">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
-     <widget class="QTableView" name="logTableView">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>1091</width>
-        <height>681</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QWidget" name="gridLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>20</y>
-        <width>1071</width>
-        <height>661</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Car 0 -&gt; Car1</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QProgressBar" name="progressBar_2">
-         <property name="minimum">
-          <number>-100</number>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="value">
-          <number>0</number>
-         </property>
-         <property name="format">
-          <string>%v</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Car0 -&gt; Car End</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QProgressBar" name="progressBar_3">
-         <property name="minimum">
-          <number>-100</number>
-         </property>
-         <property name="value">
-          <number>0</number>
-         </property>
-         <property name="format">
-          <string>%v</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
+    <widget class="QWidget" name="page"/>
+    <widget class="QWidget" name="page_2"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -136,7 +38,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1125</width>
+     <width>1400</width>
      <height>26</height>
     </rect>
    </property>

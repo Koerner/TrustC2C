@@ -21,8 +21,12 @@ QPair<bool, double> trustDecision::calculateDecission(QList<QPair<double, int> >
 
     QPair<double, int> AXresult;
     QPair<bool, double> DecissionResult;
+    if(AXreputation.second == 0)
+    {
+       // AXreputation.first = 0.5;
+    }
 
-    AXresult.second = AXreputation.second; //bool state
+    AXresult.second = AXreputation.second; //number interactions recomendation is based on.
     AXresult.first = AXreputation.first * CarXsays.second; //certainty combined %
 
     //
@@ -85,11 +89,17 @@ QPair<double, int> trustDecision::reputationWeightAverage(QList<QPair<double, in
             counter += allValues.at(i).second;
         }
 
-
-        returnPair.first = weightedAverage / counter;
+        if(counter == 0)
+        {
+            returnPair.first = 0;
+        }
+        else
+        {
+            returnPair.first = weightedAverage / counter;
+        }
         returnPair.second = counter;
     }
-    qDebug() << "Overall reputation X: " << returnPair;
+    //qDebug() << "Overall reputation X: " << returnPair;
     return returnPair;
 
 }
