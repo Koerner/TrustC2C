@@ -161,7 +161,7 @@ guiChart::guiChart(logDatabase& logDatabaseHandover, database& databaseHandover,
     chart2->createDefaultAxes();
     chart2->axisY()->setMax(1.05);
     chart2->axisY()->setMin(-0.05);
-    chart2->axisX()->setMin(0.9);
+
     QChartView *chartView2 = new QChartView(chart2);
     chartView2->setRenderHint(QPainter::Antialiasing);
     chartView2->setMinimumSize(500, 200);

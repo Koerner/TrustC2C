@@ -29,9 +29,9 @@ struct settingsGUI {
 
   bool certaintyXon;
 
-  QList<QPair<int,QPair<double, double>>> PropDetectsPrediction;
-  QList<QPair<int,QPair<double, double>>> PropDetectsObservation;
-  QList<QPair<int,QPair<double, double>>> PropHonestCarX;
+  QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsPrediction;
+  QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsObservation;
+  QList<QPair<unsigned long int,QPair<double, double>>> PropHonestCarX;
 } ;
 
 struct interactionLog {
@@ -40,7 +40,7 @@ struct interactionLog {
     bool carXthinks;
     bool carXHonest;
     QPair<bool,double> carXsays;
-    bool carAKnowsTruth;
+    //bool carAKnowsTruth;
     QPair<bool,double> carAprediction;
     QPair<bool,double> carAobservation;
     QVector<unsigned long int> carIDs;

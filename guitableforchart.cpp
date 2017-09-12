@@ -54,8 +54,8 @@ guiTableForChart::guiTableForChart(logDatabase &logDatabaseHandover, database &d
                     dataVec->replace(k, temp.first);
                     break;
                 }
-                case 9: //y-Axes VIII //Trust and reputation A->X
-                    dataVec->replace(k, 0);
+                case 9: //y-Axes VIII //Car X
+                    dataVec->replace(k, logDatabaseHandover.getInteractionLog(i).carIDs.at(1));
                     break;
                 }
             }
@@ -113,7 +113,7 @@ QVariant guiTableForChart::headerData(int section, Qt::Orientation orientation, 
             return "rB->X";
             break;
         case 9:
-            return "tA->X";
+            return "CarX";
             break;
         }
 

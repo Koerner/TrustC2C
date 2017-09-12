@@ -34,7 +34,7 @@ public:
 
     QVector<interactionLogStruct> interactionLogList;
 
-    database(unsigned long size, QList<QPair<int, QPair<double, double>> > PropDetectsPrediction, QList<QPair<int, QPair<double, double> > > PropDetectsObservation, QList<QPair<int, QPair<double, double>> > PropHonest);
+    database(unsigned long int size, QList<QPair<unsigned long int, QPair<double, double>> > PropDetectsPrediction, QList<QPair<unsigned long int, QPair<double, double> > > PropDetectsObservation, QList<QPair<unsigned long int, QPair<double, double>> > PropHonest);
 
     //get function
     QList<QPair<bool, double>> getCarTrust(unsigned long int CarBID, unsigned long int CarXid) const;
@@ -69,7 +69,7 @@ public:
 private:
     QVector<car> carVector;
 
-    QPair <double, double> calcProp(unsigned long CarID, QList<QPair<int, QPair<double, double>>> prop);
+    QPair <double, double> calcProp(unsigned long CarID, QList<QPair<unsigned long, QPair<double, double> > > prop);
 };
 
 #endif // DATABASE_H

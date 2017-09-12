@@ -32,14 +32,14 @@ void interaction::run()
     carXKnowsTruth = getCarXKnowsTruth();
     carXthinks = carXKnowsTruth.first == truth;
     // Determine whether the car is honest.
-    carXHonest = isCarXHonest(carIDs.at(1));
+    carXHonest = isCarXHonest();
     carXsays = getCarXsays() ;
     // Determine whether the carA identified the truth correctly.
 
     carAobservation = getCarAobservation();
     carAprediction = getCarAprediction();
 
-    qDebug() << "CarX thinks: " <<carXsays << "| CarA prediction is " << carAprediction << "observation is:" << carAobservation <<"| is match: " << isXMatchAobservation();
+    qDebug() << "CarX says: " <<carXsays << "| CarA prediction is " << carAprediction << "observation is:" << carAobservation <<"| is match: " << isXMatchAobservation();
 
     //get all reputations from all Bs towards X as QList
     reputations = getReputatiosnBs();
@@ -80,7 +80,7 @@ QVector<unsigned long int> interaction::selectInvolvedCars()
 
     QVector<unsigned long int> cars;
     cars.clear();
-    cars.append(randCollection->carSelectRandAX.getCarID(data->sizeCarsVector(), 2, cars));
+    cars.append(randCollection->carSelectRandAX.getCarID(data->sizeCarsVector(),2, cars));
     cars.append(randCollection->carSelectRandB.getCarID(data->sizeCarsVector(), instanceSettings.numCarsRecommending, cars));
     return cars;
 
@@ -107,12 +107,16 @@ QPair<bool, double> interaction::getCarXKnowsTruth()
 }
 
 
-bool interaction::isCarXHonest(unsigned long int carID)
+bool interaction::isCarXHonest()
 {
     /// this gives back whether the carX is honest and tells other cars the truth of it's knowledge.
     /**   */
+    double percent = data->getCarPropHonest(data->getCarPropHonest(carIDs.at(1)));
+    double stddistribution = data->getCarPropHonestStdDist(carIDs.at(1));
+    percent = randCollection->Poison.getPoisonPercent(percent, stddistribution);
+    qDebug() << "%:" << percent;
 
-    return randCollection->honestRand.getResultPercent(data->getCarPropHonest(carID));
+    return randCollection->honestRand.getResultPercent(percent);
 }
 
 QPair<bool, double> interaction::getCarXsays()
@@ -315,7 +319,7 @@ void interaction::storeReputationForBFromA()
 
 
     trustKnowledge temp;
-    if (reputations.size() != instanceSettings.numCarsRecommending){qFatal("no reputation specified, can't use it without calculation before");}
+    //if (reputations.size() != instanceSettings.numCarsRecommending){qFatal("no reputation specified, can't use it without calculation before");}
 
     QList<QPair<bool,double>> newReputationValues = temp.reputationFeedback(isXMatchAobservation(), carAobservation.second, reputations);
 
@@ -348,7 +352,7 @@ void interaction::logInteraction()
     /// This stores the most important values of one event, which can be dispalyed in the gui later
     /**   */
     interactionLog log;
-    log.carAKnowsTruth = carAKnowsTruth;
+    //log.carAKnowsTruth = carAKnowsTruth;
     log.carAprediction = carAprediction;
     log.carAobservation = carAobservation;
     log.carIDs = carIDs;

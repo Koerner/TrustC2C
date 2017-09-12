@@ -1,6 +1,6 @@
 #include "database.h"
 
-database::database(unsigned long size, QList<QPair<int,  QPair<double, double>>> PropDetectsPrediction, QList<QPair<int, QPair<double, double>> > PropDetectsObservation, QList<QPair<int,  QPair<double, double>>> PropHonest)
+database::database(unsigned long size, QList<QPair<unsigned long, QPair<double, double> > > PropDetectsPrediction, QList<QPair<unsigned long, QPair<double, double> > > PropDetectsObservation, QList<QPair<unsigned long, QPair<double, double> > > PropHonest)
 {
     carVector.clear();
     for(unsigned long int i=0; i<size; i++)
@@ -40,7 +40,7 @@ void database::addCar(QPair <double, double> PropDetectsPrediction, QPair <doubl
 
 }
 
-QPair <double, double> database::calcProp(unsigned long int CarID, QList<QPair<int, QPair<double, double>>> prop)
+QPair <double, double> database::calcProp(unsigned long int CarID, QList<QPair<unsigned long int, QPair<double, double>>> prop)
 {
 
     if(prop.size() == 0){qFatal("Something went wrong with the propabilities");}
@@ -64,7 +64,7 @@ QList<QPair<bool, double>> database::getCarTrust(unsigned long int CarBID,unsign
      * It returns a list which is sorted by the time with double values containing the trust score at that point  */
 
 
-    if(CarBID < 0 || CarBID>=carVector.size() || CarXid < 0 || CarXid >= carVector.size()){qFatal("CarID out of scope!");}
+    //if(CarBID < 0 || CarBID>=carVector.size() || CarXid < 0 || CarXid >= carVector.size()){qFatal("CarID out of scope!");}
 
     QList<QPair<bool, double>> returnList  = carVector.at(CarBID).trustMap.values(CarXid);
     /*if(returnList.isEmpty())
@@ -87,7 +87,7 @@ QList<QPair<bool, double> > database::getCarReputation(unsigned long int CarAID,
     /** This function searches for all reputation values stored by A (receiving trust recomondation) towards Car B (sending trust about X).
      * It returns a list which is sorted by the time with double values containing the trust score at that point  */
 
-    if(CarAID < 0 || CarAID>=carVector.size() || CarBID < 0 || CarBID >= carVector.size()){qFatal("CarID out of scope!");}
+    //if(CarAID < 0 || CarAID>=carVector.size() || CarBID < 0 || CarBID >= carVector.size()){qFatal("CarID out of scope!");}
 
     QList<QPair<bool, double>> returnList  = carVector.at(CarAID).reputationMap.values(CarBID);
     /*if(returnList.isEmpty())
@@ -109,7 +109,7 @@ void database::writeTrustX(unsigned long int CarOwnID,unsigned long int CarXID, 
     /// inserts new trust pair for specified CarX in the database of CarA (me)
     /**   */
 
-    if(CarOwnID < 0 || CarOwnID>=carVector.size() || CarXID < 0 || CarXID >= carVector.size()){qFatal("CarID out of scope!");}
+    //if(CarOwnID < 0 || CarOwnID>=carVector.size() || CarXID < 0 || CarXID >= carVector.size()){qFatal("CarID out of scope!");}
 
     carVector[CarOwnID].trustMap.insert(CarXID, trust); //as it is a multi map it adds the value even, if the key already exists
 
@@ -122,7 +122,7 @@ void database::writeTrustX(unsigned long int CarOwnID,unsigned long int CarXID, 
 void database::writeReputationB(unsigned long int CarOwnID, unsigned long int CarBID, QPair<bool, double> reputationTrust)
 {
 
-    if(CarOwnID < 0 || CarOwnID>=carVector.size() || CarBID < 0 || CarBID >= carVector.size()){qFatal("CarID out of scope!");}
+    //if(CarOwnID < 0 || CarOwnID>=carVector.size() || CarBID < 0 || CarBID >= carVector.size()){qFatal("CarID out of scope!");}
 
     carVector[CarOwnID].reputationMap.insert(CarBID, reputationTrust);
 

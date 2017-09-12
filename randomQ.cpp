@@ -75,8 +75,8 @@ bool randomQ::getResultPercent(double sucessPercent)
     {
         qFatal("percentage can not be higher than 100 or lower than 0: %f", sucessPercent);
     }
-
-    if(getPercent() < sucessPercent * 100)
+    double tempPercent = sucessPercent * 100;
+    if(getPercent() < tempPercent)
     {
         return true;
     }

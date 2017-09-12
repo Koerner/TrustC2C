@@ -7,6 +7,7 @@
 #include <QtWidgets/QApplication>
 #include "guiChart.h"
 #include <QDesktopWidget>
+#include "evaluation.h"
 
 
 int main(int argc, char *argv[])
@@ -29,42 +30,39 @@ int main(int argc, char *argv[])
     //trust chain specification
     instanceSettings.minRecomendingWidthDirect = 1; //minimal 1
     instanceSettings.minRecomendingWidth = 5; //minimal 1
-    instanceSettings.maxRecomendingDepth = 5;  //Minimal 1
+    instanceSettings.maxRecomendingDepth = 1;  //Minimal 1
 
     //std deviation
     double std_deviationObservation = 0.05;
     double std_deviationPrediction = 0.05;
-    double std_deviationHonest = 0;
+    double std_deviationHonest = 0.05;
 
     // Propability for cars to detect the truth before arriving
-    QList<QPair<int,QPair<double, double>>> PropDetectsPrediction;
+    QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsPrediction;
     PropDetectsPrediction.clear();
-    PropDetectsPrediction.append(QPair<unsigned int,QPair <double, double>>(0 , qMakePair(0.4, std_deviationPrediction)));
-    PropDetectsPrediction.append(QPair<unsigned int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 90 /100, qMakePair(0.2, std_deviationPrediction)));
+    PropDetectsPrediction.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.55, std_deviationPrediction)));
+    PropDetectsPrediction.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 50 /100, qMakePair(0.2, std_deviationPrediction)));
     instanceSettings.PropDetectsPrediction = PropDetectsPrediction;
     qDebug() << PropDetectsPrediction;
 
     // Propability for cars to detect the truth after situation (observation)
-    QList<QPair<int,QPair<double, double>>> PropDetectsObservation;
+    QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsObservation;
     PropDetectsObservation.clear();
-    PropDetectsObservation.append(QPair<unsigned int,QPair <double, double>>(0 , qMakePair(0.9, std_deviationObservation)));
-    PropDetectsObservation.append(QPair<unsigned int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 50 /100, qMakePair(0.3, std_deviationObservation)));
+    PropDetectsObservation.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.99, std_deviationObservation)));
+    PropDetectsObservation.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 100 /100, qMakePair(0.99, std_deviationObservation)));
     instanceSettings.PropDetectsObservation = PropDetectsObservation;
     qDebug() << PropDetectsObservation;
 
     // Propability honest  /// not yet implemented
-    QList<QPair<int,QPair<double, double>>> PropHonestCarX;
+    QList<QPair<unsigned long int,QPair<double, double>>> PropHonestCarX;
     PropHonestCarX.clear();
-    PropHonestCarX.append(QPair<unsigned int,QPair <double, double>>(0 , qMakePair(1.0, std_deviationHonest)));
-    PropHonestCarX.append(QPair<unsigned int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 100 /100, qMakePair(0.1, std_deviationHonest)));
+    PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.1, std_deviationHonest)));
+    PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 20 /100, qMakePair(1, std_deviationHonest)));
     instanceSettings.PropHonestCarX = PropHonestCarX;
-
-    //instanceSettings.PropHonestCarX = 1;
-
 
 
     //Batch II
-    QPair<double, double> PropDetectsPredictionNew = qMakePair(0.30, std_deviationPrediction);
+    QPair<double, double> PropDetectsPredictionNew = qMakePair(0.4, std_deviationPrediction);
     QPair<double, double> PropDetectsObservationNew = qMakePair(0.95, std_deviationObservation);
     QPair<double, double> PropHonestNew = qMakePair(1.0, std_deviationHonest);
     instanceSettings.numInteractionsSecond = 180;
@@ -103,6 +101,19 @@ int main(int argc, char *argv[])
         logDatabase logdata;
         logdataList.append(logdata);
 
+        int testX =0;
+        for(int i=0; i<1000000; i++)
+        {
+            QVector<long unsigned int> emp;
+            emp.clear();
+            QVector<long unsigned int> cartest = randCollection.carSelectRandAX.getCarID(10, 2, emp);
+            if(cartest.at(1) == 1)
+            {
+                testX += 1;
+            }
+        }
+        qWarning() << "Test: " << testX;
+
         //interaction batch I
 
         for (unsigned long int i=0; i < ceil((double)instanceSettings.numInteractionsFirst/100); i++)
@@ -140,6 +151,9 @@ int main(int argc, char *argv[])
     }
 
 
+    QApplication a(argc, argv);
+    QDesktopWidget dwO;
+    QRect dw = dwO.screenGeometry(0);
 
     /******************************************
      *  Display 4 graphs
@@ -147,18 +161,7 @@ int main(int argc, char *argv[])
 
     int interactionFirst = instanceSettings.numInteractionsFirst -180 + instanceSettings.numInteractionsSecond;
     int interactionLast =instanceSettings.numInteractionsFirst + instanceSettings.numInteractionsSecond;
-    unsigned long int showCarID = 0; //instanceSettings.numTotalCarsSecond -5;
-
-    QApplication a(argc, argv);
-    QDesktopWidget dwO;
-    QRect dw = dwO.screenGeometry(0);
-
-    //MainWindow w;
-    //w.show();
-    //w.createChart(logdataList,databaseList, 0, instanceSettings.numTotalCarsSecond-1, carIDfirst, carIDsecond);
-    //QApplication b(argc, argv);
-
-
+    unsigned long int showCarID = 10; //instanceSettings.numTotalCarsSecond -5;
 
     guiChart window1(logdataList[0], databaseList[0], showCarID, interactionFirst, interactionLast);
     window1.setWindowTitle("Run I");
@@ -187,6 +190,38 @@ int main(int argc, char *argv[])
     /******************************************
      *  Auswertung
      * **************************************/
+
+    evaluation eval0(logdataList);
+    eval0.rightDecission(0,0,3180,0, instanceSettings.numTotalCarsFirst);
+    eval0.showChart();
+    eval0.window.move(QPoint(dw.width()*0,dw.height()*0));
+    eval0.window.resize(QSize(dw.width()*0.49, dw.height()*0.45));
+    eval0.window.setWindowTitle("Run I");
+    eval0.window.show();
+
+    evaluation eval1(logdataList);
+    eval1.rightDecission(1,0,3180,0,instanceSettings.numTotalCarsFirst);
+    eval1.showChart();
+    eval1.window.move(QPoint(dw.width()*0.5,dw.height()*0));
+    eval1.window.resize(QSize(dw.width()*0.49, dw.height()*0.45));
+    eval1.window.setWindowTitle("Run II");
+    eval1.window.show();
+
+    evaluation eval2(logdataList);
+    eval2.rightDecission(2,0,3180,0,instanceSettings.numTotalCarsFirst);
+    eval2.showChart();
+    eval2.window.move(QPoint(dw.width()*0,dw.height()*0.47));
+    eval2.window.resize(QSize(dw.width()*0.49, dw.height()*0.45));
+    eval2.window.setWindowTitle("Run III");
+    eval2.window.show();
+
+    evaluation eval3(logdataList);
+    eval3.rightDecission(3,0,3180,0,instanceSettings.numTotalCarsFirst);
+    eval3.showChart();
+    eval3.window.move(QPoint(dw.width()*0.5,dw.height()*0.47));
+    eval3.window.resize(QSize(dw.width()*0.49, dw.height()*0.45));
+    eval3.window.setWindowTitle("Run IV");
+    eval3.window.show();
 
 
 
