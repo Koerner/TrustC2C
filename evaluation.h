@@ -11,6 +11,8 @@
 #include <QtCharts/QLegend>
 #include <QtCharts/QBarCategoryAxis>
 
+#include "QDebug"
+
 
 class evaluation
 {

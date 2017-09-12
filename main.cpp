@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     QList<QPair<unsigned long int,QPair<double, double>>> PropHonestCarX;
     PropHonestCarX.clear();
     PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.1, std_deviationHonest)));
-    PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 20 /100, qMakePair(1, std_deviationHonest)));
+    PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 50 /100, qMakePair(1, std_deviationHonest)));
     instanceSettings.PropHonestCarX = PropHonestCarX;
 
 

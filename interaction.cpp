@@ -33,7 +33,8 @@ void interaction::run()
     carXthinks = carXKnowsTruth.first == truth;
     // Determine whether the car is honest.
     carXHonest = isCarXHonest();
-    carXsays = getCarXsays() ;
+    carXsays = getCarXsays();
+
     // Determine whether the carA identified the truth correctly.
 
     carAobservation = getCarAobservation();
@@ -111,10 +112,10 @@ bool interaction::isCarXHonest()
 {
     /// this gives back whether the carX is honest and tells other cars the truth of it's knowledge.
     /**   */
-    double percent = data->getCarPropHonest(data->getCarPropHonest(carIDs.at(1)));
+    double percent = data->getCarPropHonest(carIDs.at(1));
     double stddistribution = data->getCarPropHonestStdDist(carIDs.at(1));
     percent = randCollection->Poison.getPoisonPercent(percent, stddistribution);
-    qDebug() << "%:" << percent;
+    qWarning() << "%:" << percent;
 
     return randCollection->honestRand.getResultPercent(percent);
 }
