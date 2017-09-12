@@ -29,9 +29,9 @@ struct settingsGUI {
 
   bool certaintyXon;
 
-  QList<QPair<int,double>> PropDetectsPrediction;
-  QList<QPair<int,double>> PropDetectsObservation;
-  QList<QPair<int,double>> PropHonestCarX;
+  QList<QPair<int,QPair<double, double>>> PropDetectsPrediction;
+  QList<QPair<int,QPair<double, double>>> PropDetectsObservation;
+  QList<QPair<int,QPair<double, double>>> PropHonestCarX;
 } ;
 
 struct interactionLog {

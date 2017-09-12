@@ -34,23 +34,24 @@ bool randomQ::getBool()
     return boolDist(randMT);
 }
 
-double randomQ::getPoisonPercent(double mean)
+double randomQ::getPoisonPercent(double mean, double stddiviation)
 {
     /// returns random bool.
     /** Returns one random bool from an uniform distribution based on std::mt19937. */
 
-    std::poisson_distribution<int> poisonDist(mean * 100);
-    int percent = poisonDist(randMT);
+    std::normal_distribution<double> normalDist(mean,stddiviation);
 
-    if(percent>100)
+    double percent = normalDist(randMT);
+
+    if(percent>=1.0)
     {
-        percent = 100;
+        percent = 0.9999;
     }
-    if(percent<0)
+    if(percent<=0)
     {
-        percent = 0;
+        percent = 0.0001;
     }
-    double returnValue = percent/100.0;
+    double returnValue = percent;
 
     return returnValue;
 }

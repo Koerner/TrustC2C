@@ -55,7 +55,7 @@ guiTableForChart::guiTableForChart(logDatabase &logDatabaseHandover, database &d
                     break;
                 }
                 case 9: //y-Axes VIII //Trust and reputation A->X
-                    dataVec->replace(k, (logDatabaseHandover.getInteractionLog(i).descissionResult.second / logDatabaseHandover.getInteractionLog(i).carXsays.second));
+                    dataVec->replace(k, 0);
                     break;
                 }
             }
@@ -95,25 +95,25 @@ QVariant guiTableForChart::headerData(int section, Qt::Orientation orientation, 
             return "Correct";
             break;
         case 3:
-            return "%(cert)";
+            return "certDec";
             break;
         case 4:
-            return "state(A)";
+            return "stateA";
             break;
         case 5:
-            return "cert(A)";
+            return "certA";
             break;
         case 6:
-            return "state(X)";
+            return "stateX";
             break;
         case 7:
-            return "cert(X)";
+            return "certX";
             break;
         case 8:
-            return "Rep(B->X)";
+            return "rB->X";
             break;
         case 9:
-            return "Trust(A->X)";
+            return "tA->X";
             break;
         }
 
@@ -131,7 +131,7 @@ QVariant guiTableForChart::data(const QModelIndex &index, int role) const
     } else if (role == Qt::BackgroundRole) {
         foreach (QRect rect, m_mapping) {
             if (rect.contains(index.column(), index.row()))
-                return QColor(m_mapping.key(rect));
+                return QColor(Qt::white); // QColor(m_mapping.key(rect));
         }
         // cell not mapped return white color
         return QColor(Qt::white);

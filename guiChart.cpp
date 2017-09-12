@@ -1,3 +1,4 @@
+
 #include "guiChart.h"
 #include "guitableforchart.h"
 
@@ -11,16 +12,25 @@
 #include <QScatterSeries>
 
 
+
+
+
+
 QT_CHARTS_USE_NAMESPACE
 
-guiChart::guiChart(logDatabase &logDatabaseHandover, database &databaseHandover, int CarID, int first, int last, QWidget *parent)
+guiChart::guiChart(logDatabase& logDatabaseHandover, database& databaseHandover, int CarIDHandover, int firstHandover, int lastHandover, QWidget *parent)
     : QWidget(parent)
+
 {
+    logData = &logDatabaseHandover;
+    data = &databaseHandover;
+    CarID = CarIDHandover;
+    first = firstHandover;
+    last = lastHandover;
     // create simple model for storing data
     // user's table data model
     //! [1]
-    guiTableForChart *model = new guiTableForChart(logDatabaseHandover,databaseHandover, CarID, first, last);
-    //! [1]
+    model = new guiTableForChart(*logData, *data, CarID, first, last);
 
     //! [2]
     // create table view and add model to it
@@ -141,32 +151,60 @@ guiChart::guiChart(logDatabase &logDatabaseHandover, database &databaseHandover,
 
     //! [8]
     chart->createDefaultAxes();
-    chart->axisY()->setMax(1.01);
-    chart->axisY()->setMin(-0.01);
+    chart->axisY()->setMax(1.05);
+    chart->axisY()->setMin(-0.05);
+    chart->axisX()->setMin(0.9);
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setMinimumSize(500, 200);
 
     chart2->createDefaultAxes();
-    chart2->axisY()->setMax(1.01);
-    chart2->axisY()->setMin(-0.01);
+    chart2->axisY()->setMax(1.05);
+    chart2->axisY()->setMin(-0.05);
+    chart2->axisX()->setMin(0.9);
     QChartView *chartView2 = new QChartView(chart2);
     chartView2->setRenderHint(QPainter::Antialiasing);
     chartView2->setMinimumSize(500, 200);
     //! [8]
 
+
+    carEdit = new QLineEdit;
+    carEdit->setValidator( new QIntValidator(0, 1000000, this) );
+    QString number;
+    QTextStream(&number) << CarIDHandover;
+    carEdit->setText(number);
+
+    carButton = new QPushButton("Set car ID", this);
+    //guiTableForChart *model = new guiTableForChart(logDatabaseHandover,databaseHandover, CarID, first, last);
+
+    connect(carButton, SIGNAL (clicked()), this, SLOT (updateTable()));
+
+    QFont font;
+    font.setPointSize(7);
+    tableView->setFont(font);
+    tableView->horizontalHeader()->setFont(font);
+
     //! [9]
     // create main layout
     QGridLayout *mainLayout = new QGridLayout;
-    mainLayout->addWidget(tableView, 1, 0, 2, 1);
-    mainLayout->setColumnStretch(0, 7);
+    mainLayout->addWidget(carEdit,1,2,1,1);
+    mainLayout->addWidget(carButton,1,3,1,1);
+    mainLayout->addWidget(tableView, 1, 0, 3, 1);
+    mainLayout->setColumnStretch(0, 9);
 
-    QGridLayout *chartLayout = new QGridLayout;
-    mainLayout->addWidget(chartView, 1, 1);
-    mainLayout->addWidget(chartView2, 2, 1);
+    mainLayout->addWidget(chartView, 2, 1, 1, 3);
+    mainLayout->addWidget(chartView2, 3, 1, 1, 3);
     mainLayout->setColumnStretch(1, 9);
 
     setLayout(mainLayout);
     //! [9]
+}
+
+void guiChart::updateTable()
+{
+    int carIDnew = carEdit->text().toInt();
+    qWarning() << "Updated table with: " << carIDnew;
+    //model = new guiTableForChart(*logData, *data, carIDnew, first, last);
+    guiChart(*logData, *data, carIDnew, first, last);
 }
 

@@ -1,6 +1,6 @@
 #include "database.h"
 
-database::database(unsigned long size, QList<QPair<int, double>> PropDetectsPrediction, QList<QPair<int, double> > PropDetectsObservation, QList<QPair<int, double>> PropHonest)
+database::database(unsigned long size, QList<QPair<int,  QPair<double, double>>> PropDetectsPrediction, QList<QPair<int, QPair<double, double>> > PropDetectsObservation, QList<QPair<int,  QPair<double, double>>> PropHonest)
 {
     carVector.clear();
     for(unsigned long int i=0; i<size; i++)
@@ -27,7 +27,7 @@ int database::sizeCarsVector()
 }
 
 
-void database::addCar(double PropDetectsPrediction, double PropDetectsObservation, double PropHonest)
+void database::addCar(QPair <double, double> PropDetectsPrediction, QPair <double, double> PropDetectsObservation, QPair <double, double> PropHonest)
 {
     car temp;
     temp.id = carVector.size();
@@ -40,12 +40,12 @@ void database::addCar(double PropDetectsPrediction, double PropDetectsObservatio
 
 }
 
-double database::calcProp(int CarID, QList<QPair<int, double>> prop)
+QPair <double, double> database::calcProp(unsigned long int CarID, QList<QPair<int, QPair<double, double>>> prop)
 {
 
     if(prop.size() == 0){qFatal("Something went wrong with the propabilities");}
 
-    double propResult = 0.0;
+    QPair <double, double> propResult;
 
     for(int i=0; i < prop.size() ; i++)
     {
@@ -54,7 +54,6 @@ double database::calcProp(int CarID, QList<QPair<int, double>> prop)
             propResult = prop.at(i).second;
         }
     }
-
     return propResult;
 }
 
@@ -152,18 +151,33 @@ void database::writeInteractionLog(QVector<unsigned long> carIDs, bool truth, bo
 double database::getCarPropDetectsObservation(unsigned long int CarID)
 {
 
-    return carVector.at(CarID).PropDetectsObservation;
+    return carVector.at(CarID).PropDetectsObservation.first;
+}
+
+double database::getCarPropDetectsObservationStdDist(unsigned long CarID)
+{
+    return carVector.at(CarID).PropDetectsObservation.second;
 }
 
 double database::getCarPropDetectsPrediction(unsigned long int CarID)
 {
 
-    return carVector.at(CarID).PropDetectsPrediction;
+    return carVector.at(CarID).PropDetectsPrediction.first;
+}
+
+double database::getCarPropDetectsPredictionStdDist(unsigned long CarID)
+{
+    return carVector.at(CarID).PropDetectsPrediction.second;
 }
 
 double database::getCarPropHonest(unsigned long CarID)
 {
-    return carVector.at(CarID).PropHonest;
+    return carVector.at(CarID).PropHonest.first;
+}
+
+double database::getCarPropHonestStdDist(unsigned long CarID)
+{
+    return carVector.at(CarID).PropHonest.second;
 }
 
 

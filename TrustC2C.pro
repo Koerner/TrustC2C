@@ -6,6 +6,7 @@
 
 QT += core gui
 QT += charts
+QT += widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -42,12 +43,12 @@ SOURCES += \
     database.cpp \
     trustknowledge.cpp \
     trustDecision.cpp \
-    logModel.cpp \
     average.cpp \
     logdatabase.cpp \
     trustreputational.cpp \
     guitableforchart.cpp \
-    guiChart.cpp
+    guiChart.cpp \
+    evaluation.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -57,12 +58,12 @@ HEADERS += \
     structs.h \
     trustknowledge.h \
     trustDecision.h \
-    logModel.h \
     average.h \
     logdatabase.h \
     trustreputational.h \
     guitableforchart.h \
-    guiChart.h
+    guiChart.h \
+    evaluation.h
 
 FORMS += \
         mainwindow.ui

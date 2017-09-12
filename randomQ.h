@@ -20,7 +20,7 @@ public:
     QVector<unsigned long int> getCarID(unsigned long int totalCarNumber, int requiredIDs, QVector<unsigned long int> blockedCars);
 
     double getPoison(double mean);
-    double getPoisonPercent(double mean);
+    double getPoisonPercent(double mean, double stddiviation);
 private:
     std::mt19937 randMT;
 

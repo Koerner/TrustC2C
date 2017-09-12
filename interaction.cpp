@@ -95,7 +95,8 @@ QPair<bool, double> interaction::getCarXKnowsTruth()
 
     //qDebug() << "CarX %:" << data->getCarPropDetectsPrediction(carIDs.at(0));
     double percent = data->getCarPropDetectsObservation(carIDs.at(1));
-    percent = randCollection->Poison.getPoisonPercent(percent);
+    double stddistribution = data->getCarPropDetectsObservationStdDist(carIDs.at(1));
+    percent = randCollection->Poison.getPoisonPercent(percent, stddistribution);
     qDebug() << "%:" << percent;
 
     QPair<bool, double> returnPair;
@@ -135,7 +136,8 @@ QPair<bool, double> interaction::getCarAobservation()
 {
     QPair<bool, double> returnPair;
     double percent = data->getCarPropDetectsObservation(carIDs.at(0));
-    percent = randCollection->Poison.getPoisonPercent(percent);
+    double stddistribution = data->getCarPropDetectsObservationStdDist(carIDs.at(0));
+    percent = randCollection->Poison.getPoisonPercent(percent, stddistribution);
 
     bool carAKnowsTruth = randCollection->detectRandA.getResultPercent(percent);
 
@@ -149,7 +151,9 @@ QPair<bool, double> interaction::getCarAprediction()
 {
     QPair<bool, double> returnPair;
     double percent = data->getCarPropDetectsPrediction(carIDs.at(0));
-    percent = randCollection->Poison.getPoisonPercent(percent);
+    double stdDistribution = data->getCarPropDetectsPredictionStdDist(carIDs.at(0));
+    percent = randCollection->Poison.getPoisonPercent(percent, stdDistribution);
+
 
     bool carAKnowsTruth = randCollection->detectRandA.getResultPercent(percent);
 
