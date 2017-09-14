@@ -82,12 +82,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3f533ae7ccf0a2731b9b64203c3503e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed10ee9b35f9bf43f80951b79a2986ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#aed10ee9b35f9bf43f80951b79a2986ff">getResultPercent</a> (double sucessPercent)</td></tr>
 <tr class="separator:aed10ee9b35f9bf43f80951b79a2986ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac71a073da550b11cf65c9c610ad4b8ff"><td class="memItemLeft" align="right" valign="top">QVector&lt; unsigned long int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#ac71a073da550b11cf65c9c610ad4b8ff">getCarID</a> (unsigned long int totalCarNumber, int requiredIDs)</td></tr>
-<tr class="separator:ac71a073da550b11cf65c9c610ad4b8ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada23232ae16d1358350ce2b11d43420b"><td class="memItemLeft" align="right" valign="top">QVector&lt; unsigned long int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#ada23232ae16d1358350ce2b11d43420b">getCarID</a> (unsigned long int totalCarNumber, int requiredIDs, QVector&lt; unsigned long int &gt; blockedCars)</td></tr>
+<tr class="separator:ada23232ae16d1358350ce2b11d43420b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa527382fa9ef7c650d9877059b5676d9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#aa527382fa9ef7c650d9877059b5676d9">getPoison</a> (double mean)</td></tr>
 <tr class="separator:aa527382fa9ef7c650d9877059b5676d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b8dd5119f221de479b5b0517746f036"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#a2b8dd5119f221de479b5b0517746f036">getPoisonPercent</a> (double mean)</td></tr>
-<tr class="separator:a2b8dd5119f221de479b5b0517746f036"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac455a949f2658a31bdd40632760f778c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrandom_q.html#ac455a949f2658a31bdd40632760f778c">getPoisonPercent</a> (double mean, double stddiviation)</td></tr>
+<tr class="separator:ac455a949f2658a31bdd40632760f778c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adcf00bae4dc3acb65be102abbd0d9651"></a>
@@ -149,8 +149,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac71a073da550b11cf65c9c610ad4b8ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac71a073da550b11cf65c9c610ad4b8ff">&#9670;&nbsp;</a></span>getCarID()</h2>
+<a id="ada23232ae16d1358350ce2b11d43420b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada23232ae16d1358350ce2b11d43420b">&#9670;&nbsp;</a></span>getCarID()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -165,7 +165,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>requiredIDs</em>&#160;</td>
+          <td class="paramname"><em>requiredIDs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QVector&lt; unsigned long int &gt;&#160;</td>
+          <td class="paramname"><em>blockedCars</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -215,8 +221,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2b8dd5119f221de479b5b0517746f036"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b8dd5119f221de479b5b0517746f036">&#9670;&nbsp;</a></span>getPoisonPercent()</h2>
+<a id="ac455a949f2658a31bdd40632760f778c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac455a949f2658a31bdd40632760f778c">&#9670;&nbsp;</a></span>getPoisonPercent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,8 +231,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">double randomQ::getPoisonPercent </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>mean</em></td><td>)</td>
+          <td class="paramname"><em>mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>stddiviation</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

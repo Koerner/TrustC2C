@@ -1,6 +1,5 @@
 var structinteraction_log =
 [
-    [ "carAKnowsTruth", "structinteraction_log.html#a0fa0ef74aaf74040dccc0a96e611b9d8", null ],
     [ "carAobservation", "structinteraction_log.html#a0cfea4bcf9ed09593cf8ee91b9a7f7f6", null ],
     [ "carAprediction", "structinteraction_log.html#ac11aec178b3f3a6449c19f148651216d", null ],
     [ "carIDs", "structinteraction_log.html#ab1673aed9d178526ed87136478f932ef", null ],

@@ -10,6 +10,10 @@ var files =
       [ "car", "structdatabase_1_1car.html", "structdatabase_1_1car" ],
       [ "interactionLogStruct", "structdatabase_1_1interaction_log_struct.html", "structdatabase_1_1interaction_log_struct" ]
     ] ],
+    [ "evaluation.cpp", "evaluation_8cpp.html", null ],
+    [ "evaluation.h", "evaluation_8h.html", [
+      [ "evaluation", "classevaluation.html", "classevaluation" ]
+    ] ],
     [ "guiChart.cpp", "gui_chart_8cpp.html", null ],
     [ "guiChart.h", "gui_chart_8h.html", [
       [ "guiChart", "classgui_chart.html", "classgui_chart" ]

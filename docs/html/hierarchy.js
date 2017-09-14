@@ -3,6 +3,7 @@ var hierarchy =
     [ "average", "classaverage.html", null ],
     [ "database::car", "structdatabase_1_1car.html", null ],
     [ "database", "classdatabase.html", null ],
+    [ "evaluation", "classevaluation.html", null ],
     [ "interaction", "classinteraction.html", null ],
     [ "interactionLog", "structinteraction_log.html", null ],
     [ "database::interactionLogStruct", "structdatabase_1_1interaction_log_struct.html", null ],

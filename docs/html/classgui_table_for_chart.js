@@ -1,6 +1,6 @@
 var classgui_table_for_chart =
 [
-    [ "guiTableForChart", "classgui_table_for_chart.html#a4fd6677bc6a45550d3d152c87dde1b0d", null ],
+    [ "guiTableForChart", "classgui_table_for_chart.html#a6386cde5431e44b4a1f0aa393fe40990", null ],
     [ "addMapping", "classgui_table_for_chart.html#a4813a586b14d65548678b6f189121fae", null ],
     [ "clearMapping", "classgui_table_for_chart.html#a86f98fb8c5dcbe2cb59c09000b1043c9", null ],
     [ "columnCount", "classgui_table_for_chart.html#a508ea67e31da17b886d3ad485f2443ca", null ],
