@@ -24,13 +24,14 @@ struct settingsGUI {
   unsigned int numTotalCarsSecond;
   unsigned int numCarsRecommending;
   int maxRecomendingDepth;
-  int minRecomendingWidthDirect;
-  int minRecomendingWidth;
+  int maxLevelWidth;
+
 
   bool certaintyXon;
 
   QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsPrediction;
   QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsObservation;
+  QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsX;
   QList<QPair<unsigned long int,QPair<double, double>>> PropHonestCarX;
 } ;
 

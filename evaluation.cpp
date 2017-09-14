@@ -1,4 +1,5 @@
 #include "evaluation.h"
+#include "QStandardPaths"
 
 evaluation::evaluation(QList<logDatabase> &logDataHandover)
 {
@@ -45,10 +46,12 @@ void evaluation::rightDecission(int run, int firstInteraction, int lastInteracti
     }
 
     QString filename;
-    filename.append("C:\\Users\\Quirin\\Desktop\\Evaluation");
+    filename.append(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation));
+    filename.append("/Evaluation");
     filename.append(QString::number(run));
     filename.append(".txt");
     writeToFile(ResultPercentageByCar, APercentageByCar, XPercentageByCar, MaxPercentageByCar, filename);
+    qWarning() << "wrote files to " << filename;
 
 
 
@@ -75,7 +78,7 @@ void evaluation::writeToFile(QList<double> ResultPercentageByCar, QList<double> 
     }
 }
 
-void evaluation::showChart()
+void evaluation::showChart(int numDisplayCars)
 {
     QT_CHARTS_USE_NAMESPACE
     //QList<QBarSet*> QBarList;
@@ -97,28 +100,28 @@ void evaluation::showChart()
     */
 
     QBarSet *setResult = new QBarSet("Result");
-    for(int i=0; i<ResultPercentageByCar.size(); i++)
+    for(int i=0; i<ResultPercentageByCar.size()&&i<numDisplayCars; i++)
     {
         *setResult << ResultPercentageByCar.at(i);
     }
     series->append(setResult);
 
     QBarSet *setA = new QBarSet("Car A");
-    for(int i=0; i<ResultPercentageByCar.size(); i++)
+    for(int i=0; i<ResultPercentageByCar.size()&&i<numDisplayCars; i++)
     {
         *setA << APercentageByCar.at(i);
     }
     series->append(setA);
 
     QBarSet *setX = new QBarSet("Car X");
-    for(int i=0; i<ResultPercentageByCar.size(); i++)
+    for(int i=0; i<ResultPercentageByCar.size()&&i<numDisplayCars; i++)
     {
         *setX << XPercentageByCar.at(i);
     }
     series->append(setX);
 
     QBarSet *setMax = new QBarSet("Car max");
-    for(int i=0; i<MaxPercentageByCar.size(); i++)
+    for(int i=0; i<MaxPercentageByCar.size()&&i<numDisplayCars; i++)
     {
         *setMax << MaxPercentageByCar.at(i);
     }
@@ -126,7 +129,7 @@ void evaluation::showChart()
 
 
     QStringList categories;
-    for(int i=0; i<MaxPercentageByCar.size(); i++)
+    for(int i=0; i<MaxPercentageByCar.size()&&i<numDisplayCars; i++)
     {
         QString name ="Car ";
         name.append(QString::number(i));
@@ -163,5 +166,120 @@ QList<double> evaluation::average(QList<QList<double>> ListList)
         List +=ListList.at(i);
     }
     return List;
+}
+
+void evaluation::showChartOutcome(QList<double> ResultPercentageByCar1, QList<double> ResultPercentageByCar2, QList<double> ResultPercentageByCar3, QList<double> ResultPercentageByCar4, QList<double> MaxPercentageByCar, int numDisplayCars)
+{
+    QT_CHARTS_USE_NAMESPACE
+    //QList<QBarSet*> QBarList;
+    QBarSeries *series = new QBarSeries();
+
+    QBarSet *setResult1 = new QBarSet("Result Run 1");
+    double average = 0;
+    for(int i=0; i<ResultPercentageByCar1.size(); i++)
+    {
+        average += ResultPercentageByCar1.at(i);
+        if(i<numDisplayCars)
+        {
+        *setResult1 << ResultPercentageByCar1.at(i);
+        }
+    }
+    average = average / ResultPercentageByCar1.size();
+    *setResult1 << average;
+    series->append(setResult1);
+
+    QBarSet *setResult2 = new QBarSet("Result Run 2");
+    average = 0;
+    for(int i=0; i<ResultPercentageByCar2.size(); i++)
+    {
+        average += ResultPercentageByCar2.at(i);
+        if(i<numDisplayCars)
+        {
+        *setResult2 << ResultPercentageByCar2.at(i);
+        }
+    }
+    average = average / ResultPercentageByCar2.size();
+    *setResult2 << average;
+    series->append(setResult2);
+
+    QBarSet *setResult3 = new QBarSet("Result Run 3");
+    average = 0;
+    for(int i=0; i<ResultPercentageByCar3.size(); i++)
+    {
+        average += ResultPercentageByCar3.at(i);
+        if(i<numDisplayCars)
+        {
+        *setResult3 << ResultPercentageByCar3.at(i);
+        }
+    }
+    average = average / ResultPercentageByCar3.size();
+    *setResult3 << average;
+    series->append(setResult3);
+
+    QBarSet *setResult4 = new QBarSet("Result Run 4");
+    average = 0;
+    for(int i=0; i<ResultPercentageByCar4.size(); i++)
+    {
+        average += ResultPercentageByCar4.at(i);
+        if(i<numDisplayCars)
+        {
+        *setResult4 << ResultPercentageByCar4.at(i);
+        }
+    }
+    average = average / ResultPercentageByCar4.size();
+    *setResult4 << average;
+    series->append(setResult4);
+
+
+    QBarSet *setResult5 = new QBarSet("Result Max");
+    average = 0;
+    for(int i=0; i<MaxPercentageByCar.size(); i++)
+    {
+        average += MaxPercentageByCar.at(i);
+        if(i<numDisplayCars)
+        {
+        *setResult5 << MaxPercentageByCar.at(i);
+        }
+    }
+    average = average / MaxPercentageByCar.size();
+    *setResult5 << average;
+    series->append(setResult5);
+
+
+
+    QStringList categories;
+    for(int i=0; i<MaxPercentageByCar.size(); i++)
+    {
+        QString name ="Car ";
+        name.append(QString::number(i));
+        if(i<numDisplayCars)
+        {
+        categories << name;
+        }
+    }
+    QString name ="OverAll ";
+    name.append(QString::number(MaxPercentageByCar.size()));
+    categories << name;
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+
+
+        QBarCategoryAxis *axis = new QBarCategoryAxis();
+        axis->append(categories);
+        chart->createDefaultAxes();
+        chart->setAxisX(axis, series);
+
+        chart->axisY()->setMax(1.0);
+
+        chart->legend()->setVisible(true);
+        chart->legend()->setAlignment(Qt::AlignBottom);
+
+        QChartView *chartView = new QChartView(chart);
+        chartView->setRenderHint(QPainter::Antialiasing);
+
+        window.setCentralWidget(chartView);
+
 }
 

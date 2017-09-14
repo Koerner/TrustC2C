@@ -18,6 +18,7 @@ public:
       QPair <double, double> PropDetectsPrediction;
       QPair <double, double> PropDetectsObservation;
       QPair <double, double> PropHonest;
+      QPair <double, double> PropDetectsX;
       QMultiMap<unsigned long int, QPair<bool, double>> trustMap; //Car ID, value
       QMap<unsigned long int, double > trustSumMap; //Sum of trust values for each CarID
       QMultiMap<unsigned long int, QPair<bool, double>> reputationMap; //Car ID, value
@@ -34,7 +35,8 @@ public:
 
     QVector<interactionLogStruct> interactionLogList;
 
-    database(unsigned long int size, QList<QPair<unsigned long int, QPair<double, double>> > PropDetectsPrediction, QList<QPair<unsigned long int, QPair<double, double> > > PropDetectsObservation, QList<QPair<unsigned long int, QPair<double, double>> > PropHonest);
+   // database(unsigned long int size, QList<QPair<unsigned long int, QPair<double, double>> > PropDetectsPrediction, QList<QPair<unsigned long int, QPair<double, double> > > PropDetectsObservation, QList<QPair<unsigned long int, QPair<double, double>> > PropHonest);
+     database(unsigned long size, QList<QPair<unsigned long, QPair<double, double> > > PropDetectsPrediction, QList<QPair<unsigned long, QPair<double, double> > > PropDetectsObservation, QList<QPair<unsigned long, QPair<double, double> > > PropDetectsX, QList<QPair<unsigned long, QPair<double, double> > > PropHonest);
 
     //get function
     QList<QPair<bool, double>> getCarTrust(unsigned long int CarBID, unsigned long int CarXid) const;
@@ -44,6 +46,8 @@ public:
     double getCarPropDetectsObservationStdDist(unsigned long int CarID);
     double getCarPropDetectsPrediction(unsigned long int CarID);
     double getCarPropDetectsPredictionStdDist(unsigned long int CarID);
+    double getCarPropDetectsX(unsigned long int CarID);
+    double getCarPropDetectsXStdDist(unsigned long int CarID);
     double getCarPropHonest(unsigned long int CarID);
     double getCarPropHonestStdDist(unsigned long CarID);
 
@@ -65,6 +69,7 @@ public:
 
     void addCar(QPair<double, double> PropDetectsPrediction, QPair<double, double> PropDetectsObservation, QPair<double, double> PropHonest);
     int sizeCarsVector();
+
 
 private:
     QVector<car> carVector;

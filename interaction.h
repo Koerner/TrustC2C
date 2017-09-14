@@ -55,7 +55,7 @@ private:
     QList<QPair<double,int>> reputations;
     QList<QPair<double,int>> reputationABXs;
     QList<QPair<double,int>> getReputatiosnBs();
-    QPair<double, int> getHigherLevelReputation(int depthRecomending, int neededRecomendingWidth, unsigned long carB, QVector<unsigned long> blockedCarIDs);
+    QPair<double, int> getHigherLevelReputation(int depthRecomending, unsigned long carB, QVector<unsigned long> blockedCarIDs);
     QList<QPair<double, int> > getMergedReputatiosnABXs(QList<QPair<double, int> > reputationBs);
 
 

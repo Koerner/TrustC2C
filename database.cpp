@@ -1,6 +1,6 @@
 #include "database.h"
 
-database::database(unsigned long size, QList<QPair<unsigned long, QPair<double, double> > > PropDetectsPrediction, QList<QPair<unsigned long, QPair<double, double> > > PropDetectsObservation, QList<QPair<unsigned long, QPair<double, double> > > PropHonest)
+database::database(unsigned long size, QList<QPair<unsigned long, QPair<double, double> > > PropDetectsPrediction, QList<QPair<unsigned long, QPair<double, double> > > PropDetectsObservation, QList<QPair<unsigned long,QPair<double, double> > > PropDetectsX, QList<QPair<unsigned long, QPair<double, double> > > PropHonest)
 {
     carVector.clear();
     for(unsigned long int i=0; i<size; i++)
@@ -9,6 +9,7 @@ database::database(unsigned long size, QList<QPair<unsigned long, QPair<double, 
         temp.PropDetectsPrediction = calcProp(i, PropDetectsPrediction);
         temp.PropDetectsObservation = calcProp(i, PropDetectsObservation);
         temp.PropHonest = calcProp(i, PropHonest);
+        temp.PropDetectsX = calcProp(i, PropDetectsX);
         //temp.reputationMap;
         //temp.trustMap;
         //temp.reputationSumMap;
@@ -168,6 +169,16 @@ double database::getCarPropDetectsPrediction(unsigned long int CarID)
 double database::getCarPropDetectsPredictionStdDist(unsigned long CarID)
 {
     return carVector.at(CarID).PropDetectsPrediction.second;
+}
+
+double database::getCarPropDetectsX(unsigned long CarID)
+{
+    return carVector.at(CarID).PropDetectsX.first;
+}
+
+double database::getCarPropDetectsXStdDist(unsigned long CarID)
+{
+    return carVector.at(CarID).PropDetectsX.second;
 }
 
 double database::getCarPropHonest(unsigned long CarID)

@@ -95,8 +95,8 @@ QPair<bool, double> interaction::getCarXKnowsTruth()
     /**   */
 
     //qDebug() << "CarX %:" << data->getCarPropDetectsPrediction(carIDs.at(0));
-    double percent = data->getCarPropDetectsObservation(carIDs.at(1));
-    double stddistribution = data->getCarPropDetectsObservationStdDist(carIDs.at(1));
+    double percent = data->getCarPropDetectsX(carIDs.at(1));
+    double stddistribution = data->getCarPropDetectsXStdDist(carIDs.at(1));
     percent = randCollection->Poison.getPoisonPercent(percent, stddistribution);
     qDebug() << "%:" << percent;
 
@@ -115,7 +115,6 @@ bool interaction::isCarXHonest()
     double percent = data->getCarPropHonest(carIDs.at(1));
     double stddistribution = data->getCarPropHonestStdDist(carIDs.at(1));
     percent = randCollection->Poison.getPoisonPercent(percent, stddistribution);
-    qWarning() << "%:" << percent;
 
     return randCollection->honestRand.getResultPercent(percent);
 }
@@ -195,7 +194,7 @@ QList<QPair<double, int>> interaction::getReputatiosnBs()
         {
             // BB Level
             if(REP_DEBUG){qDebug() << "Car " << carIDs.at(i) << " needs new level";};
-            mergedTrustBX = getHigherLevelReputation((instanceSettings.maxRecomendingDepth - 1), instanceSettings.minRecomendingWidth, carIDs.at(i), carIDs);
+            mergedTrustBX = getHigherLevelReputation((instanceSettings.maxRecomendingDepth - 1),  carIDs.at(i), carIDs);
         }
         else
         {
@@ -242,9 +241,9 @@ QList<QPair<double, int>> interaction::getMergedReputatiosnABXs(QList<QPair<doub
     return returnMergedReputatiosnABX;
 }
 
-QPair<double, int> interaction::getHigherLevelReputation(int depthRecomending, int neededRecomendingWidth, unsigned long carB, QVector<unsigned long>blockedCarIDs)
+QPair<double, int> interaction::getHigherLevelReputation(int depthRecomending, unsigned long carB, QVector<unsigned long>blockedCarIDs)
 {
-    if(REP_DEBUG){qDebug() << "+++ Start level " << instanceSettings.maxRecomendingDepth - depthRecomending << " to add " << neededRecomendingWidth <<"to car" << carB << "'s recomendations.";};
+    if(REP_DEBUG){qDebug() << "+++ Start level " << instanceSettings.maxRecomendingDepth - depthRecomending  <<"to car" << carB << "'s recomendations.";};
 
     QPair<int, double> recomendationReturn;
     trustReputational tempTR;
@@ -252,7 +251,7 @@ QPair<double, int> interaction::getHigherLevelReputation(int depthRecomending, i
     QList<unsigned long> tempCarsAscending = data->getCarIDsAscendingReputation(carB);
     int i = tempCarsAscending.size() -1;
 
-    for (i=i; i>0; i--) //going down the ascending list
+    for (i=i; i>0 && i>(tempCarsAscending.size() -1 -instanceSettings.maxLevelWidth); i--) //going down the ascending list
     {
         if(REP_DEBUG){qDebug() << "~~~ Start for Car " << carB << "<-" <<tempCarsAscending.at(i)<<"~~~";};
         QVector<unsigned long> newBlockedCarIDs = blockedCarIDs;
@@ -268,7 +267,7 @@ QPair<double, int> interaction::getHigherLevelReputation(int depthRecomending, i
             if(wholeTrustRecordBX.isEmpty()  && depthRecomending > 1)
             {
                 //BBB Level
-                mergedreputationsBX = (getHigherLevelReputation((depthRecomending - 1), (neededRecomendingWidth), tempCarsAscending.at(i), newBlockedCarIDs));
+                mergedreputationsBX = (getHigherLevelReputation((depthRecomending - 1), tempCarsAscending.at(i), newBlockedCarIDs));
             }
             else
             {
