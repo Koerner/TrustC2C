@@ -16,6 +16,8 @@ database::database(unsigned long size, QList<QPair<unsigned long, QPair<double, 
         //temp.trustSumMap;
         temp.id = i;
 
+        qWarning() << "Car: " << i << "Honest: " << temp.PropHonest << "DetectsX: " << temp.PropDetectsX << "PredictionA: " << temp.PropDetectsPrediction<< "ObservationA: " << temp.PropDetectsObservation;
+
         carVector.append(temp);
     }
     qDebug() << "Number of cars in database: " << carVector.size();
@@ -28,16 +30,19 @@ int database::sizeCarsVector()
 }
 
 
-void database::addCar(QPair <double, double> PropDetectsPrediction, QPair <double, double> PropDetectsObservation, QPair <double, double> PropHonest)
+void database::addCar(QPair <double, double> PropDetectsPrediction, QPair <double, double> PropDetectsObservation, QPair <double, double> PropHonest, QPair <double, double> PropDetectsX)
 {
     car temp;
     temp.id = carVector.size();
     temp.PropDetectsObservation = PropDetectsObservation;
     temp.PropDetectsPrediction = PropDetectsPrediction;
     temp.PropHonest = PropHonest;
+    temp.PropDetectsX = PropDetectsX;
 
     carVector.append(temp);
-    qDebug() <<"last id" << temp.id <<"size database" << carVector.size();
+    qWarning() << "Added new Car: " << temp.id << "Honest: " << temp.PropHonest << "DetectsX: " << temp.PropDetectsX << "PredictionA: " << temp.PropDetectsPrediction<< "ObservationA: " << temp.PropDetectsObservation;
+
+    //qDebug() <<"last id" << temp.id <<"size database" << carVector.size();
 
 }
 

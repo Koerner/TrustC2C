@@ -26,11 +26,13 @@ public:
     QList<double> APercentageByCar;
     QList<double> XPercentageByCar;
     QList<double> MaxPercentageByCar;
+    QList<double> MinPercentageByCar;
+    QList<double> AvPercentageByCar;
 
     void showChartOutcome(QList<double> ResultPercentageByCar1, QList<double> ResultPercentageByCar2, QList<double> ResultPercentageByCar3, QList<double> ResultPercentageByCar4, QList<double> MaxPercentageByCar, int numDisplayCars);
 private:
     QList<logDatabase> *logData;
-    void writeToFile(QList<double> ResultPercentageByCar, QList<double> APercentageByCar, QList<double> XPercentageByCar, QList<double> MaxPercentageByCar, QString filename);
+    void writeToFile(QList<double> ResultPercentageByCar, QList<double> APercentageByCar, QList<double> XPercentageByCar, QList<double> MaxPercentageByCar, QList<double> MinPercentageByCar, QList<double> AvPercentageByCar, QString filename);
     QList<double> average(QList<QList<double> > ListList);
 
 

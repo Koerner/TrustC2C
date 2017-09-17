@@ -67,7 +67,7 @@ public:
 
 
 
-    void addCar(QPair<double, double> PropDetectsPrediction, QPair<double, double> PropDetectsObservation, QPair<double, double> PropHonest);
+    void addCar(QPair<double, double> PropDetectsPrediction, QPair<double, double> PropDetectsObservation, QPair<double, double> PropHonest, QPair<double, double> PropDetectsX);
     int sizeCarsVector();
 
 

@@ -22,49 +22,53 @@ int main(int argc, char *argv[])
     //settings
     settingsGUI instanceSettings;
 
+    //involved cars:
+    instanceSettings.numTotalCarsFirst = 50; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
+    //involved cars
+
     /******************************
      * Settings for parameters of the cars
      * **************************/
 
     //std deviations for probabilities below
     double std_deviationObservation = 0.05;
-    double std_deviationPrediction = 0.05;
+    double std_deviationPrediction = 0.02;
     double std_deviationX = 0.05;
     double std_deviationHonest = 0.05;
 
     // Propability for cars to detect the truth before arriving
     QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsPrediction;
     PropDetectsPrediction.clear();
-    PropDetectsPrediction.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.50, std_deviationPrediction)));
-    PropDetectsPrediction.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 50 /100, qMakePair(0.2, std_deviationPrediction)));
+    PropDetectsPrediction.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.55, std_deviationPrediction)));
+    PropDetectsPrediction.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 101 /100, qMakePair(0.2, std_deviationPrediction)));
     instanceSettings.PropDetectsPrediction = PropDetectsPrediction;
     qDebug() << PropDetectsPrediction;
 
-    // Propability for for X to detect the truth
+    // Propability for for Car X to detect the truth (observation X) //////////////////////
     QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsX;
     PropDetectsX.clear();
     PropDetectsX.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.95, std_deviationX)));
-    PropDetectsX.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 80 /100, qMakePair(0.60, std_deviationX)));
+    PropDetectsX.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 101 /100, qMakePair(0.80, std_deviationX)));
     instanceSettings.PropDetectsX = PropDetectsX;
     qDebug() << PropDetectsX;
 
-    // Propability for cars to detect the truth after situation (observation)
+    // Propability for cars to detect the truth after the situation (observation A)
     QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsObservation;
     PropDetectsObservation.clear();
     PropDetectsObservation.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(1.0, std_deviationObservation)));
-    PropDetectsObservation.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 100 /100, qMakePair(1.0, std_deviationObservation)));
+    PropDetectsObservation.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 101 /100, qMakePair(1.0, std_deviationObservation)));
     instanceSettings.PropDetectsObservation = PropDetectsObservation;
     qDebug() << PropDetectsObservation;
 
     // Propability honest for X
     QList<QPair<unsigned long int,QPair<double, double>>> PropHonestCarX;
     PropHonestCarX.clear();
-    PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.01, std_deviationHonest)));
-    PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 40 /100, qMakePair(1.0, std_deviationHonest)));
+    PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.05, std_deviationHonest)));
+    PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 70 /100, qMakePair(1.0, std_deviationHonest)));
     instanceSettings.PropHonestCarX = PropHonestCarX;
+    qWarning() << "Prop Honest: " << instanceSettings.PropHonestCarX;
 
-    QList<database> databaseList;
-    //The paramters for the cars are saved to the database. From this point on all varaiibles from above are fixed and can't be changed
+    QList<database> databaseList; //container for databases
 
     /*******************************
      * Interaction specific settings
@@ -82,24 +86,29 @@ int main(int argc, char *argv[])
      * Batch I
      * *****************/
 
-    instanceSettings.numTotalCarsFirst = 600; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
     //instanceSettings.numInteractionsFirst = 100*100*0.5; //High density numCar²*30 | Low density numCar²*1
-    instanceSettings.numInteractionsFirst = std::pow(instanceSettings.numTotalCarsFirst,2) * 0.25; //density factor
+    instanceSettings.numInteractionsFirst = std::pow(instanceSettings.numTotalCarsFirst,2) * 30; //density factor
+    qWarning() << "Interactions in first batch: "<< instanceSettings.numInteractionsFirst;
 
 
     /*******************
      * Batch II
+     *
      * the second batch introduces a new car without any trust values (from and to)
      * *****************/
 
     //parameters for new car
-    QPair<double, double> PropDetectsPredictionNew = qMakePair(0.4, std_deviationPrediction);
+    QPair<double, double> PropDetectsPredictionNew = qMakePair(0.5, 0);
     QPair<double, double> PropDetectsObservationNew = qMakePair(0.95, std_deviationObservation);
+    QPair<double, double> PropDetectsDetectsXNew = qMakePair(0.95, std_deviationX);
     QPair<double, double> PropHonestNew = qMakePair(1.0, std_deviationHonest);
 
     //interaction quantity batch II
-    instanceSettings.numInteractionsSecond = 180;
+
     instanceSettings.numTotalCarsSecond = instanceSettings.numTotalCarsFirst + 1; //do not change
+    //instanceSettings.numInteractionsSecond = 180;
+    instanceSettings.numInteractionsSecond = std::pow(instanceSettings.numTotalCarsSecond,2) * 1;  //density factor
+    qWarning() << "Interactions in second batch: " << instanceSettings.numInteractionsSecond;
 
     //end settings
 
@@ -117,7 +126,7 @@ int main(int argc, char *argv[])
 
     //Random seed multiplier, specifies if and how the seed of the randomes should change
     // if 0 => all four runns will have the exact same seeding for the random generators
-    int randomeMulti = 1;
+    int randomeMulti = 0;
 
     timer.start();
     for(int k=0; k<4; k++)
@@ -129,20 +138,40 @@ int main(int argc, char *argv[])
          * Setting, which change in each run. Add variables you want to change (only "Interaction specific settings")
          * ************/
         case 0:
-            instanceSettings.numCarsRecommending = 5;
-            instanceSettings.maxRecomendingDepth = 1;
+            //instanceSettings.numCarsRecommending = 0;
+            //instanceSettings.maxRecomendingDepth = 0;
+            for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
+            {
+                instanceSettings.PropDetectsX[j].second.second = 1.5;
+            }
+            instanceSettings.certaintyXon = false;
             break;
         case 1:
-            instanceSettings.numCarsRecommending = 5;
-            instanceSettings.maxRecomendingDepth = 2;
+            //instanceSettings.numCarsRecommending = 5;
+            //instanceSettings.maxRecomendingDepth = 1;
+            for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
+            {
+                instanceSettings.PropDetectsX[j].second.second = 1.5;
+            }
+            instanceSettings.certaintyXon = true;
             break;
         case 2:
-            instanceSettings.numCarsRecommending = 5;
-            instanceSettings.maxRecomendingDepth = 3;
+            //instanceSettings.numCarsRecommending = 5;
+            //instanceSettings.maxRecomendingDepth = 1;
+            for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
+            {
+                instanceSettings.PropDetectsX[j].second.second = 2;
+            }
+            instanceSettings.certaintyXon = false;
             break;
         case 3:
-            instanceSettings.numCarsRecommending = 5;
-            instanceSettings.maxRecomendingDepth = 5;
+            //instanceSettings.numCarsRecommending = 5;
+            //instanceSettings.maxRecomendingDepth = 3;
+            for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
+            {
+                instanceSettings.PropDetectsX[j].second.second = 2;
+            }
+            instanceSettings.certaintyXon = true;
             break;
         }
 
@@ -176,6 +205,7 @@ int main(int argc, char *argv[])
             {
             interaction event(instanceSettings, randList[k], databaseList[k], logdataList[k]);
             event.run();
+
             }
             if(i%10 == 0)
             {
@@ -184,7 +214,7 @@ int main(int argc, char *argv[])
         }
 
         //interaction batch II
-        databaseList[k].addCar(PropDetectsPredictionNew, PropDetectsObservationNew, PropHonestNew);
+        databaseList[k].addCar(PropDetectsPredictionNew, PropDetectsObservationNew, PropHonestNew, PropDetectsDetectsXNew);
 
         for (unsigned long int i=0; i < ceil((double)instanceSettings.numInteractionsSecond/100); i++)
         {
@@ -216,14 +246,14 @@ int main(int argc, char *argv[])
      *  Settings for all graphs an evaluation
      * **************************************/
 
-    int interactionFirst = 0; //instanceSettings.numTotalCarsFirst; // to exclude very first results
-    int interactionLast = instanceSettings.numInteractionsFirst;//instanceSettings.numInteractionsFirst + instanceSettings.numInteractionsSecond;
+    int interactionFirst = 0;//instanceSettings.numInteractionsFirst; //instanceSettings.numTotalCarsFirst; // to exclude very first results
+    int interactionLast = instanceSettings.numInteractionsFirst;// + instanceSettings.numInteractionsSecond-1;//instanceSettings.numInteractionsFirst + instanceSettings.numInteractionsSecond;
 
     /******************************************
      *  Settings for the four single interaction graphs and table
      * **************************************/
 
-    unsigned long int showCarID = 0; //instanceSettings.numTotalCarsSecond -5;
+    unsigned long int showCarID = 50; //instanceSettings.numTotalCarsSecond -5;
 
     /*****************************************/
 
@@ -255,7 +285,7 @@ int main(int argc, char *argv[])
      *  Evaluation bar charts and summary bar chart
      * **************************************/
 
-    int carDisplayFirst = 0; //startCar
+    int carDisplayFirst = 0;; //startCar
     int carDisplayLast = instanceSettings.numTotalCarsFirst -1; //EndCarID
     int numDisplayCars = 10; //Single values displayed besides average
 

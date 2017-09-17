@@ -15,6 +15,7 @@ void evaluation::rightDecission(int run, int firstInteraction, int lastInteracti
     APercentageByCar.clear();
     XPercentageByCar.clear();
     MaxPercentageByCar.clear();
+    MinPercentageByCar.clear();
 
 
     for(unsigned long int i=firstCar; i<=lastCar; i++)
@@ -23,6 +24,7 @@ void evaluation::rightDecission(int run, int firstInteraction, int lastInteracti
         double sumA = 0;
         double sumX = 0;
         double sumMax = 0;
+        double sumMin = 0;
         int counter = 0;
         for(int j=firstInteraction; j<=lastInteraction; j++)
         {
@@ -34,6 +36,7 @@ void evaluation::rightDecission(int run, int firstInteraction, int lastInteracti
                 bool X = currentLog.getInteractionLog(j).carXsays.first == currentLog.getInteractionLog(j).truth;
                 sumX += X;
                 sumMax += std::max(A, X);
+                sumMin += std::min(A, X);
                 counter++;
             }
         }
@@ -41,6 +44,8 @@ void evaluation::rightDecission(int run, int firstInteraction, int lastInteracti
         APercentageByCar.append(sumA/counter);
         XPercentageByCar.append(sumX/counter);
         MaxPercentageByCar.append(sumMax/counter);
+        MinPercentageByCar.append(sumMin/counter);
+        AvPercentageByCar.append((sumMin/counter+sumMax/counter)/2);
 
 
     }
@@ -50,14 +55,14 @@ void evaluation::rightDecission(int run, int firstInteraction, int lastInteracti
     filename.append("/Evaluation");
     filename.append(QString::number(run));
     filename.append(".txt");
-    writeToFile(ResultPercentageByCar, APercentageByCar, XPercentageByCar, MaxPercentageByCar, filename);
+    writeToFile(ResultPercentageByCar, APercentageByCar, XPercentageByCar, MaxPercentageByCar, MinPercentageByCar, AvPercentageByCar, filename);
     qWarning() << "wrote files to " << filename;
 
 
 
 }
 
-void evaluation::writeToFile(QList<double> ResultPercentageByCar, QList<double> APercentageByCar, QList<double> XPercentageByCar, QList<double> MaxPercentageByCar, QString filename)
+void evaluation::writeToFile(QList<double> ResultPercentageByCar, QList<double> APercentageByCar, QList<double> XPercentageByCar, QList<double> MaxPercentageByCar, QList<double> MinPercentageByCar, QList<double> AvPercentageByCar, QString filename)
 {
 
     QFile file( filename );
@@ -72,6 +77,8 @@ void evaluation::writeToFile(QList<double> ResultPercentageByCar, QList<double> 
                       << APercentageByCar.at(i) << ";"
                          << XPercentageByCar.at(i) << ";"
                             << MaxPercentageByCar.at(i) << ";"
+                               << MinPercentageByCar.at(i) << ";"
+                                  << AvPercentageByCar.at(i) << ";"
                    <<"\r\n";
         }
         stream << "Ende" << endl;
@@ -126,6 +133,20 @@ void evaluation::showChart(int numDisplayCars)
         *setMax << MaxPercentageByCar.at(i);
     }
     series->append(setMax);
+
+    QBarSet *setMin = new QBarSet("Car min");
+    for(int i=0; i<MinPercentageByCar.size() && i<numDisplayCars; i++)
+    {
+        *setMin << MinPercentageByCar.at(i);
+    }
+    series->append(setMin);
+
+    QBarSet *setAv = new QBarSet("Car Av");
+    for(int i=0; i<AvPercentageByCar.size() && i<numDisplayCars; i++)
+    {
+        *setAv << AvPercentageByCar.at(i);
+    }
+    series->append(setAv);
 
 
     QStringList categories;
