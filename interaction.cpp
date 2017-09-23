@@ -175,6 +175,8 @@ bool interaction::isXMatchAobservation()
     return carXsays.first == carAobservation.first;
 }
 
+///TODO move the following three functions to trustreputational
+
 QList<QPair<double, int>> interaction::getReputatiosnBs()
 {
     /// This function returns a QList<double> of all Bs involved in the scene.

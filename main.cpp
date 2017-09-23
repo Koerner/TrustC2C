@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
             //instanceSettings.maxRecomendingDepth = 0;
             for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
             {
-                instanceSettings.PropDetectsX[j].second.second = 1.5;
+                instanceSettings.PropDetectsX[j].second.second = 0.25;
             }
             instanceSettings.certaintyXon = false;
             break;
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
             //instanceSettings.maxRecomendingDepth = 1;
             for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
             {
-                instanceSettings.PropDetectsX[j].second.second = 1.5;
+                instanceSettings.PropDetectsX[j].second.second = 0.25;
             }
             instanceSettings.certaintyXon = true;
             break;
@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
             //instanceSettings.maxRecomendingDepth = 1;
             for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
             {
-                instanceSettings.PropDetectsX[j].second.second = 2;
+                instanceSettings.PropDetectsX[j].second.second = 0.3;
             }
             instanceSettings.certaintyXon = false;
             break;
@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
             //instanceSettings.maxRecomendingDepth = 3;
             for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
             {
-                instanceSettings.PropDetectsX[j].second.second = 2;
+                instanceSettings.PropDetectsX[j].second.second = 0.3;
             }
             instanceSettings.certaintyXon = true;
             break;
@@ -253,7 +253,7 @@ int main(int argc, char *argv[])
      *  Settings for the four single interaction graphs and table
      * **************************************/
 
-    unsigned long int showCarID = 50; //instanceSettings.numTotalCarsSecond -5;
+    unsigned long int showCarID = 0; //instanceSettings.numTotalCarsSecond -5;
 
     /*****************************************/
 
