@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     settingsGUI instanceSettings;
 
     //involved cars:
-    instanceSettings.numTotalCarsFirst = 50; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 biilion)
+    instanceSettings.numTotalCarsFirst = 100; //max 2147483647 because of Qvector/Qlist (2 Billion) //  int unsigned long: 4294967296 (4 billion)
     //involved cars
 
     /******************************
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     // Propability for for Car X to detect the truth (observation X) //////////////////////
     QList<QPair<unsigned long int,QPair<double, double>>> PropDetectsX;
     PropDetectsX.clear();
-    PropDetectsX.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.95, std_deviationX)));
+    PropDetectsX.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.5, std_deviationX)));
     PropDetectsX.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 101 /100, qMakePair(0.80, std_deviationX)));
     instanceSettings.PropDetectsX = PropDetectsX;
     qDebug() << PropDetectsX;
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     QList<QPair<unsigned long int,QPair<double, double>>> PropHonestCarX;
     PropHonestCarX.clear();
     PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(0 , qMakePair(0.05, std_deviationHonest)));
-    PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 70 /100, qMakePair(1.0, std_deviationHonest)));
+    PropHonestCarX.append(QPair<unsigned long int,QPair <double, double>>(instanceSettings.numTotalCarsFirst * 0 /100, qMakePair(1.0, std_deviationHonest)));
     instanceSettings.PropHonestCarX = PropHonestCarX;
     qWarning() << "Prop Honest: " << instanceSettings.PropHonestCarX;
 
@@ -138,38 +138,38 @@ int main(int argc, char *argv[])
          * Setting, which change in each run. Add variables you want to change (only "Interaction specific settings")
          * ************/
         case 0:
-            //instanceSettings.numCarsRecommending = 0;
-            //instanceSettings.maxRecomendingDepth = 0;
+//            instanceSettings.numCarsRecommending = 0;
+//            instanceSettings.maxRecomendingDepth = 0;
             for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
             {
-                instanceSettings.PropDetectsX[j].second.second = 0.25;
+                instanceSettings.PropDetectsX[j].second.second = 1.5;
             }
             instanceSettings.certaintyXon = false;
             break;
         case 1:
-            //instanceSettings.numCarsRecommending = 5;
-            //instanceSettings.maxRecomendingDepth = 1;
+//            instanceSettings.numCarsRecommending = 5;
+//            instanceSettings.maxRecomendingDepth = 3;
             for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
             {
-                instanceSettings.PropDetectsX[j].second.second = 0.25;
+                instanceSettings.PropDetectsX[j].second.second = 1.5;
             }
             instanceSettings.certaintyXon = true;
             break;
         case 2:
-            //instanceSettings.numCarsRecommending = 5;
-            //instanceSettings.maxRecomendingDepth = 1;
+//            instanceSettings.numCarsRecommending = 0;
+//            instanceSettings.maxRecomendingDepth = 0;
             for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
             {
-                instanceSettings.PropDetectsX[j].second.second = 0.3;
+                instanceSettings.PropDetectsX[j].second.second = 2;
             }
             instanceSettings.certaintyXon = false;
             break;
         case 3:
-            //instanceSettings.numCarsRecommending = 5;
-            //instanceSettings.maxRecomendingDepth = 3;
+//            instanceSettings.numCarsRecommending = 0;
+//            instanceSettings.maxRecomendingDepth = 0;
             for(int j=0 ; j < instanceSettings.PropDetectsX.size(); j++)
             {
-                instanceSettings.PropDetectsX[j].second.second = 0.3;
+                instanceSettings.PropDetectsX[j].second.second = 2;
             }
             instanceSettings.certaintyXon = true;
             break;
@@ -285,9 +285,9 @@ int main(int argc, char *argv[])
      *  Evaluation bar charts and summary bar chart
      * **************************************/
 
-    int carDisplayFirst = 0;; //startCar
+    int carDisplayFirst = 0; //startCar
     int carDisplayLast = instanceSettings.numTotalCarsFirst -1; //EndCarID
-    int numDisplayCars = 10; //Single values displayed besides average
+    int numDisplayCars = 100; //Single values displayed besides average
 
     /*****************************************/
 

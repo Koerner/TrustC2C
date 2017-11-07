@@ -3,7 +3,7 @@ var classdatabase =
     [ "car", "structdatabase_1_1car.html", "structdatabase_1_1car" ],
     [ "interactionLogStruct", "structdatabase_1_1interaction_log_struct.html", "structdatabase_1_1interaction_log_struct" ],
     [ "database", "classdatabase.html#accdfdc4f05b1c2c0dc84c0506856007f", null ],
-    [ "addCar", "classdatabase.html#a5f1b11735015a3eb4b7ccc12c53e6991", null ],
+    [ "addCar", "classdatabase.html#a63d5f2fd1a010f2420c5b03342934cac", null ],
     [ "getAverageTrust", "classdatabase.html#afcaf13002fa8284f60db20537b503c12", null ],
     [ "getCarIDsAscendingReputation", "classdatabase.html#a6074fb7579db6540eb76fa573fd9e7c1", null ],
     [ "getCarPropDetectsObservation", "classdatabase.html#a13289f03be005c7f0392c5590c810a04", null ],
